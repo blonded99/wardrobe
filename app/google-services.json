@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "34041266451",
+    "project_id": "capstone-wardrobe",
+    "storage_bucket": "capstone-wardrobe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34041266451:android:f379924e6e30e73d245ae6",
+        "android_client_info": {
+          "package_name": "com.example.wardrobe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "34041266451-vaqdiif3non08ebr2ta3amejl00b8urq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0SyIXynowub5Tzt4tlWsFw_Zuiod1z1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "34041266451-vaqdiif3non08ebr2ta3amejl00b8urq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
