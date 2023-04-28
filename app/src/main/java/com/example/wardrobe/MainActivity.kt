@@ -20,6 +20,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.wardrobe.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
@@ -40,6 +44,7 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
     lateinit var storage: FirebaseStorage
     lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
 
     private var list = ArrayList<String>() // post image 넘어오는 array
@@ -83,24 +88,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
         storage = Firebase.storage
         val storageRef = storage.reference
         var imageRef: StorageReference
         val itemsString = mutableListOf<String>()
 
-        binding.button.setOnClickListener {
-            GlobalScope.launch(Dispatchers.IO) {
-                try {
-                    val path = "/data/data/$packageName/cloth.png"
-                    removeBackground(path)
-                    binding.imageView.visibility = View.INVISIBLE
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
+//        binding.button.setOnClickListener {
+//            GlobalScope.launch(Dispatchers.IO) {
+//                try {
+//                    val path = "/data/data/$packageName/cloth.png"
+//                    removeBackground(path)
+//                    binding.imageView.visibility = View.INVISIBLE
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        }
 
-        binding.button2.setOnClickListener {
+//        binding.button2.setOnClickListener {
 //                listImageDialog(itemsString)
 //                itemsString.forEach {
 //                    Log.e("", it)
@@ -108,52 +120,35 @@ class MainActivity : AppCompatActivity() {
 //                    displayImageRef(imageRef)
 //                    return@setOnClickListener
 //                }
+//
+//            val readPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+//            val writePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//
+//            if(readPermission == PackageManager.PERMISSION_DENIED || writePermission == PackageManager.PERMISSION_DENIED){
+//                ActivityCompat.requestPermissions(this, arrayOf(
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                ),
+//                    REQ_GALLERY
+//                )
+//            }else{
+//                // 사진 1장 선택
+//                val intent = Intent(Intent.ACTION_PICK)
+//                intent.type = "image/*"
+//                startActivityForResult(intent, REQUEST_CODE)
+//            }
+//
+//
+//        }
 
-            val readPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-            val writePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-            if(readPermission == PackageManager.PERMISSION_DENIED || writePermission == PackageManager.PERMISSION_DENIED){
-                ActivityCompat.requestPermissions(this, arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                    REQ_GALLERY
-                )
-            }else{
-                // 사진 1장 선택
-                val intent = Intent(Intent.ACTION_PICK)
-                intent.type = "image/*"
-                startActivityForResult(intent, REQUEST_CODE)
-            }
-
-//            val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, REQUEST_CODE)
-
-        }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            val selectedImageUri: Uri? = data.data
-
-            // Do something with the selected image URI, such as displaying it in an ImageView
-            if(selectedImageUri != null) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    try {
-                        val path = getFilePathFromUri(selectedImageUri)
-                        removeBackground(path)
-                        binding.imageView.visibility = View.INVISIBLE
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-
-
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+
 
     suspend fun removeBackground(path: String){
         storage = Firebase.storage
@@ -187,22 +182,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun listImageDialog(itemsString: MutableList<String>){
-        storage.reference.listAll()
-            .addOnSuccessListener {
-                for(i in it.items){
-                    itemsString.add(i.name)
-                }
-            }
-    }
-
-    private fun displayImageRef(imageRef: StorageReference?){
-        imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
-            binding.imageView.setImageBitmap(bmp)
-            binding.imageView.visibility = View.VISIBLE
-        }
-    }
 
     fun getRealPathFromURI(uri: Uri): String{
 

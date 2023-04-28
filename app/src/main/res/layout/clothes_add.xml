@@ -193,7 +193,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton
-        android:id="@+id/imageButton5"
+        android:id="@+id/button_clothes_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/icon_clothes_add_save_navy"
@@ -309,10 +309,23 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton5"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton5"
-        app:layout_constraintStart_toStartOf="@+id/imageButton5"
-        app:layout_constraintTop_toTopOf="@+id/imageButton5" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_clothes_save"
+        app:layout_constraintEnd_toEndOf="@+id/button_clothes_save"
+        app:layout_constraintStart_toStartOf="@+id/button_clothes_save"
+        app:layout_constraintTop_toTopOf="@+id/button_clothes_save" />
+
+    <EditText
+        android:id="@+id/editText_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="메모를 입력하세요"
+        android:textColorHint="#D9D9D9"
+        android:textSize="14sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/textView_memo"
+        app:layout_constraintTop_toBottomOf="@+id/textView_memo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
