@@ -49,7 +49,6 @@ class MainFragment : Fragment() {
     // Top(하의) Collection Ref
     val bottomColRef = db.collection("bottom")
 
-
     private var list = ArrayList<String>() // post image 넘어오는 array
 
     var strRef = ""
@@ -298,7 +297,7 @@ class MainFragment : Fragment() {
         var readPermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
         var writePermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-        // 권한요청 안 뜨는 오류때문에 임시로. 실제로는 이렇게 하면 안됨.
+        // 권한요청 안 뜨는 오류 때문에 임시로. 실제로는 이렇게 하면 안됨.
         readPermission = 1
         writePermission = 1
 
@@ -313,7 +312,6 @@ class MainFragment : Fragment() {
             )
         }else{
             //사진 1장 선택
-            Log.e("","intent 호출 앞까지 도달")
             var intent = Intent(Intent.ACTION_PICK)
             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*")
             imageResultSingle.launch(intent)
@@ -341,6 +339,7 @@ class MainFragment : Fragment() {
 
         }
 
+        // 갤러리 열 때 권한요청이 뜨지 않는 오류가 있어서 일단 임시로 파일 path를 다른 곳으로 지정
         val tempPath = "/data/data/com.example.wardrobe/cloth.png"
         val file = File(tempPath)
 
