@@ -8,10 +8,13 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.wardrobe.MainFragment"
-        tools:layout="@layout/fragment_empty" >
+        tools:layout="@layout/fragment_main" >
 <!--        <action-->
 <!--            android:id="@+id/action_mainFragment_to_detailFragment"-->
 <!--            app:destination="@id/detailFragment" />-->
+        <action
+            android:id="@+id/action_mainFragment_to_thirdFragment"
+            app:destination="@id/thirdFragment" />
     </fragment>
 
 <!--    <fragment-->
@@ -19,5 +22,20 @@
 <!--        android:name="com.example.wardrobe.DetailFragment"-->
 <!--        tools:layout="@layout/clothes_detail" >-->
 <!--    </fragment>-->
+
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.example.wardrobe.TestFragment"
+        tools:layout="@layout/fragment_test" >
+<!--        <action-->
+<!--            android:id="@+id/action_testFragment_to_mainFragment"-->
+<!--            app:destination="@id/mainFragment" />-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="com.example.wardrobe.ThirdFragment"
+        tools:layout="@layout/fragment_third" >
+    </fragment>
 
 </navigation>
