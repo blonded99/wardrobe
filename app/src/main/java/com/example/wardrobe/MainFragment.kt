@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,8 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.wardrobe.databinding.ClothesAddBinding
+import com.example.wardrobe.databinding.FragmentEmptyBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -39,7 +37,7 @@ import java.io.File
 
 
 class MainFragment : Fragment() {
-    private lateinit var binding: ClothesAddBinding
+    private lateinit var binding: FragmentEmptyBinding
     private lateinit var storage: FirebaseStorage
 
     val db = Firebase.firestore
@@ -55,18 +53,6 @@ class MainFragment : Fragment() {
 
     companion object{
         const val REQ_GALLERY = 1
-
-        var thickness_thick = 0
-        var thickness_normal = 0
-        var thickness_thin = 0
-
-        var category_top = 0
-        var category_bottom = 0
-        var category_coordination = 0
-
-        var clothestype_short = 0
-        var clothestype_long = 0
-        var clothestype_sleeveless = 0
     }
 
     private val imageResultSingle = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -110,160 +96,12 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = ClothesAddBinding.inflate(inflater, container, false)
+        binding = FragmentEmptyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        binding.buttonClothesAdd.setOnClickListener {
-            selectGallery()
-        }
-
-        binding.buttonThicknessThick.setOnClickListener {
-            if(thickness_thick == 0) {
-                thickness_thick = 1
-                binding.buttonThicknessThick.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                thickness_thick = 0
-                binding.buttonThicknessThick.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-        }
-
-        binding.buttonThicknessNormal.setOnClickListener {
-            if(thickness_normal == 0) {
-                thickness_normal = 1
-                binding.buttonThicknessNormal.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                thickness_normal = 0
-                binding.buttonThicknessNormal.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-        }
-
-        binding.buttonThicknessThin.setOnClickListener {
-            if(thickness_thin == 0) {
-                thickness_thin = 1
-                binding.buttonThicknessThin.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                thickness_thin = 0
-                binding.buttonThicknessThin.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-        }
-
-        binding.buttonCategoryTop.setOnClickListener {
-            if(category_top == 0) {
-                category_top = 1
-                binding.buttonCategoryTop.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                category_top = 0
-                binding.buttonCategoryTop.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-
-        }
-
-        binding.buttonCategoryBottom.setOnClickListener {
-            if(category_bottom == 0) {
-                category_bottom = 1
-                binding.buttonCategoryBottom.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                category_bottom = 0
-                binding.buttonCategoryBottom.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-
-        }
-
-        binding.buttonCategoryCoordination.setOnClickListener {
-            if(category_coordination == 0) {
-                category_coordination = 1
-                binding.buttonCategoryCoordination.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                category_coordination = 0
-                binding.buttonCategoryCoordination.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-
-        }
-
-        binding.buttonClothestypeShort.setOnClickListener {
-            if (clothestype_short == 0) {
-                clothestype_short = 1
-                binding.buttonClothestypeShort.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                clothestype_short = 0
-                binding.buttonClothestypeShort.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-        }
-
-        binding.buttonClothestypeLong.setOnClickListener {
-            if (clothestype_long == 0) {
-                clothestype_long = 1
-                binding.buttonClothestypeLong.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                clothestype_long = 0
-                binding.buttonClothestypeLong.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-
-        }
-
-        binding.buttonClothestypeSleeveless.setOnClickListener {
-            if (clothestype_sleeveless == 0) {
-                clothestype_sleeveless = 1
-                binding.buttonClothestypeSleeveless.setBackgroundResource(R.drawable.icon_clothes_type_select_navy)
-            }
-            else {
-                clothestype_sleeveless = 0
-                binding.buttonClothestypeSleeveless.setBackgroundResource(R.drawable.icon_clothes_type_select_white)
-            }
-
-        }
-
-        binding.buttonClothesSave.setOnClickListener {
-
-            var thickness = ""
-            var length = ""
-            if(thickness_thick == 1)
-                thickness = "두꺼움"
-            else if(thickness_normal == 1)
-                thickness = "보통"
-            else
-                thickness = "얇음"
-
-            if(clothestype_short == 1)
-                length = "반팔"
-            else if(clothestype_long == 1)
-                length = "긴팔"
-            else
-                length = "민소매"
-
-            val itemMap = hashMapOf(
-                "thickness" to thickness,
-                "length" to length,
-                "image" to strRef,
-            )
-
-            if(category_top == 1){
-                topColRef.add(itemMap).addOnSuccessListener {
-                    Log.e("","firestore add success")
-                    findNavController().navigate(R.id.action_mainFragment_to_detailFragment)
-                }
-            }
-            else if(category_bottom == 1){
-                bottomColRef.add(itemMap).addOnSuccessListener {
-                    Log.e("","firestore add success")
-                    findNavController().navigate(R.id.action_mainFragment_to_detailFragment)
-                }
-            }
-
-        }
 
     }
 
@@ -396,8 +234,8 @@ class MainFragment : Fragment() {
                         val imageRef = storageRef.child(strRef)
                         imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
                             val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
-                            binding.bgImg1.setImageBitmap(bmp)
-                            binding.buttonClothesAdd.visibility = View.INVISIBLE
+//                            binding.bgImg1.setImageBitmap(bmp)
+//                            binding.buttonClothesAdd.visibility = View.INVISIBLE
                         }
                     }
                     return@addOnSuccessListener
