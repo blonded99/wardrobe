@@ -18,7 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.wardrobe.databinding.FragmentEmptyBinding
+import androidx.navigation.fragment.findNavController
+import com.example.wardrobe.databinding.FragmentMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -37,7 +38,7 @@ import java.io.File
 
 
 class MainFragment : Fragment() {
-    private lateinit var binding: FragmentEmptyBinding
+    private lateinit var binding: FragmentMainBinding
     private lateinit var storage: FirebaseStorage
 
     val db = Firebase.firestore
@@ -96,12 +97,16 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEmptyBinding.inflate(inflater, container, false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_thirdFragment)
+        }
 
     }
 
