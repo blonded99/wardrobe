@@ -15,32 +15,5 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/button"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="84dp"-->
-<!--        android:layout_marginTop="640dp"-->
-<!--        android:text="SEND"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="500dp"-->
-<!--        android:layout_marginStart="52dp"-->
-<!--        android:layout_marginTop="28dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="48dp"-->
-<!--        android:text="GET"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/button"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/button" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
