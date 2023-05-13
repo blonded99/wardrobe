@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".WardrobeFragment">
+    tools:context=".CommunityFragment">
 
     <ImageView
         android:id="@+id/iv_clothes"
@@ -15,7 +15,7 @@
         android:paddingBottom="20dp"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:background="@drawable/rectangle_wardrobe_background_ivory"/>
+        android:background="@drawable/rectangle_wardrobe_background_green"/>
 
 <!--    <ImageView-->
 <!--        android:id="@+id/imageView"-->

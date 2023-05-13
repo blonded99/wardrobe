@@ -46,4 +46,10 @@
         tools:layout="@layout/fragment_wardrobe" >
     </fragment>
 
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.example.wardrobe.CommunityFragment"
+        tools:layout="@layout/fragment_community" >
+    </fragment>
+
 </navigation>
