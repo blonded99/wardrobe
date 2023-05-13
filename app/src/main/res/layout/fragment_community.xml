@@ -12,42 +12,44 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
+        android:background="@drawable/rectangle_community_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:checked="true"
-            android:id="@+id/button_top"
-            android:layout_width="59dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="65dp"
-            android:background="@drawable/selector_wardrobe_button"
+            android:id="@+id/button_community"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:button="@null"
-            android:text="상의"
+            android:text="커뮤니티"
+            android:textSize="13sp"
             android:textAlignment="center"
-            android:textColor="@drawable/selector_wardrobe_button_text" />
+            android:textColor="@drawable/selector_community_button_text" />
 
         <RadioButton
-            android:id="@+id/button_bottom"
-            android:layout_width="59dp"
-            android:layout_height="30dp"
-            android:background="@drawable/selector_wardrobe_button"
+            android:id="@+id/button_liked_clothes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:button="@null"
-            android:text="하의"
+            android:text="좋아요 코디"
+            android:textSize="13sp"
             android:textAlignment="center"
-            android:textColor="@drawable/selector_wardrobe_button_text" />
+            android:textColor="@drawable/selector_community_button_text" />
 
         <RadioButton
-            android:id="@+id/button_set"
-            android:layout_width="59dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="65dp"
-            android:background="@drawable/selector_wardrobe_button"
+            android:id="@+id/button_public_clothes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:button="@null"
-            android:text="코디"
+            android:text="내 공개 코디"
+            android:textSize="13sp"
             android:textAlignment="center"
-            android:textColor="@drawable/selector_wardrobe_button_text" />
+            android:textColor="@drawable/selector_community_button_text" />
     </RadioGroup>
 
     <View
@@ -70,16 +72,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line1" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
-        android:backgroundTint="@color/primaryColor"
-        android:clickable="true"
-        android:src="@drawable/button_fab"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

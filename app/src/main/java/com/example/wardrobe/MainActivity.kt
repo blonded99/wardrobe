@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.mainFragment,R.id.wardrobeFragment),
+            setOf(R.id.mainFragment,R.id.wardrobeFragment,R.id.communityFragment),
             binding.mainDrawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
