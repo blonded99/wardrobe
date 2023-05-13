@@ -105,6 +105,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.button.setOnClickListener {
+//            findNavController().navigate(R.id.action_mainFragment_to_thirdFragment)
             findNavController().navigate(R.id.action_mainFragment_to_thirdFragment)
         }
 
