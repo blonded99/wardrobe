@@ -19,20 +19,6 @@
 
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/detailFragment"-->
-<!--        android:name="com.example.wardrobe.DetailFragment"-->
-<!--        tools:layout="@layout/clothes_detail" >-->
-<!--    </fragment>-->
-
-    <fragment
-        android:id="@+id/testFragment"
-        android:name="com.example.wardrobe.TestFragment"
-        tools:layout="@layout/fragment_test" >
-<!--        <action-->
-<!--            android:id="@+id/action_testFragment_to_mainFragment"-->
-<!--            app:destination="@id/mainFragment" />-->
-    </fragment>
 
     <fragment
         android:id="@+id/thirdFragment"

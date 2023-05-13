@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 
 data class Item(val clothesImageUrl: Int)
 
-class WordrobeViewModel: ViewModel() {
+class WardrobeViewModel: ViewModel() {
     val wardrobeItems = ArrayList<Item>()
     val wardrobeItemsListData = MutableLiveData<ArrayList<Item>>()
 

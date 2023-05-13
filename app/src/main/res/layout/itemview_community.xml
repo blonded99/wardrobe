@@ -11,13 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="50dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:background="@drawable/rectangle_wardrobe_background_green"/>
 
-<!--    <ImageView-->
+    <ImageButton
+        android:id="@+id/button_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_heart_empty"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_clothes"
+        app:layout_constraintEnd_toEndOf="@+id/iv_clothes" />
+
+
+    <!--    <ImageView-->
 <!--        android:id="@+id/imageView"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

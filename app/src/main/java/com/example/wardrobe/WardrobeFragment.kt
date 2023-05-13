@@ -11,25 +11,16 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentWardrobeBinding
 import com.example.wardrobe.viewmodel.Item
-import com.example.wardrobe.viewmodel.WordrobeViewModel
+import com.example.wardrobe.viewmodel.WardrobeViewModel
 
 class WardrobeFragment : Fragment() {
     private lateinit var binding: FragmentWardrobeBinding
 
-    private val viewModel by viewModels<WordrobeViewModel>()
+    private val viewModel by viewModels<WardrobeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        viewModel.addItem(Item(R.drawable.sample_img1))
-//        viewModel.addItem(Item(R.drawable.sample_img2))
-//        viewModel.addItem(Item(R.drawable.sample_img3))
-//        viewModel.addItem(Item(R.drawable.sample_img4))
-//        viewModel.addItem(Item(R.drawable.sample_img5))
-//        viewModel.addItem(Item(R.drawable.sample_img6))
-
-        viewModel.addWardrobeItem(Item(R.drawable.test_top))
-        viewModel.addWardrobeItem(Item(R.drawable.test_bottom))
     }
 
     override fun onCreateView(
@@ -43,6 +34,19 @@ class WardrobeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+//        viewModel.addItem(Item(R.drawable.sample_img1))
+//        viewModel.addItem(Item(R.drawable.sample_img2))
+//        viewModel.addItem(Item(R.drawable.sample_img3))
+//        viewModel.addItem(Item(R.drawable.sample_img4))
+//        viewModel.addItem(Item(R.drawable.sample_img5))
+//        viewModel.addItem(Item(R.drawable.sample_img6))
+
+
+        viewModel.addWardrobeItem(Item(R.drawable.test_top))
+        viewModel.addWardrobeItem(Item(R.drawable.test_bottom))
+
 
         val adapter = WardrobeRecyclerViewAdapter(viewModel,context,this)
 
