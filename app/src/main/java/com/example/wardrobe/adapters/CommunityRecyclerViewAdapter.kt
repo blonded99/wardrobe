@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.WardrobeViewModel
 
-class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val context: Context?, val fragment: Fragment):
-    RecyclerView.Adapter<WardrobeRecyclerViewAdapter.RecyclerViewViewHolder>() {
+class CommunityRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val context: Context?, val fragment: Fragment):
+    RecyclerView.Adapter<CommunityRecyclerViewAdapter.RecyclerViewViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.itemview_wardrobe,
+            R.layout.itemview_community,
             parent, false)
 //        val inflater = LayoutInflater.from(parent.context)
 //        val binding = ItemViewBinding.inflate(inflater,parent,false)
@@ -29,7 +29,7 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val 
 
     override fun getItemCount(): Int {
         // 옷 개수
-        return viewModel.wardrobeItems.size
+        return viewModel.communityItems.size
     }
 
     inner class RecyclerViewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -41,7 +41,7 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val 
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
 
         fun setContents(pos: Int){
-            with(viewModel.wardrobeItems[pos]){
+            with(viewModel.communityItems[pos]){
                 // clothesImage 세팅
                 clothesImage.setImageResource(clothesImageUrl)
 //                Glide.with(itemView).load(clothesImageUrl).into(clothesImage)

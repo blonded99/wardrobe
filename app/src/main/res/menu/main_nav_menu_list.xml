@@ -10,5 +10,9 @@
         android:id="@+id/wardrobeFragment"
         android:title="옷장"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/communityFragment"
+        android:title="커뮤니티"
+        app:showAsAction="always"/>
 
 </menu>
