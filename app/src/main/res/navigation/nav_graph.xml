@@ -15,6 +15,8 @@
         <action
             android:id="@+id/action_mainFragment_to_thirdFragment"
             app:destination="@id/thirdFragment" />
+
+
     </fragment>
 
 <!--    <fragment-->
@@ -36,6 +38,12 @@
         android:id="@+id/thirdFragment"
         android:name="com.example.wardrobe.ThirdFragment"
         tools:layout="@layout/fragment_third" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/wardrobeFragment"
+        android:name="com.example.wardrobe.WardrobeFragment"
+        tools:layout="@layout/fragment_wardrobe" >
     </fragment>
 
 </navigation>

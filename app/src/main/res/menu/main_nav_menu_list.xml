@@ -7,8 +7,8 @@
         android:title="홈"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/testFragment"
-        android:title="테스트"
+        android:id="@+id/wardrobeFragment"
+        android:title="옷장"
         app:showAsAction="always"/>
 
 </menu>
