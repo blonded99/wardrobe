@@ -6,12 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentCommunityBinding
-import com.example.wardrobe.databinding.FragmentWardrobeBinding
 import com.example.wardrobe.viewmodel.Item
 import com.example.wardrobe.viewmodel.WordrobeViewModel
 
@@ -24,8 +19,8 @@ class CommunityFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
-        viewModel.addItem(Item(R.drawable.test_top))
-        viewModel.addItem(Item(R.drawable.test_bottom))
+        viewModel.addCommunityItem(Item(R.drawable.test_top))
+        viewModel.addCommunityItem(Item(R.drawable.test_bottom))
     }
 
     override fun onCreateView(

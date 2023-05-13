@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.WordrobeViewModel
 
@@ -30,7 +29,7 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WordrobeViewModel, val 
 
     override fun getItemCount(): Int {
         // 옷 개수
-        return viewModel.items.size
+        return viewModel.wardrobeItems.size
     }
 
     inner class RecyclerViewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -42,7 +41,7 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WordrobeViewModel, val 
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
 
         fun setContents(pos: Int){
-            with(viewModel.items[pos]){
+            with(viewModel.wardrobeItems[pos]){
                 // clothesImage 세팅
                 clothesImage.setImageResource(clothesImageUrl)
 //                Glide.with(itemView).load(clothesImageUrl).into(clothesImage)
