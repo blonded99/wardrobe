@@ -16,10 +16,20 @@
         android:layout_width="match_parent"
         android:layout_height="300dp">
 
+        <Button
+            android:id="@+id/camera_button"
+            android:layout_width="95dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:adjustViewBounds="true"
+            android:background = "@drawable/icon_gallery"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            />
         <ImageView
             android:id = "@+id/addimg"
-            android:src = "@drawable/icon_gallery"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:layout_marginTop="30dp"
