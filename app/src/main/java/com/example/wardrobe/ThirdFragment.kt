@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -35,6 +36,8 @@ import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONArray
+import org.json.JSONException
 import java.io.File
 
 class ThirdFragment : Fragment() {
@@ -42,6 +45,8 @@ class ThirdFragment : Fragment() {
 
     private lateinit var storage: FirebaseStorage
 
+
+    var strRef = ""
 
     var isTop : Boolean = true
 
@@ -241,6 +246,33 @@ class ThirdFragment : Fragment() {
 //        response.close()
         Snackbar.make(binding.root,"Completed", Snackbar.LENGTH_SHORT).show()
 
+
+        // RESPONSE 성공시
+        if (response.isSuccessful) {
+            try {
+                val jsonArray = JSONArray(responseBody)
+                if (jsonArray.length() > 0) {
+                    val jsonObject = jsonArray.getJSONObject(0)
+                    val path = jsonObject.optString("path", "") // storage에 들어간 사진의 path
+                    Log.e("", "path= $path")
+
+                    // Process the path value as needed
+                    listImageDialog(path)
+
+                } else {
+                    Snackbar.make(binding.root,"ARRAY IS EMPTY", Snackbar.LENGTH_SHORT).show()
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+                Snackbar.make(binding.root,"JSON PARSING ERROR", Snackbar.LENGTH_SHORT).show()
+            }
+        } else {
+            Snackbar.make(binding.root,"RESPONSE FAILED", Snackbar.LENGTH_SHORT).show()
+        }
+
+//        listImageDialog()
+
+
         withContext(Dispatchers.Main) {
             // handle the response on the main thread
         }
@@ -253,6 +285,22 @@ class ThirdFragment : Fragment() {
                 removeBackground(path, isTop)
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+        }
+
+    }
+
+
+    // path를 넘겨받고 storage에서 이미지 받아와서 imageView에 세팅
+    private fun listImageDialog(path: String){
+        storage = Firebase.storage
+//        val storageRef = storage.reference
+
+        if(path != ""){ // path is always not null
+            val imageRef = storage.reference.child(path)
+            imageRef.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+                val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
+                binding.imageView.setImageBitmap(bmp)
             }
         }
 
