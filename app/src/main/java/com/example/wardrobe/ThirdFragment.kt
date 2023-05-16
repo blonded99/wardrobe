@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.databinding.FragmentThirdBinding
 
 class ThirdFragment : Fragment() {
