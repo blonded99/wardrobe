@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/mainFragment"
+        android:id="@+id/homeFragment"
         android:title="홈"
         app:showAsAction="always"/>
     <item

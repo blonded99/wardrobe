@@ -19,7 +19,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.wardrobe.databinding.FragmentHomeBinding
 import com.example.wardrobe.databinding.FragmentMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
@@ -39,7 +38,7 @@ import java.io.File
 
 
 class MainFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentMainBinding
     private lateinit var storage: FirebaseStorage
 
     val db = Firebase.firestore
@@ -98,7 +97,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 

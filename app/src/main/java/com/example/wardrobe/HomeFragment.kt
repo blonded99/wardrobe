@@ -43,8 +43,8 @@ class HomeFragment : Fragment() {
 
         val adapter = HomeRecyclerViewAdapter(viewModel,context,this)
 
-        binding.homecommunityrecyclerview.adapter = adapter
-        binding.homecommunityrecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        binding.homecommunityrecyclerview.adapter = adapter
+//        binding.homecommunityrecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //        binding.homecommunityrecyclerview.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
 
         binding.weatherrecyclerview.adapter = adapter
@@ -52,9 +52,9 @@ class HomeFragment : Fragment() {
 
 //        binding.weatherrecyclerview.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
 
-        viewModel.HomecommunityItemsListData.observe(viewLifecycleOwner){
-            HomeRecyclerViewAdapter(viewModel,context,this).notifyDataSetChanged()
-        }
+//        viewModel.HomecommunityItemsListData.observe(viewLifecycleOwner){
+//            HomeRecyclerViewAdapter(viewModel,context,this).notifyDataSetChanged()
+//        }
         viewModel.HomeweatherItemsListData.observe(viewLifecycleOwner){
             HomeRecyclerViewAdapter(viewModel,context,this).notifyDataSetChanged()
         }
