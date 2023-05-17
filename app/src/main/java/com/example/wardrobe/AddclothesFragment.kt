@@ -250,6 +250,7 @@ class AddclothesFragment : Fragment() {
         readPermission = 1
         writePermission = 1
 
+
         if(readPermission == PackageManager.PERMISSION_DENIED || writePermission == PackageManager.PERMISSION_DENIED){
             Log.e("","readPerm = ${readPermission}")
             Log.e("","writePerm = ${writePermission}")
