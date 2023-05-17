@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
@@ -15,6 +17,7 @@ import com.example.wardrobe.viewmodel.WardrobeViewModel
 
 class WardrobeFragment : Fragment() {
     private lateinit var binding: FragmentWardrobeBinding
+    protected lateinit var navController: NavController
 
     private val viewModel by viewModels<WardrobeViewModel>()
 
@@ -35,6 +38,7 @@ class WardrobeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        navController = findNavController()
 
 //        viewModel.addItem(Item(R.drawable.sample_img1))
 //        viewModel.addItem(Item(R.drawable.sample_img2))
@@ -55,6 +59,10 @@ class WardrobeFragment : Fragment() {
 
         viewModel.wardrobeItemsListData.observe(viewLifecycleOwner){
             WardrobeRecyclerViewAdapter(viewModel,context,this).notifyDataSetChanged()
+        }
+
+        binding.floatingActionButton.setOnClickListener {
+            navController.navigate(R.id.action_wardrobeFragment_to_addclothesFragment)
         }
 
     }
