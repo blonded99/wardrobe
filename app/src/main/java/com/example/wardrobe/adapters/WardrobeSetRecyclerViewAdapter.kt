@@ -1,6 +1,8 @@
 package com.example.wardrobe.adapters
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +11,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.WardrobeViewModel
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 
-class CommunityRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val context: Context?, val fragment: Fragment):
-    RecyclerView.Adapter<CommunityRecyclerViewAdapter.RecyclerViewViewHolder>() {
+class WardrobeSetRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val context: Context?, val fragment: Fragment):
+    RecyclerView.Adapter<WardrobeSetRecyclerViewAdapter.RecyclerViewViewHolder>() {
+
+    private lateinit var storage: FirebaseStorage
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.itemview_community,
+            R.layout.itemview_wardrobe,
             parent, false)
+        storage = Firebase.storage
 //        val inflater = LayoutInflater.from(parent.context)
 //        val binding = ItemViewBinding.inflate(inflater,parent,false)
         return RecyclerViewViewHolder(itemView)
@@ -29,7 +37,7 @@ class CommunityRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val
 
     override fun getItemCount(): Int {
         // 옷 개수
-        return viewModel.communityItems.size
+        return viewModel.setItems.size
     }
 
     inner class RecyclerViewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -37,14 +45,20 @@ class CommunityRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val
 //        val db = Firebase.firestore
 //        val currentUid = Firebase.auth.currentUser?.uid.toString()
 
-
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
+        val storageRef = storage.reference
 
         fun setContents(pos: Int){
-            with(viewModel.communityItems[pos]){
-                // clothesImage 세팅
-//                clothesImage.setImageResource(clothesImageUrl)
-//                Glide.with(itemView).load(clothesImageUrl).into(clothesImage)
+            with(viewModel.setItems[pos]){
+                val imageRef = storage.reference.child(clothesImageUrl)
+                imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+                    val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
+                    clothesImage.setImageBitmap(bmp)
+                }
+                    .addOnFailureListener {
+                        Log.e("","firebase storage called failed")
+                    }
+
             }
 
 
