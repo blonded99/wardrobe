@@ -247,8 +247,8 @@ class AddclothesFragment : Fragment() {
         var writePermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         // 에뮬레이터 문제로 권한요청 안 뜨는 오류 때문에 임시로. 실제로는 이렇게 하면 안됨.
-        readPermission = 1
-        writePermission = 1
+//        readPermission = 1
+//        writePermission = 1
 
         if(readPermission == PackageManager.PERMISSION_DENIED || writePermission == PackageManager.PERMISSION_DENIED){
             Log.e("","readPerm = ${readPermission}")
@@ -289,10 +289,18 @@ class AddclothesFragment : Fragment() {
         }
 
         // 갤러리 열 때 권한요청이 뜨지 않는 오류가 있어서 일단 임시로 파일 path를 다른 곳으로 지정
-        val tempPath = "/data/data/com.example.wardrobe/test_image5.jpg"
-        val file = File(tempPath)
+//        val tempPath = "/data/data/com.example.wardrobe/test_image5.jpg"
+        val file = File(path)
 
-        val client = OkHttpClient().newBuilder().build()
+//        val client = OkHttpClient().newBuilder().build()
+
+        // 느린 서버 테스트용 timeout 재설정
+        val client = OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS) // Adjust the timeout value as needed
+            .readTimeout(30, TimeUnit.SECONDS) // Adjust the timeout value as needed
+            .writeTimeout(30, TimeUnit.SECONDS) // Adjust the timeout value as needed
+            .build()
+
         val requestBody: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart(
                 "file",
