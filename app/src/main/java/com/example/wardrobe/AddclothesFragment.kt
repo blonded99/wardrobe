@@ -23,9 +23,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.wardrobe.DTO.TopBottomDTO
 import com.example.wardrobe.databinding.FragmentAddclothesBinding
 import com.example.wardrobe.databinding.FragmentThirdBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -41,16 +43,23 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 class AddclothesFragment : Fragment() {
     private lateinit var binding: FragmentAddclothesBinding
-
     private lateinit var storage: FirebaseStorage
 
+    // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
+    val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
 
-    var strRef = ""
-
+    var clothesInfo = TopBottomDTO()
     var isTop : Boolean = true
+
+    val db = Firebase.firestore
+    // Top(상의) Collection Ref
+    val topColRef = db.collection("top")
+    // Top(하의) Collection Ref
+    val bottomColRef = db.collection("bottom")
 
     companion object{
         const val REQ_GALLERY = 1
@@ -137,6 +146,72 @@ class AddclothesFragment : Fragment() {
 
             dialog.show()
         }
+
+
+        binding.radioGroupThickness.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_thickness_thick -> clothesInfo.thickness = "thick"
+                R.id.button_thickness_medium -> clothesInfo.thickness = "medium"
+                R.id.button_thickness_thin -> clothesInfo.thickness = "thin"
+            }
+        }
+
+        binding.radioGroupSeason.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_season_spring_fall -> clothesInfo.season = "spring&fall"
+                R.id.button_season_summer -> clothesInfo.season = "summer"
+                R.id.button_season_winter -> clothesInfo.season = "winter"
+            }
+        }
+
+        binding.radioGroupLength.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_length_short -> clothesInfo.length = "short"
+                R.id.button_length_long -> clothesInfo.length = "long"
+                R.id.button_length_other -> clothesInfo.length = "other"
+            }
+        }
+
+        binding.radioGroupSize.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_size_xs -> clothesInfo.size = "xs"
+                R.id.button_size_s -> clothesInfo.size = "s"
+                R.id.button_size_m -> clothesInfo.size = "m"
+                R.id.button_size_l -> clothesInfo.size = "l"
+                R.id.button_size_xl -> clothesInfo.size = "xl"
+            }
+        }
+
+        binding.buttonSave.setOnClickListener {
+            clothesInfo.userID = currentUID
+            clothesInfo.brand = binding.editTextBrandName.text.toString()
+            clothesInfo.memo = binding.editTextMemo.text.toString()
+//            clothesInfo.apply {
+//                println(this)
+//            }
+
+            if(isTop) {
+                topColRef.add(clothesInfo).addOnSuccessListener {
+                    Snackbar.make(binding.root,"FIRESTORE ADD SUCCESS", Snackbar.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                }
+                    .addOnFailureListener {
+                        Snackbar.make(binding.root,"FIRESTORE ADD FAILED", Snackbar.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                    }
+            }
+            else{
+                bottomColRef.add(clothesInfo).addOnSuccessListener {
+                    Snackbar.make(binding.root,"FIRESTORE ADD SUCCESS", Snackbar.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                }
+                    .addOnFailureListener {
+                        Snackbar.make(binding.root,"FIRESTORE ADD FAILED", Snackbar.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                    }
+            }
+
+        }
     }
 
     override fun onResume() {
@@ -214,7 +289,7 @@ class AddclothesFragment : Fragment() {
         }
 
         // 갤러리 열 때 권한요청이 뜨지 않는 오류가 있어서 일단 임시로 파일 path를 다른 곳으로 지정
-        val tempPath = "/data/data/com.example.wardrobe/cloth.png"
+        val tempPath = "/data/data/com.example.wardrobe/test_image5.jpg"
         val file = File(tempPath)
 
         val client = OkHttpClient().newBuilder().build()
@@ -224,11 +299,11 @@ class AddclothesFragment : Fragment() {
                 file.name,
                 file.asRequestBody("image/*".toMediaType())
             )
-            .addFormDataPart("uid", "3t6Dt8DleiZXrzzf696dgF15gJl2")
+            .addFormDataPart("uid", currentUID)
             .addFormDataPart("smooth_edges", "true")
             .build()
 
-        var baseUrl = "http://10.0.2.2:5000/seg_clothes"
+        var baseUrl = "http://helike.duckdns.org:5000/seg_clothes"
 
         if (isTop) {
             baseUrl += "?include=0"
@@ -254,11 +329,16 @@ class AddclothesFragment : Fragment() {
             try {
                 val jsonArray = JSONArray(responseBody)
                 if (jsonArray.length() > 0) {
-                    val jsonObject = jsonArray.getJSONObject(0)
+                    var jsonObject: Any
+                    if(isTop)
+                        jsonObject = jsonArray.getJSONObject(0)
+                    else
+                        jsonObject = jsonArray.getJSONObject(1)
                     val path = jsonObject.optString("path", "") // storage에 들어간 사진의 path
                     Log.e("", "path= $path")
 
                     // Process with path
+                    clothesInfo.imageRef = path
                     listImageDialog(path)
 
                 } else {
