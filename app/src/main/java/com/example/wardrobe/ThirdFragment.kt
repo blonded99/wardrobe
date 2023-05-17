@@ -22,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.databinding.FragmentThirdBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
