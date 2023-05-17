@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wardrobe.adapters.HomeRecyclerViewAdapter
+import com.example.wardrobe.adapters.HomeRecyclerViewAdapter2
 import com.example.wardrobe.databinding.FragmentHomeBinding
 import com.example.wardrobe.viewmodel.HomeViewModel
 import com.example.wardrobe.viewmodel.Homeitem
@@ -42,21 +43,23 @@ class HomeFragment : Fragment() {
         viewModel.addHomeWeatherItem(Homeitem(R.drawable.test_bottom))
 
         val adapter = HomeRecyclerViewAdapter(viewModel,context,this)
+        val adapter_community = HomeRecyclerViewAdapter2(viewModel,context,this)
 
-        binding.homecommunityrecyclerview.adapter = adapter
-        binding.homecommunityrecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        binding.homecommunityrecyclerview.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
 
-        binding.weatherrecyclerview.adapter = adapter
-        binding.weatherrecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        // 날씨에 따른 추천 부분 옷
+        binding.recyclerViewRecommend.adapter = adapter
+        binding.recyclerViewRecommend.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-//        binding.weatherrecyclerview.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        // 최신 커뮤니티 부분 옷
+        binding.recyclerViewCommunity.adapter = adapter_community
+        binding.recyclerViewCommunity.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        viewModel.HomecommunityItemsListData.observe(viewLifecycleOwner){
-            HomeRecyclerViewAdapter(viewModel,context,this).notifyDataSetChanged()
-        }
         viewModel.HomeweatherItemsListData.observe(viewLifecycleOwner){
             HomeRecyclerViewAdapter(viewModel,context,this).notifyDataSetChanged()
+        }
+
+        viewModel.HomecommunityItemsListData.observe(viewLifecycleOwner){
+            HomeRecyclerViewAdapter2(viewModel,context,this).notifyDataSetChanged()
         }
     }
 

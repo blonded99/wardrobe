@@ -11,8 +11,8 @@ import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.HomeViewModel
 import com.example.wardrobe.viewmodel.WardrobeViewModel
 
-class HomeRecyclerViewAdapter(private val viewModel: HomeViewModel, val context: Context?, val fragment: Fragment):
-    RecyclerView.Adapter<HomeRecyclerViewAdapter.RecyclerViewViewHolder>() {
+class HomeRecyclerViewAdapter2(private val viewModel: HomeViewModel, val context: Context?, val fragment: Fragment):
+    RecyclerView.Adapter<HomeRecyclerViewAdapter2.RecyclerViewViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
@@ -30,7 +30,7 @@ class HomeRecyclerViewAdapter(private val viewModel: HomeViewModel, val context:
 
     override fun getItemCount(): Int {
         // 옷 개수
-        return viewModel.HomeweatherItems.size
+        return viewModel.HomecommunityItems.size
     }
 
     inner class RecyclerViewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -42,7 +42,7 @@ class HomeRecyclerViewAdapter(private val viewModel: HomeViewModel, val context:
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
 
         fun setContents(pos: Int){
-            with(viewModel.HomeweatherItems[pos]){
+            with(viewModel.HomecommunityItems[pos]){
                 // clothesImage 세팅
                 clothesImage.setImageResource(clothesImageUrl)
 //                Glide.with(itemView).load(clothesImageUrl).into(clothesImage)
