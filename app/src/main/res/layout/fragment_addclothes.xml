@@ -53,29 +53,32 @@
                     android:id="@+id/button_thickness_thick"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="두꺼움" />
 
                 <RadioButton
                     android:id="@+id/button_thickness_medium"
                     android:button="@null"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="보통" />
 
                 <RadioButton
                     android:id="@+id/button_thickness_thin"
                     android:button="@null"
                     android:layout_marginStart="30dp"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="얇음" />
             </RadioGroup>
 
@@ -104,29 +107,32 @@
                     android:id="@+id/button_season_spring_fall"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="봄/가을" />
 
                 <RadioButton
                     android:id="@+id/button_season_summer"
                     android:button="@null"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="여름" />
 
                 <RadioButton
                     android:id="@+id/button_season_winter"
                     android:button="@null"
                     android:layout_marginStart="30dp"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="겨울" />
             </RadioGroup>
 
@@ -155,29 +161,32 @@
                     android:id="@+id/button_length_short"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="짧음" />
 
                 <RadioButton
                     android:id="@+id/button_length_long"
                     android:button="@null"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="김" />
 
                 <RadioButton
                     android:id="@+id/button_length_other"
                     android:button="@null"
                     android:layout_marginStart="30dp"
-                    android:background="@drawable/button_white_medium"
+                    android:background="@drawable/selector_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="기타" />
             </RadioGroup>
 
@@ -206,49 +215,54 @@
                     android:id="@+id/button_size_xs"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/button_white_tiny"
+                    android:background="@drawable/selector_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="XS" />
 
                 <RadioButton
                     android:id="@+id/button_size_s"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/button_white_tiny"
+                    android:background="@drawable/selector_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="S" />
 
                 <RadioButton
                     android:id="@+id/button_size_m"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/button_white_tiny"
+                    android:background="@drawable/selector_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="M" />
 
                 <RadioButton
                     android:id="@+id/button_size_l"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/button_white_tiny"
+                    android:background="@drawable/selector_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="L" />
 
                 <RadioButton
                     android:id="@+id/button_size_xl"
                     android:button="@null"
-                    android:background="@drawable/button_white_tiny"
+                    android:background="@drawable/selector_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textColor="@drawable/selector_radio_text"
                     android:text="XL" />
             </RadioGroup>
 
@@ -313,6 +327,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTextMemo" />
+
+
+
+
+            <ImageButton
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_navy_large"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
