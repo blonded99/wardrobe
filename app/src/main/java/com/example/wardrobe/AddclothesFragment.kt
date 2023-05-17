@@ -58,7 +58,7 @@ class AddclothesFragment : Fragment() {
     val db = Firebase.firestore
     // Top(상의) Collection Ref
     val topColRef = db.collection("top")
-    // Top(하의) Collection Ref
+    // Bottom(하의) Collection Ref
     val bottomColRef = db.collection("bottom")
 
     companion object{
@@ -247,6 +247,7 @@ class AddclothesFragment : Fragment() {
         var writePermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         // 에뮬레이터 문제로 권한요청 안 뜨는 오류 때문에 임시로. 실제로는 이렇게 하면 안됨.
+        // ※ 순수 테스트용 ※
         readPermission = 1
         writePermission = 1
 
@@ -290,7 +291,7 @@ class AddclothesFragment : Fragment() {
         }
 
         // 갤러리 열 때 권한요청이 뜨지 않는 오류가 있어서 일단 임시로 파일 path를 다른 곳으로 지정
-//        val tempPath = "/data/data/com.example.wardrobe/test_image5.jpg"
+//        val tempPath = "/data/data/com.example.wardrobe/test_image8.jpg"
         val file = File(path)
 
 //        val client = OkHttpClient().newBuilder().build()
@@ -312,7 +313,8 @@ class AddclothesFragment : Fragment() {
             .addFormDataPart("smooth_edges", "true")
             .build()
 
-        var baseUrl = "http://helike.duckdns.org:5000/seg_clothes"
+//        var baseUrl = "http://10.0.2.2:5000/seg_clothes"              // 로컬 테스트용
+        var baseUrl = "http://helike.duckdns.org:5000/seg_clothes"   // 느린 서버 테스트용
 
         if (isTop) {
             baseUrl += "?include=0"

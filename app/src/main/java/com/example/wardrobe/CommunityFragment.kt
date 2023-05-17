@@ -36,8 +36,8 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.addCommunityItem(Item(R.drawable.test_top))
-        viewModel.addCommunityItem(Item(R.drawable.test_bottom))
+//        viewModel.addCommunityItem(Item(R.drawable.test_top))
+//        viewModel.addCommunityItem(Item(R.drawable.test_bottom))
 
         val adapter = CommunityRecyclerViewAdapter(viewModel,context,this)
 
