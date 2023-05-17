@@ -247,8 +247,8 @@ class AddclothesFragment : Fragment() {
         var writePermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         // 에뮬레이터 문제로 권한요청 안 뜨는 오류 때문에 임시로. 실제로는 이렇게 하면 안됨.
-//        readPermission = 1
-//        writePermission = 1
+        readPermission = 1
+        writePermission = 1
 
         if(readPermission == PackageManager.PERMISSION_DENIED || writePermission == PackageManager.PERMISSION_DENIED){
             Log.e("","readPerm = ${readPermission}")
