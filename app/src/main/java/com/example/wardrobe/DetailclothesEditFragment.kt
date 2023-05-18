@@ -7,16 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.wardrobe.DTO.TopBottomDTO
 import com.example.wardrobe.databinding.FragmentDetailClothesBinding
+import com.example.wardrobe.databinding.FragmentDetailClothesEditBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
-class DetailclothesFragment : Fragment() {
-    private lateinit var binding: FragmentDetailClothesBinding
+class DetailclothesEditFragment : Fragment() {
+    private lateinit var binding: FragmentDetailClothesEditBinding
     private lateinit var storage: FirebaseStorage
     private var storageImageRef = ""
+
+    // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
+    val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
+
+    var clothesInfo = TopBottomDTO()
 
     val db = Firebase.firestore
     // Top(상의) Collection Ref
@@ -43,7 +51,7 @@ class DetailclothesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailClothesBinding.inflate(inflater, container, false)
+        binding = FragmentDetailClothesEditBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -52,14 +60,80 @@ class DetailclothesFragment : Fragment() {
 
 
 
+        if(!storageImageRef.equals("")){
+            val imageRef = storage.reference.child(storageImageRef)
+            imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+                val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
+                binding.ivClothes.setImageBitmap(bmp)
+            }
+        }
 
         setClothesInfo(isTop)
 
-        binding.buttonEdit.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("imageRef",storageImageRef)
-            bundle.putBoolean("isTop",isTop)
-            findNavController().navigate(R.id.action_detailClothesFragment_to_detailClothesEditFragment,bundle)
+
+        binding.radioGroupThickness.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_thickness_thick -> clothesInfo.thickness = "thick"
+                R.id.button_thickness_medium -> clothesInfo.thickness = "medium"
+                R.id.button_thickness_thin -> clothesInfo.thickness = "thin"
+            }
+        }
+
+        binding.radioGroupSeason.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_season_spring_fall -> clothesInfo.season = "spring&fall"
+                R.id.button_season_summer -> clothesInfo.season = "summer"
+                R.id.button_season_winter -> clothesInfo.season = "winter"
+            }
+        }
+
+        binding.radioGroupLength.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_length_short -> clothesInfo.length = "short"
+                R.id.button_length_long -> clothesInfo.length = "long"
+                R.id.button_length_other -> clothesInfo.length = "other"
+            }
+        }
+
+        binding.radioGroupSize.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_size_xs -> clothesInfo.size = "xs"
+                R.id.button_size_s -> clothesInfo.size = "s"
+                R.id.button_size_m -> clothesInfo.size = "m"
+                R.id.button_size_l -> clothesInfo.size = "l"
+                R.id.button_size_xl -> clothesInfo.size = "xl"
+            }
+        }
+
+        binding.buttonSave.setOnClickListener {
+            clothesInfo.userID = currentUID
+            clothesInfo.imageRef = storageImageRef
+            clothesInfo.brand = binding.editTextBrandName.text.toString()
+            clothesInfo.memo = binding.editTextMemo.text.toString()
+
+
+            if(isTop) {
+                topColRef.whereEqualTo("imageRef",storageImageRef).get()
+                    .addOnSuccessListener {
+                        for(doc in it){
+                            topColRef.document(doc.id)
+                                .set(clothesInfo)
+                        }
+                        findNavController().popBackStack()
+                    }
+
+            }
+            else{
+                bottomColRef.whereEqualTo("imageRef",storageImageRef).get()
+                    .addOnSuccessListener {
+                        for(doc in it){
+                            bottomColRef.document(doc.id)
+                                .set(clothesInfo)
+                        }
+                        findNavController().popBackStack()
+                    }
+            }
+
         }
 
 

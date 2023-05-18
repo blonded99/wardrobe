@@ -60,6 +60,15 @@
         android:id="@+id/detailClothesFragment"
         android:name="com.example.wardrobe.DetailclothesFragment"
         tools:layout="@layout/fragment_detail_clothes" >
+        <action
+            android:id="@+id/action_detailClothesFragment_to_detailClothesEditFragment"
+            app:destination="@id/detailClothesEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailClothesEditFragment"
+        android:name="com.example.wardrobe.DetailclothesEditFragment"
+        tools:layout="@layout/fragment_detail_clothes_edit" >
     </fragment>
 
 </navigation>
