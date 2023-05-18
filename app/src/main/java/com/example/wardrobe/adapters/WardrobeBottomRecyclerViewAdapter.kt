@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.WardrobeViewModel
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -44,11 +45,12 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
 
     inner class RecyclerViewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-//        val db = Firebase.firestore
-//        val currentUid = Firebase.auth.currentUser?.uid.toString()
+        val db = Firebase.firestore
+        // Bottom(하의) Collection Ref
+        val bottomColRef = db.collection("bottom")
+
 
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
-        val storageRef = storage.reference
 
         fun setContents(pos: Int){
             with(viewModel.bottomItems[pos]){
@@ -65,8 +67,14 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
 
 
             clothesImage.setOnClickListener {
-                val bundle = Bundle()
-                fragment.findNavController().navigate(R.id.action_wardrobeFragment_to_detailClothesFragment,bundle)
+                bottomColRef.whereEqualTo("imageRef",viewModel.bottomItems[pos].clothesImageUrl).get()
+                    .addOnSuccessListener {
+                        for(doc in it){
+                            val bundle = Bundle()
+                            bundle.putString("imageRef",doc["imageRef"].toString())
+                            fragment.findNavController().navigate(R.id.action_wardrobeFragment_to_detailClothesFragment,bundle)
+                        }
+                    }
             }
         }
 
