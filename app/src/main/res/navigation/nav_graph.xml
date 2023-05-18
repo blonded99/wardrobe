@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_wardrobeFragment_to_addclothesFragment"
             app:destination="@id/addclothesFragment" />
+        <action
+            android:id="@+id/action_wardrobeFragment_to_detailClothesFragment"
+            app:destination="@id/detailClothesFragment" />
     </fragment>
 
     <fragment
@@ -51,6 +54,12 @@
         android:id="@+id/addclothesFragment"
         android:name="com.example.wardrobe.AddclothesFragment"
         tools:layout="@layout/fragment_addclothes" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailClothesFragment"
+        android:name="com.example.wardrobe.DetailclothesFragment"
+        tools:layout="@layout/fragment_detail_clothes" >
     </fragment>
 
 </navigation>
