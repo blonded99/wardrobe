@@ -72,6 +72,7 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
                         for(doc in it){
                             val bundle = Bundle()
                             bundle.putString("imageRef",doc["imageRef"].toString())
+                            bundle.putBoolean("isTop",false)
                             fragment.findNavController().navigate(R.id.action_wardrobeFragment_to_detailClothesFragment,bundle)
                         }
                     }
