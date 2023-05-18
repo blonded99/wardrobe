@@ -19,25 +19,25 @@
 
 
             <ImageView
-                android:id="@+id/iv_gallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:id="@+id/iv_clothes"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
                 android:scaleType="fitCenter"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/icon_gallery" />
+                android:background="#FFFDF6" />
 
             <View
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="20dp"
                 android:background="@color/lightgray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_gallery" />
+                app:layout_constraintTop_toBottomOf="@id/iv_clothes" />
 
             <RadioGroup
                 android:id="@+id/radioGroup_thickness"
@@ -51,10 +51,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/line1">
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_thickness_thick"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -62,9 +63,10 @@
                     android:text="두꺼움" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_thickness_medium"
                     android:button="@null"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -72,10 +74,11 @@
                     android:text="보통" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_thickness_thin"
                     android:button="@null"
                     android:layout_marginStart="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -100,15 +103,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line2">
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_season_spring_fall"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -116,9 +121,10 @@
                     android:text="봄/가을" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_season_summer"
                     android:button="@null"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -126,10 +132,11 @@
                     android:text="여름" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_season_winter"
                     android:button="@null"
                     android:layout_marginStart="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -154,15 +161,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line3">
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_length_short"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -170,9 +179,10 @@
                     android:text="짧음" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_length_long"
                     android:button="@null"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -180,10 +190,11 @@
                     android:text="김" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_length_other"
                     android:button="@null"
                     android:layout_marginStart="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -208,15 +219,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line4">
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_size_xs"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/selector_radio_button_tiny"
+                    android:background="@drawable/selector_detail_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -224,10 +237,11 @@
                     android:text="XS" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_size_s"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/selector_radio_button_tiny"
+                    android:background="@drawable/selector_detail_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -235,10 +249,11 @@
                     android:text="S" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_size_m"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/selector_radio_button_tiny"
+                    android:background="@drawable/selector_detail_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -246,10 +261,11 @@
                     android:text="M" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_size_l"
                     android:button="@null"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/selector_radio_button_tiny"
+                    android:background="@drawable/selector_detail_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -257,9 +273,10 @@
                     android:text="L" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_size_xl"
                     android:button="@null"
-                    android:background="@drawable/selector_radio_button_tiny"
+                    android:background="@drawable/selector_detail_radio_button_tiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -284,10 +301,11 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
-                android:hint="브랜드명을 입력해주세요."
                 android:textSize="13sp"
+                android:textColor="@color/black"
                 android:background="@null"
                 android:inputType="textPersonName"
+                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line5" />
@@ -311,8 +329,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
                 android:gravity="start|top"
-                android:hint="메모를 입력해주세요."
+                android:enabled="false"
                 android:textSize="13sp"
+                android:textColor="@color/black"
                 android:background="@null"
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -333,14 +352,15 @@
 
 
             <ImageButton
-                android:id="@+id/button_save"
+                android:id="@+id/button_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_save_navy_large"
+                android:background="@drawable/button_edit_navy_large"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

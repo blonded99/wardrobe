@@ -19,25 +19,25 @@
 
 
             <ImageView
-                android:id="@+id/iv_gallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:id="@+id/iv_clothes"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
                 android:scaleType="fitCenter"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/icon_gallery" />
+                android:background="#FFFDF6" />
 
             <View
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="20dp"
                 android:background="@color/lightgray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_gallery" />
+                app:layout_constraintTop_toBottomOf="@id/iv_clothes" />
 
             <RadioGroup
                 android:id="@+id/radioGroup_thickness"
@@ -100,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line2">
@@ -154,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line3">
@@ -208,6 +210,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line4">
@@ -284,8 +287,8 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
-                android:hint="브랜드명을 입력해주세요."
                 android:textSize="13sp"
+                android:textColor="@color/black"
                 android:background="@null"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -311,8 +314,8 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
                 android:gravity="start|top"
-                android:hint="메모를 입력해주세요."
                 android:textSize="13sp"
+                android:textColor="@color/black"
                 android:background="@null"
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -341,6 +344,7 @@
                 android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
