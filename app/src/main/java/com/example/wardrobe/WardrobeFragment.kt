@@ -82,9 +82,6 @@ class WardrobeFragment : Fragment() {
         binding.recyclerViewSet.adapter = adapter_set
         binding.recyclerViewSet.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
 
-//        viewModel.wardrobeItemsListData.observe(viewLifecycleOwner){
-//            adapter.notifyDataSetChanged()
-//        }
 
         viewModel.topItemsListData.observe(viewLifecycleOwner){
             adapter_top.notifyDataSetChanged()
@@ -101,6 +98,8 @@ class WardrobeFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             navController.navigate(R.id.action_wardrobeFragment_to_addclothesFragment)
         }
+
+        loadTopList()
 
         binding.radioGroup.setOnCheckedChangeListener{group, checkedId ->
             when(checkedId){
