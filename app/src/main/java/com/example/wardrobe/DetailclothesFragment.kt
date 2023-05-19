@@ -115,14 +115,24 @@ class DetailclothesFragment : Fragment() {
                     }
 
                     if(doc["brand"].toString().equals(""))
-                        binding.editTextBrandName.setHint("브랜드를 입력해주세요")
+                        binding.editTextBrandName.setHint("브랜드를 입력해주세요.")
                     else
                         binding.editTextBrandName.setText(doc["brand"].toString())
 
                     if(doc["memo"].toString().equals(""))
-                        binding.editTextBrandName.setHint("메모를 입력해주세요")
+                        binding.editTextBrandName.setHint("메모를 입력해주세요.")
                     else
                         binding.editTextMemo.setText(doc["memo"].toString())
+
+                    val tempList = doc["hashtag"] as List<String>
+                    if(tempList.isEmpty())
+                        binding.editTextBrandName.setHint("해시태그를 #로 구분하여 입력해주세요.")
+                    else{
+                        tempList.forEach {
+                            binding.editTextHashtag.text.append("#")
+                            binding.editTextHashtag.text.append(it)
+                        }
+                    }
                 }
         }
     }
