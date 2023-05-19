@@ -110,6 +110,13 @@ class DetailclothesEditFragment : Fragment() {
             clothesInfo.imageRef = storageImageRef
             clothesInfo.brand = binding.editTextBrandName.text.toString()
             clothesInfo.memo = binding.editTextMemo.text.toString()
+            if(binding.editTextHashtag.text.startsWith("#")){
+                val tempList = binding.editTextHashtag.text.split("#"," ")
+                clothesInfo.hashtag = tempList.filter{
+                    !(it.equals("") || it.equals(" "))
+                }
+                println(clothesInfo.hashtag)
+            }
 
 
             if(isTop) {
@@ -194,9 +201,19 @@ class DetailclothesEditFragment : Fragment() {
                         binding.editTextBrandName.setText(doc["brand"].toString())
 
                     if(doc["memo"].toString().equals(""))
-                        binding.editTextBrandName.setHint("메모를 입력해주세요")
+                        binding.editTextMemo.setHint("메모를 입력해주세요")
                     else
                         binding.editTextMemo.setText(doc["memo"].toString())
+
+                    val tempList = doc["hashtag"] as List<String>
+                    if(tempList.isEmpty())
+                        binding.editTextHashtag.setHint("해시태그를 #로 구분하여 입력해주세요.")
+                    else{
+                        tempList.forEach {
+                            binding.editTextHashtag.text.append("#")
+                            binding.editTextHashtag.text.append(it)
+                        }
+                    }
                 }
         }
     }

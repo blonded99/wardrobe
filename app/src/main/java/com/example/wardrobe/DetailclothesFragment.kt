@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.set
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.databinding.FragmentDetailClothesBinding
@@ -124,6 +125,7 @@ class DetailclothesFragment : Fragment() {
                     else
                         binding.editTextMemo.setText(doc["memo"].toString())
 
+                    binding.editTextHashtag.text.clear()
                     val tempList = doc["hashtag"] as List<String>
                     if(tempList.isEmpty())
                         binding.editTextHashtag.setHint("해시태그를 #로 구분하여 입력해주세요.")

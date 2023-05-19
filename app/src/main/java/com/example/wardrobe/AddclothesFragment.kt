@@ -295,8 +295,8 @@ class AddclothesFragment : Fragment() {
         }
 
         // 갤러리 열 때 권한요청이 뜨지 않는 오류가 있어서 일단 임시로 파일 path를 다른 곳으로 지정
-        val tempPath = "/data/data/com.example.wardrobe/test_image9.jpg"
-        val file = File(tempPath)
+//        val tempPath = "/data/data/com.example.wardrobe/test_image9.jpg"
+        val file = File(path)
 
 //        val client = OkHttpClient().newBuilder().build()
 
