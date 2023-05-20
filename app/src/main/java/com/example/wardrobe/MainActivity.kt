@@ -33,6 +33,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wardrobe.databinding.ActivityMainBinding
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setCustomToolbar(layout: Int){
-        val toolbar = findViewById<Toolbar>(layout)
+        val toolbar = findViewById<MaterialToolbar>(layout)
         // 커스텀 툴바를 액션바로 설정
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
