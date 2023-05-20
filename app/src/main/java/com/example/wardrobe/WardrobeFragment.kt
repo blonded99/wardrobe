@@ -1,6 +1,7 @@
 package com.example.wardrobe
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.wardrobe.adapters.WardrobeSetRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentWardrobeBinding
 import com.example.wardrobe.viewmodel.Item
 import com.example.wardrobe.viewmodel.WardrobeViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -106,6 +108,25 @@ class WardrobeFragment : Fragment() {
                 R.id.button_top -> loadTopList()
                 R.id.button_bottom -> loadBottomList()
                 R.id.button_set -> loadSetList()
+            }
+        }
+
+
+        viewModel.topSelectedCheckBox.observe(viewLifecycleOwner) { position ->
+            if(viewModel.topSelectedCheckBox.value != null) {
+                if (viewModel.bottomSelectedCheckBox.value != null)
+                    Snackbar.make(binding.root,"코디 화면으로 넘어감", Snackbar.LENGTH_SHORT).show()
+                else
+                    binding.buttonBottom.isChecked = true
+            }
+        }
+
+        viewModel.bottomSelectedCheckBox.observe(viewLifecycleOwner) { position ->
+            if(viewModel.bottomSelectedCheckBox.value != null) {
+                if (viewModel.topSelectedCheckBox.value != null)
+                    Snackbar.make(binding.root,"코디 화면으로 넘어감",Snackbar.LENGTH_SHORT).show()
+                else
+                    binding.buttonTop.isChecked = true
             }
         }
 
