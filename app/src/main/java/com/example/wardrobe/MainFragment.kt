@@ -138,19 +138,14 @@ class MainFragment : Fragment() {
     fun selectGallery(){
         list.clear()
 
-        var readPermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-        var writePermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        var readPermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_MEDIA_IMAGES)
 
         // 권한요청 안 뜨는 오류 때문에 임시로. 실제로는 이렇게 하면 안됨.
-        readPermission = 1
-        writePermission = 1
 
-        if(readPermission == PackageManager.PERMISSION_DENIED || writePermission == PackageManager.PERMISSION_DENIED){
-            Log.e("","readPerm = ${readPermission}")
-            Log.e("","writePerm = ${writePermission}")
+        if(readPermission == PackageManager.PERMISSION_DENIED) {
+            Log.e("","readPerm = $readPermission")
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_MEDIA_IMAGES,
             ),
                 REQ_GALLERY
             )
@@ -171,12 +166,11 @@ class MainFragment : Fragment() {
         var imageRef: StorageReference
         val itemsString = mutableListOf<String>()
 
-        if (context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED) {
+        if (context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.READ_MEDIA_IMAGES) } != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
 
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_MEDIA_IMAGES,
             ),
                 REQ_GALLERY
             )
