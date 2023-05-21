@@ -2,15 +2,18 @@ package com.example.wardrobe.adapters
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.CodiViewModel
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -40,6 +43,10 @@ class CodiAllRecyclerViewAdapter(private val viewModel: CodiViewModel, val conte
 
     inner class RecyclerViewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+        val db = Firebase.firestore
+        // Set(코디) Collection Ref
+        val setColRef = db.collection("set")
+
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
 
         fun setContents(pos: Int){
@@ -54,6 +61,19 @@ class CodiAllRecyclerViewAdapter(private val viewModel: CodiViewModel, val conte
                     }
 
             }
+
+            clothesImage.setOnClickListener {
+                setColRef.whereEqualTo("imageRef",viewModel.CodiAllItems[pos].clothesImageUrl).get()
+                    .addOnSuccessListener {
+                        for(doc in it){
+                            val bundle = Bundle()
+                            bundle.putString("imageRef",doc["imageRef"].toString())
+                            fragment.findNavController().navigate(R.id.action_codiFragment_to_detailCodiFragment,bundle)
+                        }
+                    }
+            }
+
+
 
         }
 

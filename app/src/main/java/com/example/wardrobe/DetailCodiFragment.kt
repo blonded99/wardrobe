@@ -53,7 +53,7 @@ class DetailCodiFragment : Fragment() {
         binding.buttonEdit.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("imageRef",storageImageRef)
-            findNavController().navigate(R.id.action_detailClothesFragment_to_detailClothesEditFragment,bundle)
+//            findNavController().navigate(R.id.action_detailClothesFragment_to_detailClothesEditFragment,bundle)
         }
 
 
@@ -86,7 +86,7 @@ class DetailCodiFragment : Fragment() {
                         "summer" -> binding.buttonSeasonSummer.isChecked = true
                         "winter" -> binding.buttonSeasonWinter.isChecked = true
                     }
-                    when(doc["isPublic"]){ // 왜?
+                    when(doc["public"]){ // 왜?
                         true -> binding.buttonPublic.isChecked = true
                         false -> binding.buttonPrivate.isChecked = true
                     }
