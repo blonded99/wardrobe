@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.DTO.SetDTO
 import com.example.wardrobe.databinding.FragmentAddCodiBinding
-import com.example.wardrobe.databinding.FragmentDoCodiBinding
-import com.example.wardrobe.databinding.FragmentTestBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
