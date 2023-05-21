@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="#FFFDF6" />
+                android:background="@color/bg_ivory" />
 
             <View
                 android:id="@+id/line1"
