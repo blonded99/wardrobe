@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -54,6 +55,8 @@ class DoCodiFragment : Fragment() {
             topRef = bundle.getString("topRef","")
             bottomRef = bundle.getString("bottomRef","")
         }
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
     }
 
@@ -285,6 +288,12 @@ class DoCodiFragment : Fragment() {
         return (1..length)
             .map { allowedChars.random() }
             .joinToString("")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
     }
 
 
