@@ -38,25 +38,25 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="좋아요 코디"
+            android:text="좋아요 누른 코디"
             android:textStyle="bold"
             android:textSize="13sp"
             android:textAlignment="center"
             android:backgroundTint="@color/button_toggle_group_background_tint"
             android:textColor="@drawable/selector_community_button_text" />
 
-        <Button
-            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
-            android:id="@+id/button_public_clothes"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="내 공개 코디"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textAlignment="center"
-            android:backgroundTint="@color/button_toggle_group_background_tint"
-            android:textColor="@drawable/selector_community_button_text" />
+<!--        <Button-->
+<!--            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"-->
+<!--            android:id="@+id/button_public_clothes"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="내 공개 코디"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="13sp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:backgroundTint="@color/button_toggle_group_background_tint"-->
+<!--            android:textColor="@drawable/selector_community_button_text" />-->
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 

@@ -34,8 +34,6 @@ class WardrobeFragment : Fragment() {
     val topColRef = db.collection("top")
     // Bottom(하의) Collection Ref
     val bottomColRef = db.collection("bottom")
-    // Set(코디) Collection Ref
-    val setColRef = db.collection("set")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,16 +58,12 @@ class WardrobeFragment : Fragment() {
 
         val adapter_top = WardrobeRecyclerViewAdapter(viewModel,context,this)
         val adapter_bottom = WardrobeBottomRecyclerViewAdapter(viewModel,context,this)
-//        val adapter_set = WardrobeSetRecyclerViewAdapter(viewModel,context,this)
 
         binding.recyclerViewTop.adapter = adapter_top
         binding.recyclerViewTop.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
 
         binding.recyclerViewBottom.adapter = adapter_bottom
         binding.recyclerViewBottom.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
-
-//        binding.recyclerViewSet.adapter = adapter_set
-//        binding.recyclerViewSet.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
 
 
         viewModel.topItemsListData.observe(viewLifecycleOwner){
@@ -79,10 +73,6 @@ class WardrobeFragment : Fragment() {
         viewModel.bottomItemsListData.observe(viewLifecycleOwner){
             adapter_bottom.notifyDataSetChanged()
         }
-
-//        viewModel.setItemsListData.observe(viewLifecycleOwner){
-//            adapter_set.notifyDataSetChanged()
-//        }
 
         binding.floatingActionButton.setOnClickListener {
             navController.navigate(R.id.action_wardrobeFragment_to_addclothesFragment)
@@ -96,7 +86,6 @@ class WardrobeFragment : Fragment() {
             when(group.checkedButtonId){
                 R.id.button_top -> loadTopList()
                 R.id.button_bottom -> loadBottomList()
-//                R.id.button_set -> loadSetList()
             }
         }
 
@@ -168,21 +157,6 @@ class WardrobeFragment : Fragment() {
                 }
             }
     }
-
-//    private fun loadSetList(){
-//        binding.recyclerViewTop.visibility = View.GONE
-//        binding.recyclerViewBottom.visibility = View.GONE
-//        binding.recyclerViewSet.visibility = View.VISIBLE
-//        viewModel.deleteAllWardrobeItem("set")
-//        setColRef.whereEqualTo("userID",currentUID).get()
-//            .addOnSuccessListener {
-//                for(doc in it){
-//                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"set")
-//                }
-//            }
-//    }
-
-
 
 
 }
