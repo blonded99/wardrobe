@@ -92,4 +92,10 @@
             app:destination="@id/wardrobeFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/codiFragment"
+        android:name="com.example.wardrobe.CodiFragment"
+        tools:layout="@layout/fragment_codi" >
+    </fragment>
+
 </navigation>

@@ -20,6 +20,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import kotlin.math.max
+import kotlin.math.min
 
 
 class DoCodiFragment : Fragment() {
@@ -70,16 +72,24 @@ class DoCodiFragment : Fragment() {
         setTop(topRef)
         setBottom(bottomRef)
 
+        val scaleFactorAdjustment = 0.1f // 속도 제어
+        val maxScaleFactor = 3.0f // 최대 확대
+        val minScaleFactor = 0.5f // 최대 축소
 
         scaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
-                val scaleFactor = detector.scaleFactor
-                if (scaleFactor > 1) {
-                    // 축소
-                    binding.ivTop.scaleX /= scaleFactor
-                    binding.ivTop.scaleY /= scaleFactor
+                var scaleFactor = detector.scaleFactor
+                scaleFactor = if (scaleFactor > 1) {
+                    min(scaleFactor, 1 + scaleFactorAdjustment)
                 } else {
+                    max(scaleFactor, 1 - scaleFactorAdjustment)
+                }
+                if (scaleFactor > 1 && binding.ivTop.scaleX < maxScaleFactor) {
                     // 확대
+                    binding.ivTop.scaleX *= scaleFactor
+                    binding.ivTop.scaleY *= scaleFactor
+                } else if (scaleFactor < 1 && binding.ivTop.scaleX > minScaleFactor) {
+                    // 축소
                     binding.ivTop.scaleX *= scaleFactor
                     binding.ivTop.scaleY *= scaleFactor
                 }
@@ -89,19 +99,31 @@ class DoCodiFragment : Fragment() {
 
         scaleGestureDetector2 = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
-                val scaleFactor = detector.scaleFactor
-                if (scaleFactor > 1) {
-                    // 축소
-                    binding.ivBottom.scaleX /= scaleFactor
-                    binding.ivBottom.scaleY /= scaleFactor
+                var scaleFactor = detector.scaleFactor
+                scaleFactor = if (scaleFactor > 1) {
+                    min(scaleFactor, 1 + scaleFactorAdjustment)
                 } else {
+                    max(scaleFactor, 1 - scaleFactorAdjustment)
+                }
+                if (scaleFactor > 1 && binding.ivBottom.scaleX < maxScaleFactor) {
                     // 확대
+                    binding.ivBottom.scaleX *= scaleFactor
+                    binding.ivBottom.scaleY *= scaleFactor
+                } else if (scaleFactor < 1 && binding.ivBottom.scaleX > minScaleFactor) {
+                    // 축소
                     binding.ivBottom.scaleX *= scaleFactor
                     binding.ivBottom.scaleY *= scaleFactor
                 }
                 return true
             }
         })
+
+
+
+
+
+
+
 
 
         binding.ivTop.setOnTouchListener(object : View.OnTouchListener {
