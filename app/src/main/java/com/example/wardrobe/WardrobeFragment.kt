@@ -34,8 +34,6 @@ class WardrobeFragment : Fragment() {
     val topColRef = db.collection("top")
     // Bottom(하의) Collection Ref
     val bottomColRef = db.collection("bottom")
-    // Set(코디) Collection Ref
-    val setColRef = db.collection("set")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +58,6 @@ class WardrobeFragment : Fragment() {
 
         val adapter_top = WardrobeRecyclerViewAdapter(viewModel,context,this)
         val adapter_bottom = WardrobeBottomRecyclerViewAdapter(viewModel,context,this)
-//        val adapter_set = WardrobeSetRecyclerViewAdapter(viewModel,context,this)
 
         binding.recyclerViewTop.adapter = adapter_top
         binding.recyclerViewTop.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)

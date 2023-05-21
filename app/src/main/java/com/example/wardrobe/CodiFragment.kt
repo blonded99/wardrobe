@@ -6,22 +6,35 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wardrobe.adapters.HomeRecyclerViewAdapter
-import com.example.wardrobe.adapters.HomeRecyclerViewAdapter2
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.wardrobe.adapters.CodiAllRecyclerViewAdapter
+import com.example.wardrobe.adapters.CodiPrivateRecyclerViewAdapter
+import com.example.wardrobe.adapters.CodiPublicRecyclerViewAdapter
+import com.example.wardrobe.adapters.WardrobeBottomRecyclerViewAdapter
+import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentCodiBinding
-import com.example.wardrobe.databinding.FragmentHomeBinding
-import com.example.wardrobe.viewmodel.HomeViewModel
-import com.example.wardrobe.viewmodel.Homeitem
+import com.example.wardrobe.viewmodel.CodiItem
+import com.example.wardrobe.viewmodel.CodiViewModel
+import com.example.wardrobe.viewmodel.Item
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CodiFragment : Fragment() {
     private lateinit var binding: FragmentCodiBinding
 
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<CodiViewModel>()
+
+    // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
+    val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
+
+    val db = Firebase.firestore
+    // Set(코디) Collection Ref
+    val setColRef = db.collection("set")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
     }
 
@@ -37,6 +50,43 @@ class CodiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter_codi_all = CodiAllRecyclerViewAdapter(viewModel,context,this)
+        val adapter_codi_public = CodiPublicRecyclerViewAdapter(viewModel,context,this)
+        val adapter_codi_private = CodiPrivateRecyclerViewAdapter(viewModel,context,this)
+
+        binding.recyclerViewAllCodi.adapter = adapter_codi_all
+        binding.recyclerViewAllCodi.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+
+        binding.recyclerViewPublicCodi.adapter = adapter_codi_public
+        binding.recyclerViewPublicCodi.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+
+        binding.recyclerViewPrivateCodi.adapter = adapter_codi_private
+        binding.recyclerViewPrivateCodi.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+
+        viewModel.CodiAllItemsListData.observe(viewLifecycleOwner){
+            adapter_codi_all.notifyDataSetChanged()
+        }
+
+        viewModel.CodiPublicItemsListData.observe(viewLifecycleOwner){
+            adapter_codi_public.notifyDataSetChanged()
+        }
+
+        viewModel.CodiPrivateItemsListData.observe(viewLifecycleOwner){
+            adapter_codi_private.notifyDataSetChanged()
+        }
+
+        loadCodiAllList()
+
+        binding.radioGroup.addOnButtonCheckedListener { group, _, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+
+            when(group.checkedButtonId){
+                R.id.button_all_codi -> loadCodiAllList()
+                R.id.button_public_codi -> loadCodiPublicList()
+                R.id.button_private_codi -> loadCodiPrivateList()
+            }
+        }
+
 
     }
 
@@ -46,6 +96,47 @@ class CodiFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
+    }
+
+    private fun loadCodiAllList(){
+        binding.recyclerViewPublicCodi.visibility = View.GONE
+        binding.recyclerViewPrivateCodi.visibility = View.GONE
+        binding.recyclerViewAllCodi.visibility = View.VISIBLE
+        viewModel.deleteCodiItem("all")
+        setColRef.whereEqualTo("userID",currentUID).get()
+            .addOnSuccessListener {
+                for(doc in it){
+                    viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()),"all")
+                }
+            }
+    }
+
+    private fun loadCodiPublicList(){
+        binding.recyclerViewPrivateCodi.visibility = View.GONE
+        binding.recyclerViewAllCodi.visibility = View.GONE
+        binding.recyclerViewPublicCodi.visibility = View.VISIBLE
+        viewModel.deleteCodiItem("public")
+        setColRef.whereEqualTo("userID",currentUID).get()
+            .addOnSuccessListener {
+                for(doc in it){
+                    if(doc["public"] == true)
+                        viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()),"public")
+                }
+            }
+    }
+
+    private fun loadCodiPrivateList(){
+        binding.recyclerViewAllCodi.visibility = View.GONE
+        binding.recyclerViewPublicCodi.visibility = View.GONE
+        binding.recyclerViewPrivateCodi.visibility = View.VISIBLE
+        viewModel.deleteCodiItem("private")
+        setColRef.whereEqualTo("userID",currentUID).get()
+            .addOnSuccessListener {
+                for(doc in it){
+                    if(doc["public"] == false)
+                        viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()),"private")
+                }
+            }
     }
 
 
