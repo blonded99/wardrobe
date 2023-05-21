@@ -105,6 +105,15 @@
         android:id="@+id/detailCodiFragment"
         android:name="com.example.wardrobe.DetailCodiFragment"
         tools:layout="@layout/fragment_detail_codi" >
+        <action
+            android:id="@+id/action_detailCodiFragment_to_detailCodiEditFragment"
+            app:destination="@id/detailCodiEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailCodiEditFragment"
+        android:name="com.example.wardrobe.DetailCodiEditFragment"
+        tools:layout="@layout/fragment_detail_codi_edit" >
     </fragment>
 
 </navigation>

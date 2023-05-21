@@ -53,7 +53,7 @@ class DetailCodiFragment : Fragment() {
         binding.buttonEdit.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("imageRef",storageImageRef)
-//            findNavController().navigate(R.id.action_detailClothesFragment_to_detailClothesEditFragment,bundle)
+            findNavController().navigate(R.id.action_detailCodiFragment_to_detailCodiEditFragment,bundle)
         }
 
 
