@@ -23,6 +23,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.wardrobe.DTO.TopBottomDTO
 import com.example.wardrobe.databinding.FragmentAddclothesBinding
 import com.example.wardrobe.databinding.FragmentThirdBinding
@@ -382,15 +384,12 @@ class AddclothesFragment : Fragment() {
 
     // path를 넘겨받고 storage에서 이미지 받아와서 imageView에 세팅
     private fun listImageDialog(path: String){
-        storage = Firebase.storage
-//        val storageRef = storage.reference
-
         if(path != ""){ // path is always not null
-            val imageRef = storage.reference.child(path)
-            imageRef.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
-                val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
-                binding.ivGallery.setImageBitmap(bmp)
-            }
+            val imageRef = Firebase.storage.reference.child(path)
+            Glide.with(binding.root.context)
+                .asBitmap()
+                .load(imageRef)
+                .into(BitmapImageViewTarget(binding.ivGallery))
         }
 
     }
