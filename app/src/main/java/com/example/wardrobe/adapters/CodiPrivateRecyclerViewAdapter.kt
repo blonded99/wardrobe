@@ -17,19 +17,17 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
-class WardrobeSetRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val context: Context?, val fragment: Fragment):
-    RecyclerView.Adapter<WardrobeSetRecyclerViewAdapter.RecyclerViewViewHolder>() {
+class CodiPrivateRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val context: Context?, val fragment: Fragment):
+    RecyclerView.Adapter<CodiPrivateRecyclerViewAdapter.RecyclerViewViewHolder>() {
 
     private lateinit var storage: FirebaseStorage
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.itemview_wardrobe,
+            R.layout.itemview_codi,
             parent, false)
         storage = Firebase.storage
-//        val inflater = LayoutInflater.from(parent.context)
-//        val binding = ItemViewBinding.inflate(inflater,parent,false)
         return RecyclerViewViewHolder(itemView)
     }
 
@@ -44,11 +42,7 @@ class WardrobeSetRecyclerViewAdapter(private val viewModel: WardrobeViewModel, v
 
     inner class RecyclerViewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-//        val db = Firebase.firestore
-//        val currentUid = Firebase.auth.currentUser?.uid.toString()
-
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
-        val storageRef = storage.reference
 
         fun setContents(pos: Int){
             with(viewModel.setItems[pos]){
@@ -63,11 +57,6 @@ class WardrobeSetRecyclerViewAdapter(private val viewModel: WardrobeViewModel, v
 
             }
 
-
-            clothesImage.setOnClickListener {
-                val bundle = Bundle()
-                fragment.findNavController().navigate(R.id.action_wardrobeFragment_to_detailClothesFragment,bundle)
-            }
         }
 
     }

@@ -68,9 +68,6 @@ class WardrobeFragment : Fragment() {
         binding.recyclerViewBottom.adapter = adapter_bottom
         binding.recyclerViewBottom.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
 
-//        binding.recyclerViewSet.adapter = adapter_set
-//        binding.recyclerViewSet.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
-
 
         viewModel.topItemsListData.observe(viewLifecycleOwner){
             adapter_top.notifyDataSetChanged()
@@ -79,10 +76,6 @@ class WardrobeFragment : Fragment() {
         viewModel.bottomItemsListData.observe(viewLifecycleOwner){
             adapter_bottom.notifyDataSetChanged()
         }
-
-//        viewModel.setItemsListData.observe(viewLifecycleOwner){
-//            adapter_set.notifyDataSetChanged()
-//        }
 
         binding.floatingActionButton.setOnClickListener {
             navController.navigate(R.id.action_wardrobeFragment_to_addclothesFragment)
@@ -96,7 +89,6 @@ class WardrobeFragment : Fragment() {
             when(group.checkedButtonId){
                 R.id.button_top -> loadTopList()
                 R.id.button_bottom -> loadBottomList()
-//                R.id.button_set -> loadSetList()
             }
         }
 
@@ -168,21 +160,6 @@ class WardrobeFragment : Fragment() {
                 }
             }
     }
-
-//    private fun loadSetList(){
-//        binding.recyclerViewTop.visibility = View.GONE
-//        binding.recyclerViewBottom.visibility = View.GONE
-//        binding.recyclerViewSet.visibility = View.VISIBLE
-//        viewModel.deleteAllWardrobeItem("set")
-//        setColRef.whereEqualTo("userID",currentUID).get()
-//            .addOnSuccessListener {
-//                for(doc in it){
-//                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"set")
-//                }
-//            }
-//    }
-
-
 
 
 }
