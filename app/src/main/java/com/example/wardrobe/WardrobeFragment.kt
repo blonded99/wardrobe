@@ -90,7 +90,9 @@ class WardrobeFragment : Fragment() {
 
         loadTopList()
 
-        binding.radioGroup.addOnButtonCheckedListener { group, _, _ ->
+        binding.radioGroup.addOnButtonCheckedListener { group, _, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+
             when(group.checkedButtonId){
                 R.id.button_top -> loadTopList()
                 R.id.button_bottom -> loadBottomList()
