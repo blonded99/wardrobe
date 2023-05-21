@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.CommunityRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentCommunityBinding
-import com.example.wardrobe.viewmodel.Item
 import com.example.wardrobe.viewmodel.WardrobeViewModel
 
 class CommunityFragment : Fragment() {

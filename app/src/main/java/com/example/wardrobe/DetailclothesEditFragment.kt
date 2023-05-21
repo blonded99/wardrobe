@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.DTO.TopBottomDTO
-import com.example.wardrobe.databinding.FragmentDetailClothesBinding
 import com.example.wardrobe.databinding.FragmentDetailClothesEditBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
