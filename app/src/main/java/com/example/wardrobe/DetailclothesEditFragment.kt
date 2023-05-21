@@ -57,15 +57,6 @@ class DetailclothesEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-        if(!storageImageRef.equals("")){
-            val imageRef = storage.reference.child(storageImageRef)
-            imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-                val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
-                binding.ivClothes.setImageBitmap(bmp)
-            }
-        }
-
         setClothesInfo(isTop)
 
 

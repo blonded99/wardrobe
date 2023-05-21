@@ -7,20 +7,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.wardrobe.databinding.FragmentDetailClothesBinding
+import com.example.wardrobe.DTO.SetDTO
+import com.example.wardrobe.databinding.FragmentDetailCodiBinding
+import com.example.wardrobe.databinding.FragmentDetailCodiEditBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
-class DetailclothesFragment : Fragment() {
-    private lateinit var binding: FragmentDetailClothesBinding
+class DetailCodiEditFragment : Fragment() {
+    private lateinit var binding: FragmentDetailCodiEditBinding
     private lateinit var storage: FirebaseStorage
     private var storageImageRef = ""
 
-    val db = Firebase.firestore
+    // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
+    val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
 
-    var isTop : Boolean = true
+    var clothesInfo = SetDTO()
+
+    val db = Firebase.firestore
+    // Set(코디) Collection Ref
+    val setColRef = db.collection("set")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +38,6 @@ class DetailclothesFragment : Fragment() {
         val bundle = arguments
         if (bundle != null) {
             storageImageRef = bundle.getString("imageRef", "")
-            isTop = bundle.getBoolean("isTop",true)
         }
     }
 
@@ -39,7 +46,7 @@ class DetailclothesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailClothesBinding.inflate(inflater, container, false)
+        binding = FragmentDetailCodiEditBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,13 +56,44 @@ class DetailclothesFragment : Fragment() {
 
 
 
-        setClothesInfo(isTop)
+        setClothesInfo()
 
-        binding.buttonEdit.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("imageRef",storageImageRef)
-            bundle.putBoolean("isTop",isTop)
-            findNavController().navigate(R.id.action_detailClothesFragment_to_detailClothesEditFragment,bundle)
+        binding.radioGroupSeason.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_season_spring_fall -> clothesInfo.season = "spring&fall"
+                R.id.button_season_summer -> clothesInfo.season = "summer"
+                R.id.button_season_winter -> clothesInfo.season = "winter"
+            }
+        }
+
+        binding.radioGroupIsPublic.setOnCheckedChangeListener{group, checkedId ->
+            when(checkedId){
+                R.id.button_public -> clothesInfo.isPublic = true
+                R.id.button_private -> clothesInfo.isPublic = false
+            }
+        }
+
+
+        binding.buttonSave.setOnClickListener {
+            clothesInfo.userID = currentUID
+            clothesInfo.memo = binding.editTextMemo.text.toString()
+            clothesInfo.imageRef = storageImageRef
+            if(binding.editTextHashtag.text.startsWith("#")){
+                val tempList = binding.editTextHashtag.text.split("#"," ")
+                clothesInfo.hashtag = tempList.filter{
+                    !(it.equals("") || it.equals(" "))
+                }
+            }
+
+            setColRef.whereEqualTo("imageRef",storageImageRef).get()
+                .addOnSuccessListener {
+                    for(doc in it){
+                        setColRef.document(doc.id)
+                            .set(clothesInfo)
+                    }
+                    findNavController().popBackStack()
+                }
+
         }
 
 
@@ -70,51 +108,31 @@ class DetailclothesFragment : Fragment() {
 
     }
 
-    private fun setClothesInfo(isTop: Boolean){
+    private fun setClothesInfo(){
 
         if(!storageImageRef.equals("")){
             val imageRef = storage.reference.child(storageImageRef)
             imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
                 val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
-                binding.ivClothes.setImageBitmap(bmp)
+                binding.ivCodi.setImageBitmap(bmp)
             }
         }
 
-        var target = "top"
-        if(isTop == false)
-            target = "bottom"
-
-        db.collection(target).whereEqualTo("imageRef",storageImageRef).get()
+        setColRef.whereEqualTo("imageRef",storageImageRef).get()
             .addOnSuccessListener {
                 for(doc in it){
-                    when(doc["thickness"]){
-                        "thick" -> binding.buttonThicknessThick.isChecked = true
-                        "medium" -> binding.buttonThicknessMedium.isChecked = true
-                        "thin" -> binding.buttonThicknessThin.isChecked = true
-                    }
+                    clothesInfo.bottomRef = doc["bottomRef"].toString()
+                    clothesInfo.topRef = doc["topRef"].toString()
+
                     when(doc["season"]){
                         "spring&fall" -> binding.buttonSeasonSpringFall.isChecked = true
                         "summer" -> binding.buttonSeasonSummer.isChecked = true
                         "winter" -> binding.buttonSeasonWinter.isChecked = true
                     }
-                    when(doc["length"]){
-                        "long" -> binding.buttonLengthLong.isChecked = true
-                        "short" -> binding.buttonLengthShort.isChecked = true
-                        "other" -> binding.buttonLengthOther.isChecked = true
+                    when(doc["public"]){ // 왜?
+                        true -> binding.buttonPublic.isChecked = true
+                        false -> binding.buttonPrivate.isChecked = true
                     }
-                    when(doc["size"]){
-                        "xs" -> binding.buttonSizeXs.isChecked = true
-                        "s" -> binding.buttonSizeS.isChecked = true
-                        "m" -> binding.buttonSizeM.isChecked = true
-                        "l" -> binding.buttonSizeL.isChecked = true
-                        "xl" -> binding.buttonSizeXl.isChecked = true
-                    }
-
-                    if(doc["brand"].toString().isNullOrBlank())
-                        binding.editTextBrandName.setHint("브랜드를 입력해주세요.")
-                    else
-                        binding.editTextBrandName.setText(doc["brand"].toString())
-
                     if(doc["memo"].toString().isNullOrBlank())
                         binding.editTextMemo.setHint("메모를 입력해주세요.")
                     else
