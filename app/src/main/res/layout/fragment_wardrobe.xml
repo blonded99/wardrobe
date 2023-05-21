@@ -42,17 +42,17 @@
             android:textAlignment="center"
             android:textColor="@drawable/selector_community_button_text" />
 
-        <RadioButton
-            android:id="@+id/button_set"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:text="코디"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textAlignment="center"
-            android:textColor="@drawable/selector_community_button_text" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/button_set"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:button="@null"-->
+<!--            android:text="코디"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="13sp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@drawable/selector_community_button_text" />-->
     </RadioGroup>
 
     <View
@@ -86,16 +86,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line1" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/recyclerView_set"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line1" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/recyclerView_set"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/line1" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
