@@ -86,13 +86,13 @@ class AddCodiFragment : Fragment() {
 
             setColRef.add(clothesInfo).addOnSuccessListener {
                 Snackbar.make(binding.root,"FIRESTORE ADD SUCCESS", Snackbar.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_addCodiFragment_to_wardrobeFragment)
-                findNavController().clearBackStack(R.id.action_addCodiFragment_to_wardrobeFragment)
+                findNavController().navigate(R.id.action_addCodiFragment_to_codiFragment)
+                findNavController().clearBackStack(R.id.action_addCodiFragment_to_codiFragment)
             }
                 .addOnFailureListener {
                     Snackbar.make(binding.root,"FIRESTORE ADD FAILED", Snackbar.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_addCodiFragment_to_wardrobeFragment)
-                    findNavController().clearBackStack(R.id.action_addCodiFragment_to_wardrobeFragment)
+                    findNavController().navigate(R.id.action_addCodiFragment_to_codiFragment)
+                    findNavController().clearBackStack(R.id.action_addCodiFragment_to_codiFragment)
                 }
 
         }
