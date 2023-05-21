@@ -5,6 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_marginHorizontal="14dp"
+        app:selectionRequired="true"
+        app:singleSelection="true"
+        app:checkedButton="@id/button_all_codi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
+            android:id="@+id/button_all_codi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="전체"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            android:backgroundTint="@color/button_toggle_group_background_tint"
+            android:textColor="@drawable/selector_community_button_text" />
+
+        <Button
+            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
+            android:id="@+id/button_public_codi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="공개"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            android:backgroundTint="@color/button_toggle_group_background_tint"
+            android:textColor="@drawable/selector_community_button_text" />
+
+        <Button
+            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
+            android:id="@+id/button_private_codi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="비공개"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            android:backgroundTint="@color/button_toggle_group_background_tint"
+            android:textColor="@drawable/selector_community_button_text" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
