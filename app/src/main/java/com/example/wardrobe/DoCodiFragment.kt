@@ -6,8 +6,10 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,7 +26,10 @@ class DoCodiFragment : Fragment() {
     private lateinit var binding: FragmentDoCodiBinding
     private lateinit var storage: FirebaseStorage
 
-    private val viewModel by viewModels<WardrobeViewModel>()
+//    private val viewModel by viewModels<WardrobeViewModel>()
+
+    private lateinit var scaleGestureDetector: ScaleGestureDetector
+    private lateinit var scaleGestureDetector2: ScaleGestureDetector
 
     // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
     val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
@@ -35,22 +40,17 @@ class DoCodiFragment : Fragment() {
     lateinit var topBitmap : Bitmap
     lateinit var bottomBitmap : Bitmap
 
+    val locationTop = IntArray(2)
+    val locationBottom = IntArray(2)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val bundle = arguments
         if (bundle != null) {
-//            val topIndex = bundle.getInt("topIndex",-1)
-//            val bottomIndex = bundle.getInt("bottomIndex",-1)
             topRef = bundle.getString("topRef","")
             bottomRef = bundle.getString("bottomRef","")
-
-//            if(topIndex != -1 && bottomIndex != -1){
-//                if(viewModel.topItems.size > topIndex && viewModel.bottomItems.size > bottomIndex) {
-//                    topPath = viewModel.topItems[topIndex].clothesImageUrl
-//                    bottomPath = viewModel.bottomItems[bottomIndex].clothesImageUrl
-//                }
-//            }
         }
 
     }
@@ -71,12 +71,45 @@ class DoCodiFragment : Fragment() {
         setBottom(bottomRef)
 
 
+        scaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                val scaleFactor = detector.scaleFactor
+                if (scaleFactor > 1) {
+                    // 축소
+                    binding.ivTop.scaleX /= scaleFactor
+                    binding.ivTop.scaleY /= scaleFactor
+                } else {
+                    // 확대
+                    binding.ivTop.scaleX *= scaleFactor
+                    binding.ivTop.scaleY *= scaleFactor
+                }
+                return true
+            }
+        })
+
+        scaleGestureDetector2 = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                val scaleFactor = detector.scaleFactor
+                if (scaleFactor > 1) {
+                    // 축소
+                    binding.ivBottom.scaleX /= scaleFactor
+                    binding.ivBottom.scaleY /= scaleFactor
+                } else {
+                    // 확대
+                    binding.ivBottom.scaleX *= scaleFactor
+                    binding.ivBottom.scaleY *= scaleFactor
+                }
+                return true
+            }
+        })
+
 
         binding.ivTop.setOnTouchListener(object : View.OnTouchListener {
             private var dX = 0f
             private var dY = 0f
 
             override fun onTouch(view: View, event: MotionEvent): Boolean {
+                scaleGestureDetector.onTouchEvent(event)
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
                         dX = view.x - event.rawX
@@ -100,6 +133,7 @@ class DoCodiFragment : Fragment() {
             private var dY = 0f
 
             override fun onTouch(view: View, event: MotionEvent): Boolean {
+                scaleGestureDetector2.onTouchEvent(event)
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
                         dX = view.x - event.rawX
@@ -119,16 +153,15 @@ class DoCodiFragment : Fragment() {
         })
 
         binding.buttonCombine.setOnClickListener {
-            val position1 = floatArrayOf(binding.ivTop.x, binding.ivTop.y)
-            val position2 = floatArrayOf(binding.ivBottom.x, binding.ivBottom.y)
+            binding.ivTop.getLocationOnScreen(locationTop)
+            binding.ivBottom.getLocationOnScreen(locationBottom)
 
-            val width1 = binding.ivTop.width
-            val height1 = binding.ivTop.height
-            val width2 = binding.ivBottom.width
-            val height2 = binding.ivBottom.height
+            val position1 = floatArrayOf(locationTop[0].toFloat(), locationTop[1].toFloat())
+            val position2 = floatArrayOf(locationBottom[0].toFloat(), locationBottom[1].toFloat())
 
-            val adjustedClothes1 = adjustBitmap(topBitmap, width1, height1)
-            val adjustedClothes2 = adjustBitmap(bottomBitmap, width2, height2)
+
+            val adjustedClothes1 = adjustBitmap(topBitmap, binding.ivTop.scaleX, binding.ivTop.scaleY)
+            val adjustedClothes2 = adjustBitmap(bottomBitmap, binding.ivBottom.scaleX, binding.ivBottom.scaleY)
 
             val combineBitmap = combineImages(adjustedClothes1,position1,adjustedClothes2,position2)
 
@@ -200,9 +233,12 @@ class DoCodiFragment : Fragment() {
     }
 
 
-    private fun adjustBitmap(original: Bitmap, width: Int, height: Int): Bitmap {
+    private fun adjustBitmap(original: Bitmap, scaleX: Float, scaleY: Float): Bitmap {
+        val width = (original.width * scaleX).toInt()
+        val height = (original.height * scaleY).toInt()
         return Bitmap.createScaledBitmap(original, width, height, false)
     }
+
 
     private fun combineImages(clothes1: Bitmap, position1: FloatArray, clothes2: Bitmap, position2: FloatArray): Bitmap {
         val minX = Math.min(position1[0], position2[0])
