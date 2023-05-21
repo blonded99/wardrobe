@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="#FFFDF6" />
+                android:background="@color/bg_ivory" />
 
             <View
                 android:id="@+id/line1"
@@ -359,7 +359,6 @@
                 android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                app:layout_constraintBottom_toTopOf="@+id/button_save"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line7" />
@@ -372,9 +371,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_save_navy_large"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextHashtag"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
 

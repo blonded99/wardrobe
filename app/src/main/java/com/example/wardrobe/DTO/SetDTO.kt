@@ -8,5 +8,6 @@ data class SetDTO(
     var season: String? = null,
     var memo: String? = null,
     var isPublic: Boolean = true,
-    var likeCount: Int = 0
+    var likeCount: Int = 0,
+    var hashtag: List<String>? = arrayListOf()
 )

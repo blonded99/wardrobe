@@ -83,6 +83,12 @@ class AddCodiFragment : Fragment() {
             clothesInfo.topRef = topRef
             clothesInfo.bottomRef = bottomRef
             clothesInfo.imageRef = storageImageRef
+            if(binding.editTextHashtag.text.startsWith("#")){
+                val tempList = binding.editTextHashtag.text.split("#"," ")
+                clothesInfo.hashtag = tempList.filter{
+                    !(it.equals("") || it.equals(" "))
+                }
+            }
 
             setColRef.add(clothesInfo).addOnSuccessListener {
                 Snackbar.make(binding.root,"FIRESTORE ADD SUCCESS", Snackbar.LENGTH_SHORT).show()

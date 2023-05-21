@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="#FFFDF6" />
+                android:background="@color/bg_purple" />
 
             <View
                 android:id="@+id/line1"
@@ -50,10 +50,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/line1">
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_season_spring_fall"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -61,9 +62,10 @@
                     android:text="봄/가을" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_season_summer"
                     android:button="@null"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -71,10 +73,11 @@
                     android:text="여름" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_season_winter"
                     android:button="@null"
                     android:layout_marginStart="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -103,10 +106,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/line2">
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_public"
                     android:button="@null"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -114,9 +118,10 @@
                     android:text="공개" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/button_private"
                     android:button="@null"
-                    android:background="@drawable/selector_radio_button_medium"
+                    android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -142,7 +147,8 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
                 android:gravity="start|top"
-                android:hint="메모를 입력해주세요."
+                android:enabled="false"
+                android:textColor="@color/black"
                 android:textSize="13sp"
                 android:background="@null"
                 android:inputType="textMultiLine"
@@ -163,24 +169,27 @@
             <EditText
                 android:id="@+id/editTextHashtag"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@null"
+                android:enabled="false"
                 android:gravity="start|top"
-                android:hint="해시태그를 #로 구분하여 입력해주세요."
                 android:inputType="textMultiLine"
                 android:textSize="13sp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/button_edit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line4" />
 
             <ImageButton
-                android:id="@+id/button_save"
+                android:id="@+id/button_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_save_navy_large"
+                android:background="@drawable/button_edit_navy_large"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"

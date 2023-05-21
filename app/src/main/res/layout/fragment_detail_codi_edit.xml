@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="#FFFDF6" />
+                android:background="@color/bg_purple" />
 
             <View
                 android:id="@+id/line1"
@@ -142,7 +142,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
                 android:gravity="start|top"
-                android:hint="메모를 입력해주세요."
+                android:textColor="@color/black"
                 android:textSize="13sp"
                 android:background="@null"
                 android:inputType="textMultiLine"
@@ -163,15 +163,17 @@
             <EditText
                 android:id="@+id/editTextHashtag"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@null"
                 android:gravity="start|top"
-                android:hint="해시태그를 #로 구분하여 입력해주세요."
                 android:inputType="textMultiLine"
                 android:textSize="13sp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/button_save"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line4" />
