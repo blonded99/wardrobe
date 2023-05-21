@@ -9,8 +9,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.databinding.FragmentDoCodiBinding
-import com.example.wardrobe.databinding.FragmentTestBinding
+import com.example.wardrobe.viewmodel.WardrobeViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -18,23 +20,38 @@ import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 
 
-class doCodiFragment : Fragment() {
+class DoCodiFragment : Fragment() {
     private lateinit var binding: FragmentDoCodiBinding
     private lateinit var storage: FirebaseStorage
+
+    private val viewModel by viewModels<WardrobeViewModel>()
 
     // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
     val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
 
-
-    val topPath = "3t6Dt8DleiZXrzzf696dgF15gJl2/upper/92f0b714-ac4d-4b03-93ef-b729ebffe147/base.webp"
-    //    val bottomPath = "3t6Dt8DleiZXrzzf696dgF15gJl2/lower/7d31642e-6edd-4fb5-9320-1c9abe284150/base.webp"
-    val bottomPath = "3t6Dt8DleiZXrzzf696dgF15gJl2/lower/3b8d17e4-f532-455f-9a6d-27dd7f33bd53/base.webp"
+    var topRef = ""
+    var bottomRef = ""
 
     lateinit var topBitmap : Bitmap
     lateinit var bottomBitmap : Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val bundle = arguments
+        if (bundle != null) {
+//            val topIndex = bundle.getInt("topIndex",-1)
+//            val bottomIndex = bundle.getInt("bottomIndex",-1)
+            topRef = bundle.getString("topRef","")
+            bottomRef = bundle.getString("bottomRef","")
+
+//            if(topIndex != -1 && bottomIndex != -1){
+//                if(viewModel.topItems.size > topIndex && viewModel.bottomItems.size > bottomIndex) {
+//                    topPath = viewModel.topItems[topIndex].clothesImageUrl
+//                    bottomPath = viewModel.bottomItems[bottomIndex].clothesImageUrl
+//                }
+//            }
+        }
 
     }
 
@@ -50,8 +67,8 @@ class doCodiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setTop(topPath)
-        setBottom(bottomPath)
+        setTop(topRef)
+        setBottom(bottomRef)
 
 
 
@@ -115,12 +132,6 @@ class doCodiFragment : Fragment() {
 
             val combineBitmap = combineImages(adjustedClothes1,position1,adjustedClothes2,position2)
 
-//            binding.ivTop.visibility = View.GONE
-//            binding.ivBottom.visibility = View.GONE
-//
-//            binding.ivCombined.visibility = View.VISIBLE
-//            binding.ivCombined.setImageBitmap(combineBitmap)
-
             val uniqueId = generateRandomString(20)
             val path = "${currentUID}/codi/${uniqueId}/codi.webp"
             val imageRef = storage.reference.child(path)
@@ -130,9 +141,19 @@ class doCodiFragment : Fragment() {
             val data = baos.toByteArray()
 
             imageRef.putBytes(data).addOnCompleteListener{
-                if(it.isSuccessful)
-                    Snackbar.make(binding.root,"Storage upload completed",Snackbar.LENGTH_SHORT).show()
+                if(it.isSuccessful) {
+                    Snackbar.make(binding.root, "Storage upload completed", Snackbar.LENGTH_SHORT)
+                        .show()
+
+                    val bundle = Bundle()
+                    bundle.putString("imageRef",path)
+                    bundle.putString("topRef",topRef)
+                    bundle.putString("bottomRef",bottomRef)
+                    findNavController().navigate(R.id.action_doCodiFragment_to_addCodiFragment,bundle)
+                }
             }
+
+
         }
 
 

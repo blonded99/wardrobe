@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_wardrobeFragment_to_detailClothesFragment"
             app:destination="@id/detailClothesFragment" />
+        <action
+            android:id="@+id/action_wardrobeFragment_to_doCodiFragment"
+            app:destination="@id/doCodiFragment" />
     </fragment>
 
     <fragment
@@ -69,6 +72,24 @@
         android:id="@+id/detailClothesEditFragment"
         android:name="com.example.wardrobe.DetailclothesEditFragment"
         tools:layout="@layout/fragment_detail_clothes_edit" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/doCodiFragment"
+        android:name="com.example.wardrobe.DoCodiFragment"
+        tools:layout="@layout/fragment_do_codi" >
+        <action
+            android:id="@+id/action_doCodiFragment_to_addCodiFragment"
+            app:destination="@id/addCodiFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addCodiFragment"
+        android:name="com.example.wardrobe.AddCodiFragment"
+        tools:layout="@layout/fragment_add_codi" >
+        <action
+            android:id="@+id/action_addCodiFragment_to_wardrobeFragment"
+            app:destination="@id/wardrobeFragment" />
     </fragment>
 
 </navigation>

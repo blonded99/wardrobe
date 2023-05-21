@@ -103,8 +103,14 @@ class WardrobeFragment : Fragment() {
 
         viewModel.topSelectedCheckBox.observe(viewLifecycleOwner) { position ->
             if(viewModel.topSelectedCheckBox.value != null) {
-                if (viewModel.bottomSelectedCheckBox.value != null)
-                    Snackbar.make(binding.root,"코디 화면으로 넘어감", Snackbar.LENGTH_SHORT).show()
+                if (viewModel.bottomSelectedCheckBox.value != null) {
+                    val bundle = Bundle()
+//                    bundle.putInt("topIndex", viewModel.topSelectedCheckBox.value!!)
+//                    bundle.putInt("bottomIndex", viewModel.bottomSelectedCheckBox.value!!)
+                    bundle.putString("topRef",viewModel.topItems[viewModel.topSelectedCheckBox.value!!].clothesImageUrl)
+                    bundle.putString("bottomRef",viewModel.bottomItems[viewModel.bottomSelectedCheckBox.value!!].clothesImageUrl)
+                    findNavController().navigate(R.id.action_wardrobeFragment_to_doCodiFragment,bundle)
+                }
                 else
                     binding.buttonBottom.isChecked = true
             }
@@ -112,8 +118,15 @@ class WardrobeFragment : Fragment() {
 
         viewModel.bottomSelectedCheckBox.observe(viewLifecycleOwner) { position ->
             if(viewModel.bottomSelectedCheckBox.value != null) {
-                if (viewModel.topSelectedCheckBox.value != null)
-                    Snackbar.make(binding.root,"코디 화면으로 넘어감",Snackbar.LENGTH_SHORT).show()
+                if (viewModel.topSelectedCheckBox.value != null) {
+                    val bundle = Bundle()
+//                    bundle.putInt("topIndex", viewModel.topSelectedCheckBox.value!!)
+//                    bundle.putInt("bottomIndex", viewModel.bottomSelectedCheckBox.value!!)
+                    bundle.putString("topRef",viewModel.topItems[viewModel.topSelectedCheckBox.value!!].clothesImageUrl)
+                    bundle.putString("bottomRef",viewModel.bottomItems[viewModel.bottomSelectedCheckBox.value!!].clothesImageUrl)
+                    findNavController().navigate(R.id.action_wardrobeFragment_to_doCodiFragment,bundle)
+                    Log.e("","topIndex = ${viewModel.topSelectedCheckBox.value}, bottomIndex = ${viewModel.bottomSelectedCheckBox.value}")
+                }
                 else
                     binding.buttonTop.isChecked = true
             }
