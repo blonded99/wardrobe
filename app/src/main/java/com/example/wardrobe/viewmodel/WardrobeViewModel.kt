@@ -21,6 +21,10 @@ class WardrobeViewModel: ViewModel() {
     val communityItems = ArrayList<Item>()
     val communityItemsListData = MutableLiveData<ArrayList<Item>>()
 
+
+    val topSelectedCheckBox = MutableLiveData<Int>()
+    val bottomSelectedCheckBox = MutableLiveData<Int>()
+
     /* 옷장 이미지 */
 
     fun addWardrobeItem(item: Item,which: String){

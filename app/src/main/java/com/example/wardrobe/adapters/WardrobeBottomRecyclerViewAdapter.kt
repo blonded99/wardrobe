@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -22,6 +23,7 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
     RecyclerView.Adapter<WardrobeBottomRecyclerViewAdapter.RecyclerViewViewHolder>() {
 
     private lateinit var storage: FirebaseStorage
+    private var checkedPosition = -1
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
@@ -51,6 +53,7 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
 
 
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
+        private val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
 
         fun setContents(pos: Int){
             with(viewModel.bottomItems[pos]){
@@ -77,6 +80,26 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
                         }
                     }
             }
+
+
+            checkBox.setOnCheckedChangeListener(null)
+            checkBox.isChecked = pos == checkedPosition
+
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if(isChecked) {
+                    checkedPosition = pos
+                    viewModel.bottomSelectedCheckBox.value = pos
+//                    notifyDataSetChanged()
+                } else {
+                    if (pos == checkedPosition) {
+                        viewModel.bottomSelectedCheckBox.value = null
+                        checkedPosition = -1 // if the currently checked checkbox is unchecked manually
+                    }
+                }
+            }
+
+
+
         }
 
     }

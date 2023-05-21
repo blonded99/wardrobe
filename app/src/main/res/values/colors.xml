@@ -11,5 +11,6 @@
     <color name="backgroundColor">#EFEFEF</color>
     <color name="primaryColor">#0A1260</color>
     <color name="lightgray">#CBCBCB</color>
+    <color name="lightgreen">#F3F6F6</color>
 
 </resources>

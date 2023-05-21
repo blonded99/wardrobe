@@ -7,6 +7,6 @@ data class SetDTO(
     var bottomRef: String? = null,
     var season: String? = null,
     var memo: String? = null,
-    var isOpen: Boolean = true,
+    var isPublic: Boolean = true,
     var likeCount: Int = 0
 )

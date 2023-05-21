@@ -7,9 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
@@ -23,6 +23,7 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val 
     RecyclerView.Adapter<WardrobeRecyclerViewAdapter.RecyclerViewViewHolder>() {
 
     private lateinit var storage: FirebaseStorage
+    private var checkedPosition = -1
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
@@ -51,6 +52,7 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val 
         val topColRef = db.collection("top")
 
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
+        private val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
 
         fun setContents(pos: Int){
             with(viewModel.topItems[pos]){
@@ -77,6 +79,26 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val 
                         }
                     }
             }
+
+
+
+            checkBox.setOnCheckedChangeListener(null)
+            checkBox.isChecked = pos == checkedPosition
+
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if(isChecked) {
+                    checkedPosition = pos
+                    viewModel.topSelectedCheckBox.value = pos
+//                    notifyDataSetChanged()
+                } else {
+                    if (pos == checkedPosition) {
+                        viewModel.topSelectedCheckBox.value = null
+                        checkedPosition = -1 // if the currently checked checkbox is unchecked manually
+                    }
+                }
+            }
+
+
         }
 
     }
