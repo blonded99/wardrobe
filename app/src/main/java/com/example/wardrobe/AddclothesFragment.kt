@@ -2,11 +2,9 @@ package com.example.wardrobe
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -27,7 +25,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.wardrobe.DTO.TopBottomDTO
 import com.example.wardrobe.databinding.FragmentAddclothesBinding
-import com.example.wardrobe.databinding.FragmentThirdBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

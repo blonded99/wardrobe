@@ -1,25 +1,19 @@
 package com.example.wardrobe
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.DTO.SetDTO
 import com.example.wardrobe.databinding.FragmentAddCodiBinding
-import com.example.wardrobe.databinding.FragmentDoCodiBinding
-import com.example.wardrobe.databinding.FragmentTestBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import java.io.ByteArrayOutputStream
 
 
 class AddCodiFragment : Fragment() {

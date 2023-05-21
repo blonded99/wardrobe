@@ -13,11 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.WardrobeBottomRecyclerViewAdapter
 import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
-import com.example.wardrobe.adapters.WardrobeSetRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentWardrobeBinding
 import com.example.wardrobe.viewmodel.Item
 import com.example.wardrobe.viewmodel.WardrobeViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
