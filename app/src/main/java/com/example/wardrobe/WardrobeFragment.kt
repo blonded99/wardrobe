@@ -90,7 +90,7 @@ class WardrobeFragment : Fragment() {
 
         loadTopList()
 
-        binding.radioGroup.setOnCheckedChangeListener{group, checkedId ->
+        binding.radioGroup.addOnButtonCheckedListener { _, checkedId, _ ->
             when(checkedId){
                 R.id.button_top -> loadTopList()
                 R.id.button_bottom -> loadBottomList()
@@ -110,7 +110,7 @@ class WardrobeFragment : Fragment() {
                     findNavController().navigate(R.id.action_wardrobeFragment_to_doCodiFragment,bundle)
                 }
                 else
-                    binding.buttonBottom.isChecked = true
+                    binding.radioGroup.check(binding.buttonBottom.id)
             }
         }
 
@@ -126,7 +126,7 @@ class WardrobeFragment : Fragment() {
                     Log.e("","topIndex = ${viewModel.topSelectedCheckBox.value}, bottomIndex = ${viewModel.bottomSelectedCheckBox.value}")
                 }
                 else
-                    binding.buttonTop.isChecked = true
+                    binding.radioGroup.check(binding.buttonTop.id)
             }
         }
 
