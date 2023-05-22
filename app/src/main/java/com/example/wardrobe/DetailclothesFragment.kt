@@ -121,8 +121,8 @@ class DetailclothesFragment : Fragment() {
                         binding.editTextMemo.setText(doc["memo"].toString())
 
                     binding.editTextHashtag.text.clear()
-                    val tempList = doc["hashtag"] as List<String>
-                    if(tempList.isEmpty())
+                    val tempList = doc["hashtag"] as List<String>?
+                    if(tempList.isNullOrEmpty())
                         binding.editTextHashtag.setHint("해시태그를 #로 구분하여 입력해주세요.")
                     else{
                         tempList.forEach {
