@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,9 @@ class CommunityLikedRecyclerViewAdapter(private val viewModel: CommunityViewMode
     RecyclerView.Adapter<CommunityLikedRecyclerViewAdapter.RecyclerViewViewHolder>() {
 
     private lateinit var storage: FirebaseStorage
+
+    // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
+    val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -46,6 +50,7 @@ class CommunityLikedRecyclerViewAdapter(private val viewModel: CommunityViewMode
         val setColRef = db.collection("set")
 
         private val clothesImage: ImageView = itemView.findViewById(R.id.iv_clothes)
+        private val buttonLike: ImageButton = itemView.findViewById(R.id.button_like)
 
         fun setContents(pos: Int){
             with(viewModel.communityLikedItems[pos]){
@@ -57,12 +62,32 @@ class CommunityLikedRecyclerViewAdapter(private val viewModel: CommunityViewMode
                     .addOnFailureListener {
                         Log.e("","firebase storage called failed")
                     }
+
+                buttonLike.setBackgroundResource(R.drawable.icon_heart)
             }
 
 
-            clothesImage.setOnClickListener {
-
+            buttonLike.setOnClickListener {
+                setColRef.whereEqualTo("imageRef",viewModel.communityLikedItems[pos].clothesImageUrl).get()
+                    .addOnSuccessListener {
+                        for(doc in it){
+                            val tempList = doc["likedUser"] as MutableList<String> ?: mutableListOf()
+                            if (tempList.contains(currentUID)) {
+                                tempList.remove(currentUID)
+                                setColRef.document(doc.id).update("likedUser",tempList)
+                                buttonLike.setBackgroundResource(R.drawable.icon_heart_empty)
+                                return@addOnSuccessListener
+                            }
+                            else {
+                                tempList.add(currentUID)
+                                setColRef.document(doc.id).update("likedUser",tempList)
+                                buttonLike.setBackgroundResource(R.drawable.icon_heart)
+                                return@addOnSuccessListener
+                            }
+                        }
+                    }
             }
+
         }
 
     }
