@@ -64,6 +64,11 @@ class CommunityMainRecyclerViewAdapter(private val viewModel: CommunityViewModel
                     .addOnFailureListener {
                         Log.e("","firebase storage called failed")
                     }
+
+                if(isLiked)
+                    buttonLike.setBackgroundResource(R.drawable.icon_heart)
+                else
+                    buttonLike.setBackgroundResource(R.drawable.icon_heart_empty)
             }
 
             buttonLike.setOnClickListener {
@@ -74,11 +79,13 @@ class CommunityMainRecyclerViewAdapter(private val viewModel: CommunityViewModel
                             if (tempList.contains(currentUID)) {
                                 tempList.remove(currentUID)
                                 setColRef.document(doc.id).update("likedUser",tempList)
+                                buttonLike.setBackgroundResource(R.drawable.icon_heart_empty)
                                 return@addOnSuccessListener
                             }
                             else {
                                 tempList.add(currentUID)
                                 setColRef.document(doc.id).update("likedUser",tempList)
+                                buttonLike.setBackgroundResource(R.drawable.icon_heart)
                                 return@addOnSuccessListener
                             }
                         }

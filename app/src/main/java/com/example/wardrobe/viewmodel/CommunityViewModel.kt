@@ -3,7 +3,7 @@ package com.example.wardrobe.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-data class CommunityItem(val clothesImageUrl: String)
+data class CommunityItem(val clothesImageUrl: String, val isLiked: Boolean)
 
 class CommunityViewModel: ViewModel() {
 

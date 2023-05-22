@@ -92,8 +92,17 @@ class CommunityFragment : Fragment() {
         setColRef.whereNotEqualTo("userID",currentUID).get()
             .addOnSuccessListener {
                 for(doc in it){
-                    if(doc["public"] == true)
-                        viewModel.addCommunityItem(CommunityItem(doc["imageRef"].toString()),"main")
+                    if(doc["public"] == true) {
+                        val tempList = doc["likedUser"] as List<String>?
+                        if (!tempList.isNullOrEmpty()) {
+                            if (tempList.contains(currentUID))
+                                viewModel.addCommunityItem(CommunityItem(doc["imageRef"].toString(),true), "main")
+                            else
+                                viewModel.addCommunityItem(CommunityItem(doc["imageRef"].toString(),false), "main")
+                        }
+                        else
+                            viewModel.addCommunityItem(CommunityItem(doc["imageRef"].toString(),false), "main")
+                    }
                 }
             }
     }
@@ -109,7 +118,7 @@ class CommunityFragment : Fragment() {
                         val tempList = doc["likedUser"] as List<String>?
                         if (!tempList.isNullOrEmpty()) {
                             if (tempList.contains(currentUID))
-                                viewModel.addCommunityItem(CommunityItem(doc["imageRef"].toString()), "liked")
+                                viewModel.addCommunityItem(CommunityItem(doc["imageRef"].toString(),true), "liked")
                         }
                     }
                 }
