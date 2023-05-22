@@ -74,9 +74,53 @@ class WardrobeFragment : Fragment() {
             adapter_bottom.notifyDataSetChanged()
         }
 
+        viewModel.isCodiMode.observe(viewLifecycleOwner){
+            when(binding.radioGroup.checkedButtonId){
+                R.id.button_top -> adapter_top.notifyDataSetChanged()
+                R.id.button_bottom -> adapter_bottom.notifyDataSetChanged()
+            }
+            if(it==true)
+                binding.floatingActionButtonCodi.setImageResource(R.drawable.button_return)
+            else
+                binding.floatingActionButtonCodi.setImageResource(R.drawable.button_fab_codi)
+        }
+
+        var isFABOpen = false
+
         binding.floatingActionButton.setOnClickListener {
+            if (!isFABOpen) {
+                isFABOpen = true
+                binding.floatingActionButton.animate()
+                    .rotation(45f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(300)
+                    .start()
+
+                binding.floatingActionButtonAdd.visibility = View.VISIBLE
+                binding.floatingActionButtonCodi.visibility = View.VISIBLE
+            } else {
+                isFABOpen = false
+                binding.floatingActionButton.animate()
+                    .rotation(0f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(300)
+                    .start()
+
+                binding.floatingActionButtonAdd.visibility = View.INVISIBLE
+                binding.floatingActionButtonCodi.visibility = View.INVISIBLE
+            }
+        }
+
+        binding.floatingActionButtonAdd.setOnClickListener {
             navController.navigate(R.id.action_wardrobeFragment_to_addclothesFragment)
         }
+
+        binding.floatingActionButtonCodi.setOnClickListener {
+            viewModel.isCodiMode.value = viewModel.isCodiMode.value != true
+        }
+
 
         loadTopList()
 
@@ -134,7 +178,6 @@ class WardrobeFragment : Fragment() {
 
     private fun loadTopList(){
         binding.recyclerViewBottom.visibility = View.GONE
-//        binding.recyclerViewSet.visibility = View.GONE
         binding.recyclerViewTop.visibility = View.VISIBLE
         viewModel.deleteAllWardrobeItem("top")
         topColRef.whereEqualTo("userID",currentUID).get()
@@ -146,7 +189,6 @@ class WardrobeFragment : Fragment() {
     }
 
     private fun loadBottomList(){
-//        binding.recyclerViewSet.visibility = View.GONE
         binding.recyclerViewTop.visibility = View.GONE
         binding.recyclerViewBottom.visibility = View.VISIBLE
         viewModel.deleteAllWardrobeItem("bottom")

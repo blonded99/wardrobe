@@ -10,9 +10,11 @@
 
     <color name="backgroundColor">#EFEFEF</color>
     <color name="primaryColor">#0A1260</color>
+    <color name="primaryColor_tonedown">#313667</color>
     <color name="lightgray">#CBCBCB</color>
     <color name="lightgreen">#F3F6F6</color>
     <color name="bg_ivory">#FFFBEC</color>
     <color name="bg_purple">#DDDFFF</color>
+    <color name="yellow">#FAFF00</color>
 
 </resources>

@@ -42,12 +42,12 @@ class HomeFragment : Fragment() {
         viewModel.addHomeWeatherItem(Homeitem(R.drawable.test_top))
         viewModel.addHomeWeatherItem(Homeitem(R.drawable.test_bottom))
 
-        val adapter = HomeRecyclerViewAdapter(viewModel,context,this)
+        val adapter_weather = HomeRecyclerViewAdapter(viewModel,context,this)
         val adapter_community = HomeRecyclerViewAdapter2(viewModel,context,this)
 
 
         // 날씨에 따른 추천 부분 옷
-        binding.recyclerViewRecommend.adapter = adapter
+        binding.recyclerViewRecommend.adapter = adapter_weather
         binding.recyclerViewRecommend.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         // 최신 커뮤니티 부분 옷
@@ -55,11 +55,11 @@ class HomeFragment : Fragment() {
         binding.recyclerViewCommunity.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         viewModel.HomeweatherItemsListData.observe(viewLifecycleOwner){
-            HomeRecyclerViewAdapter(viewModel,context,this).notifyDataSetChanged()
+            adapter_weather.notifyDataSetChanged()
         }
 
         viewModel.HomecommunityItemsListData.observe(viewLifecycleOwner){
-            HomeRecyclerViewAdapter2(viewModel,context,this).notifyDataSetChanged()
+            adapter_community.notifyDataSetChanged()
         }
     }
 

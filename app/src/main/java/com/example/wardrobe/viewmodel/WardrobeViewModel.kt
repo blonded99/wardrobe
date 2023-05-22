@@ -25,6 +25,8 @@ class WardrobeViewModel: ViewModel() {
     val topSelectedCheckBox = MutableLiveData<Int>()
     val bottomSelectedCheckBox = MutableLiveData<Int>()
 
+    val isCodiMode = MutableLiveData<Boolean>(false)
+
     /* 옷장 이미지 */
 
     fun addWardrobeItem(item: Item,which: String){
