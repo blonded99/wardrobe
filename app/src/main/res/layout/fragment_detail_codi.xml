@@ -57,6 +57,7 @@
                     android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="0dp"
                     android:textAlignment="center"
                     android:textColor="@drawable/selector_radio_text"
                     android:text="봄/가을" />
@@ -68,6 +69,7 @@
                     android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="0dp"
                     android:textAlignment="center"
                     android:textColor="@drawable/selector_radio_text"
                     android:text="여름" />
@@ -80,6 +82,7 @@
                     android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="0dp"
                     android:textAlignment="center"
                     android:textColor="@drawable/selector_radio_text"
                     android:text="겨울" />
@@ -113,6 +116,7 @@
                     android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="0dp"
                     android:textAlignment="center"
                     android:textColor="@drawable/selector_radio_text"
                     android:text="공개" />
@@ -124,6 +128,7 @@
                     android:background="@drawable/selector_detail_radio_button_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="0dp"
                     android:textAlignment="center"
                     android:textColor="@drawable/selector_radio_text"
                     android:text="비공개" />
