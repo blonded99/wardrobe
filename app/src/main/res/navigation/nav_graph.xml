@@ -9,22 +9,8 @@
         android:id="@+id/mainFragment"
         android:name="com.example.wardrobe.MainFragment"
         tools:layout="@layout/fragment_main" >
-<!--        <action-->
-<!--            android:id="@+id/action_mainFragment_to_detailFragment"-->
-<!--            app:destination="@id/detailFragment" />-->
-        <action
-            android:id="@+id/action_mainFragment_to_thirdFragment"
-            app:destination="@id/thirdFragment" />
-
-
     </fragment>
 
-
-    <fragment
-        android:id="@+id/thirdFragment"
-        android:name="com.example.wardrobe.ThirdFragment"
-        tools:layout="@layout/fragment_third" >
-    </fragment>
 
     <fragment
         android:id="@+id/wardrobeFragment"
@@ -45,6 +31,9 @@
         android:id="@+id/communityFragment"
         android:name="com.example.wardrobe.CommunityFragment"
         tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_communityFragment_to_detailCommunityFragment"
+            app:destination="@id/detailCommunityFragment" />
     </fragment>
 
     <fragment
@@ -114,6 +103,12 @@
         android:id="@+id/detailCodiEditFragment"
         android:name="com.example.wardrobe.DetailCodiEditFragment"
         tools:layout="@layout/fragment_detail_codi_edit" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailCommunityFragment"
+        android:name="com.example.wardrobe.DetailCommunityFragment"
+        tools:layout="@layout/fragment_detail_community" >
     </fragment>
 
 </navigation>
