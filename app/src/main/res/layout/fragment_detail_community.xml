@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_codi"
+                android:id="@+id/iv_community"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:scaleType="fitCenter"
@@ -37,7 +37,7 @@
                 android:background="@color/lightgray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_codi" />
+                app:layout_constraintTop_toBottomOf="@id/iv_community" />
 
 
             <TextView
