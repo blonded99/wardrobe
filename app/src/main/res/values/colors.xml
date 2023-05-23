@@ -15,6 +15,7 @@
     <color name="lightgreen">#F3F6F6</color>
     <color name="bg_ivory">#FFFBEC</color>
     <color name="bg_purple">#DDDFFF</color>
+    <color name="bg_green">#F0F8F8</color>
     <color name="yellow">#FAFF00</color>
 
 </resources>

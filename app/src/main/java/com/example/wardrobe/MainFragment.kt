@@ -104,11 +104,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.button.setOnClickListener {
-//            findNavController().navigate(R.id.action_mainFragment_to_thirdFragment)
-            findNavController().navigate(R.id.action_mainFragment_to_thirdFragment)
-        }
-
     }
 
     override fun onResume() {

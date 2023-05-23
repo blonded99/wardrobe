@@ -2,6 +2,7 @@ package com.example.wardrobe.adapters
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.CommunityItem
@@ -88,6 +90,17 @@ class CommunityMainRecyclerViewAdapter(private val viewModel: CommunityViewModel
                                 buttonLike.setBackgroundResource(R.drawable.icon_heart)
                                 return@addOnSuccessListener
                             }
+                        }
+                    }
+            }
+
+            clothesImage.setOnClickListener {
+                setColRef.whereEqualTo("imageRef",viewModel.communityMainItems[pos].clothesImageUrl).get()
+                    .addOnSuccessListener {
+                        for(doc in it){
+                            val bundle = Bundle()
+                            bundle.putString("imageRef",doc["imageRef"].toString())
+                            fragment.findNavController().navigate(R.id.action_communityFragment_to_detailCommunityFragment,bundle)
                         }
                     }
             }
