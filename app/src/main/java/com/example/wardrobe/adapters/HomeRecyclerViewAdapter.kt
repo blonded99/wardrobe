@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
 import com.example.wardrobe.viewmodel.HomeViewModel
-import com.example.wardrobe.viewmodel.WardrobeViewModel
 
 class HomeRecyclerViewAdapter(private val viewModel: HomeViewModel, val context: Context?, val fragment: Fragment):
     RecyclerView.Adapter<HomeRecyclerViewAdapter.RecyclerViewViewHolder>() {
