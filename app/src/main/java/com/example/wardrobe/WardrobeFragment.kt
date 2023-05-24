@@ -120,6 +120,9 @@ class WardrobeFragment : Fragment() {
         binding.floatingActionButtonCodi.setOnClickListener {
             viewModel.isCodiMode.value = viewModel.isCodiMode.value != true
         }
+        binding.searchbtn.setOnClickListener{
+            navController.navigate(R.id.action_wardrobeFragment_to_searchFragment)
+        }
 
 
         loadTopList()

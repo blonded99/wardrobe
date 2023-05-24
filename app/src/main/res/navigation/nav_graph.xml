@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_wardrobeFragment_to_doCodiFragment"
             app:destination="@id/doCodiFragment" />
+        <action
+            android:id="@+id/action_wardrobeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment
@@ -110,5 +113,10 @@
         android:name="com.example.wardrobe.DetailCommunityFragment"
         tools:layout="@layout/fragment_detail_community" >
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.wardrobe.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 
 </navigation>
