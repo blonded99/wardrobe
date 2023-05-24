@@ -117,6 +117,13 @@
         android:id="@+id/searchFragment"
         android:name="com.example.wardrobe.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_self"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_doCodiFragment"
+            app:destination="@id/doCodiFragment" />
+    </fragment>
 
 </navigation>

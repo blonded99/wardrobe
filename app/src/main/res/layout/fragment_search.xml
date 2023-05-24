@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
-
     <LinearLayout
         android:id="@+id/search_area"
         android:layout_width="match_parent"
@@ -36,14 +35,86 @@
             android:text="검색" />
 
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/SearchRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/lightgray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_area" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="14dp"
+        app:selectionRequired="true"
+        app:singleSelection="true"
+        app:checkedButton="@id/button_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line1" >
+
+        <Button
+            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
+            android:id="@+id/button_top"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="상의"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            android:backgroundTint="@color/button_toggle_group_background_tint"
+            android:textColor="@drawable/selector_community_button_text" />
+
+        <Button
+            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
+            android:id="@+id/button_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="하의"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            android:backgroundTint="@color/button_toggle_group_background_tint"
+            android:textColor="@drawable/selector_community_button_text" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/lightgray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/recyclerView_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
