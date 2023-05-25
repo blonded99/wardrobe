@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_communityFragment_to_detailCommunityFragment"
             app:destination="@id/detailCommunityFragment" />
+        <action
+            android:id="@+id/action_communityFragment_to_communitySearchFragment"
+            app:destination="@id/communitySearchFragment" />
     </fragment>
 
     <fragment
@@ -128,6 +131,9 @@
             android:name="search"
             app:argType="string"
             />
+        <action
+            android:id="@+id/action_searchFragment_to_detailClothesFragment"
+            app:destination="@id/detailClothesFragment" />
     </fragment>
     <fragment
         android:id="@+id/codiSearchFragment"
@@ -136,6 +142,16 @@
         tools:layout="@layout/fragment_codisearch">
         <argument
             android:name="searchcodi"
+            app:argType="string"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/communitySearchFragment"
+        android:name="com.example.wardrobe.CommunitySearchFragment"
+        android:label="fragment_communitysearch"
+        tools:layout="@layout/fragment_communitysearch" >
+        <argument
+            android:name="searchcommunity"
             app:argType="string"
             />
     </fragment>

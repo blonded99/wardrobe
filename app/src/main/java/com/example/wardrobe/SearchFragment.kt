@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.WardrobeBottomRecyclerViewAdapter
 import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentSearchBinding
+import com.example.wardrobe.viewmodel.CommunityItem
 import com.example.wardrobe.viewmodel.Item
 import com.example.wardrobe.viewmodel.WardrobeViewModel
 import com.google.firebase.firestore.ktx.firestore
@@ -25,16 +26,20 @@ import com.google.firebase.ktx.Firebase
 class SearchFragment: Fragment(){
     private lateinit var binding:FragmentSearchBinding
     private val viewModel by viewModels<WardrobeViewModel> ()
-    private lateinit var adapter_top:WardrobeRecyclerViewAdapter
     protected lateinit var navController: NavController
 
-
+//    val inputtext = binding.editSearch.text.toString()
 
     val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
 
     val db = Firebase.firestore
     // Top(상의) Collection Ref
     val topColRef = db.collection("top")
+    val bottomColRef = db.collection("bottom")
+
+    val text = requireArguments().getString("search")
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,17 +48,19 @@ class SearchFragment: Fragment(){
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater,container,false)
 
-        initView()
-        return binding.root
-    }
-    private fun initView() {
         val text = requireArguments().getString("search")
         binding.editSearch.setText(text)
         searchtopList()
 
+
+        initView()
+        return binding.root
+    }
+    private fun initView() {
+
         navController = findNavController()
 
-        adapter_top = WardrobeRecyclerViewAdapter(viewModel, context, this)
+        val adapter_top = WardrobeRecyclerViewAdapter(viewModel, context, this)
         val adapter_bottom = WardrobeBottomRecyclerViewAdapter(viewModel,context,this)
 
         binding.recyclerViewTop.adapter = adapter_top
@@ -70,15 +77,16 @@ class SearchFragment: Fragment(){
             adapter_bottom.notifyDataSetChanged()
         }
 
-        binding.searchProductBtn.setOnClickListener {
-            Log.d("search", "input: ${binding.editSearch.text.toString()}")
-            searchBottomList()
-            searchtopList()
-        }
-
         binding.radioGroup.addOnButtonCheckedListener { group, _, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener
-
+            if (group.checkedButtonId == R.id.button_top) {
+                binding.searchProductBtn.setOnClickListener {
+                    searchtopList()
+                }
+            } else if (group.checkedButtonId == R.id.button_bottom)
+                binding.searchProductBtn.setOnClickListener {
+                    searchBottomList()
+                }
             when(group.checkedButtonId){
                 R.id.button_top -> searchtopList()
                 R.id.button_bottom -> searchBottomList()
@@ -136,8 +144,6 @@ class SearchFragment: Fragment(){
             if(viewModel.topSelectedCheckBox.value != null) {
                 if (viewModel.bottomSelectedCheckBox.value != null) {
                     val bundle = Bundle()
-//                    bundle.putInt("topIndex", viewModel.topSelectedCheckBox.value!!)
-//                    bundle.putInt("bottomIndex", viewModel.bottomSelectedCheckBox.value!!)
                     bundle.putString("topRef",viewModel.topItems[viewModel.topSelectedCheckBox.value!!].clothesImageUrl)
                     bundle.putString("bottomRef",viewModel.bottomItems[viewModel.bottomSelectedCheckBox.value!!].clothesImageUrl)
                     findNavController().navigate(R.id.action_searchFragment_to_doCodiFragment,bundle)
@@ -151,8 +157,6 @@ class SearchFragment: Fragment(){
             if(viewModel.bottomSelectedCheckBox.value != null) {
                 if (viewModel.topSelectedCheckBox.value != null) {
                     val bundle = Bundle()
-//                    bundle.putInt("topIndex", viewModel.topSelectedCheckBox.value!!)
-//                    bundle.putInt("bottomIndex", viewModel.bottomSelectedCheckBox.value!!)
                     bundle.putString("topRef",viewModel.topItems[viewModel.topSelectedCheckBox.value!!].clothesImageUrl)
                     bundle.putString("bottomRef",viewModel.bottomItems[viewModel.bottomSelectedCheckBox.value!!].clothesImageUrl)
                     findNavController().navigate(R.id.action_searchFragment_to_doCodiFragment,bundle)
@@ -186,113 +190,277 @@ class SearchFragment: Fragment(){
         loadbottomthicknessList()
     }
     private fun loadseasonList() {
-        val seasonColRef = db.collection("top")
-        seasonColRef.whereEqualTo("season", binding.editSearch.text.toString()).get()
-            .addOnSuccessListener {
-                for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"top")
+        if (binding.editSearch.text.toString().equals("여름")) {
+            topColRef.whereEqualTo("season", "summer").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
                 }
-            }
+        }
+        else if(binding.editSearch.text.toString().equals("겨울")) {
+            topColRef.whereEqualTo("season", "summer").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("가을")){
+            topColRef.whereEqualTo("season", "spring&fall").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("봄")){
+            topColRef.whereEqualTo("season", "spring&fall").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
+                }
+        }
     }
     private fun loadsizeList() {
-        val seasonColRef = db.collection("top")
-        seasonColRef.whereEqualTo("size", binding.editSearch.text.toString()).get()
+        topColRef.whereEqualTo("size", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"top")
+                    if(doc["userID"] == currentUID) {
+                        viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                    }
                 }
             }
     }
     private fun loadbrandList() {
-        val seasonColRef = db.collection("top")
-        seasonColRef.whereEqualTo("brand", binding.editSearch.text.toString()).get()
+        topColRef.whereEqualTo("brand", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"top")
+                    if(doc["userID"] == currentUID) {
+                        viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                    }
                 }
             }
     }
     private fun loadtagList() {
-        val seasonColRef = db.collection("top")
-        seasonColRef.whereArrayContains("hashtag", binding.editSearch.text.toString()).get()
+        topColRef.whereArrayContains("hashtag", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"top")
+                    if(doc["userID"] == currentUID) {
+                        viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                    }
                 }
             }
     }
     private fun loadlengthList() {
-        val seasonColRef = db.collection("top")
-        seasonColRef.whereEqualTo("length", binding.editSearch.text.toString()).get()
-            .addOnSuccessListener {
-                for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"top")
+        if (binding.editSearch.text.toString().equals("김")) {
+            topColRef.whereEqualTo("length", "long").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
                 }
-            }
+        }
+        else if(binding.editSearch.text.toString().equals("짧음")) {
+            topColRef.whereEqualTo("length", "short").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("기타")){
+            topColRef.whereEqualTo("length", "other").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
+                }
+        }
     }
     private fun loadthicknessList() {
-        val seasonColRef = db.collection("top")
-        seasonColRef.whereEqualTo("thickness", binding.editSearch.text.toString()).get()
-            .addOnSuccessListener {
-                for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"top")
+        if (binding.editSearch.text.toString().equals("두꺼움")) {
+            topColRef.whereEqualTo("thickness", "thick").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
                 }
-            }
+        }
+        else if(binding.editSearch.text.toString().equals("보통")) {
+            topColRef.whereEqualTo("thickness", "medium").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("얇음")){
+            topColRef.whereEqualTo("thickness", "thin").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "top")
+                        }
+                    }
+                }
+        }
     }
 
     private fun loadbottomseasonList() {
-        val seasonColRef = db.collection("bottom")
-        seasonColRef.whereEqualTo("season", binding.editSearch.text.toString()).get()
-            .addOnSuccessListener {
-                for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"bottom")
+        if (binding.editSearch.text.toString().equals("여름")) {
+            bottomColRef.whereEqualTo("season", "summer").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
                 }
-            }
+        }
+        else if(binding.editSearch.text.toString().equals("겨울")) {
+            bottomColRef.whereEqualTo("season", "summer").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("봄")){
+            bottomColRef.whereEqualTo("season", "spring&fall").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("가을")){
+            bottomColRef.whereEqualTo("season", "spring&fall").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
+                }
+        }
     }
     private fun loadbottomsizeList() {
-        val seasonColRef = db.collection("bottom")
-        seasonColRef.whereEqualTo("size", binding.editSearch.text.toString()).get()
+        bottomColRef.whereEqualTo("size", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"bottom")
+                    if(doc["userID"] == currentUID) {
+                        viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                    }
                 }
             }
     }
     private fun loadbottombrandList() {
-        val seasonColRef = db.collection("bottom")
-        seasonColRef.whereEqualTo("brand", binding.editSearch.text.toString()).get()
+        bottomColRef.whereEqualTo("brand", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"bottom")
+                    if(doc["userID"] == currentUID) {
+                        viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                    }
                 }
             }
     }
     private fun loadbottomtagList() {
-        val seasonColRef = db.collection("bottom")
-        seasonColRef.whereArrayContains("hashtag", binding.editSearch.text.toString()).get()
+        bottomColRef.whereArrayContains("hashtag", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"bottom")
+                    if(doc["userID"] == currentUID) {
+                        viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                    }
                 }
             }
     }
     private fun loadbottomlengthList() {
-        val seasonColRef = db.collection("bottom")
-        seasonColRef.whereEqualTo("length", binding.editSearch.text.toString()).get()
-            .addOnSuccessListener {
-                for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"bottom")
+        if (binding.editSearch.text.toString().equals("김")) {
+            bottomColRef.whereEqualTo("length", "long").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
                 }
-            }
+        }
+        else if(binding.editSearch.text.toString().equals("짧음")) {
+            bottomColRef.whereEqualTo("length", "short").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("기타")){
+            bottomColRef.whereEqualTo("length", "other").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
+                }
+        }
     }
     private fun loadbottomthicknessList() {
-        val seasonColRef = db.collection("bottom")
-        seasonColRef.whereEqualTo("thickness", binding.editSearch.text.toString()).get()
-            .addOnSuccessListener {
-                for (doc in it) {
-                    viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"bottom")
+        if (binding.editSearch.text.toString().equals("두꺼움")) {
+            bottomColRef.whereEqualTo("thickness", "thick").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
                 }
-            }
+        }
+        else if(binding.editSearch.text.toString().equals("보통")) {
+            bottomColRef.whereEqualTo("thickness", "medium").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("얇음")){
+            bottomColRef.whereEqualTo("thickness", "thin").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addWardrobeItem(Item(doc["imageRef"].toString()), "bottom")
+                        }
+                    }
+                }
+        }
     }
 
 }

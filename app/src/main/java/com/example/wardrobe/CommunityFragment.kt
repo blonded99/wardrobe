@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.CommunityLikedRecyclerViewAdapter
@@ -18,8 +21,9 @@ import com.google.firebase.ktx.Firebase
 
 class CommunityFragment : Fragment() {
     private lateinit var binding: FragmentCommunityBinding
-
+    protected lateinit var navController: NavController
     private val viewModel by viewModels<CommunityViewModel>()
+
 
     // 회원가입 구현 시 이부분 firebase auth에서 받아올 것
     val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
@@ -45,6 +49,7 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        navController = findNavController()
 
         val adapter_community_main = CommunityMainRecyclerViewAdapter(viewModel,context,this)
         val adapter_community_liked = CommunityLikedRecyclerViewAdapter(viewModel,context,this)
@@ -64,6 +69,13 @@ class CommunityFragment : Fragment() {
         }
 
         loadCommunityMainList()
+
+        binding.searchProductBtn.setOnClickListener {
+            val bundle = bundleOf("searchcommunity" to binding.editSearch.text.toString())
+            navController.navigate(R.id.action_communityFragment_to_communitySearchFragment, bundle)
+//            navController.navigate(R.id.action_wardrobeFragment_to_searchFragment)
+
+        }
 
         binding.radioGroup.addOnButtonCheckedListener { group, _, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener
