@@ -119,11 +119,12 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_self"
-            app:destination="@id/searchFragment" />
-        <action
             android:id="@+id/action_searchFragment_to_doCodiFragment"
             app:destination="@id/doCodiFragment" />
+        <argument
+            android:name="search"
+            app:argType="string"
+            />
     </fragment>
 
 </navigation>

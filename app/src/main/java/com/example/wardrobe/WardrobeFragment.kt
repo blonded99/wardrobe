@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -115,6 +116,13 @@ class WardrobeFragment : Fragment() {
 
         binding.floatingActionButtonAdd.setOnClickListener {
             navController.navigate(R.id.action_wardrobeFragment_to_addclothesFragment)
+        }
+
+        binding.searchProductBtn.setOnClickListener {
+            val bundle = bundleOf("search" to binding.editSearch.text.toString())
+            navController.navigate(R.id.action_wardrobeFragment_to_searchFragment, bundle)
+//            navController.navigate(R.id.action_wardrobeFragment_to_searchFragment)
+
         }
 
         binding.floatingActionButtonCodi.setOnClickListener {

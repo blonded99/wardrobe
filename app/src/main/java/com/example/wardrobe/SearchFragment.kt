@@ -1,10 +1,12 @@
 package com.example.wardrobe
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -26,6 +28,8 @@ class SearchFragment: Fragment(){
     private lateinit var adapter_top:WardrobeRecyclerViewAdapter
     protected lateinit var navController: NavController
 
+
+
     val currentUID = "3t6Dt8DleiZXrzzf696dgF15gJl2"
 
     val db = Firebase.firestore
@@ -38,10 +42,15 @@ class SearchFragment: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater,container,false)
+
         initView()
         return binding.root
     }
     private fun initView() {
+        val text = requireArguments().getString("search")
+        binding.editSearch.setText(text)
+        searchtopList()
+
         navController = findNavController()
 
         adapter_top = WardrobeRecyclerViewAdapter(viewModel, context, this)
@@ -74,6 +83,53 @@ class SearchFragment: Fragment(){
                 R.id.button_top -> searchtopList()
                 R.id.button_bottom -> searchBottomList()
             }
+        }
+
+        viewModel.isCodiMode.observe(viewLifecycleOwner){
+            when(binding.radioGroup.checkedButtonId){
+                R.id.button_top -> adapter_top.notifyDataSetChanged()
+                R.id.button_bottom -> adapter_bottom.notifyDataSetChanged()
+            }
+            if(it==true)
+                binding.floatingActionButtonCodi.setImageResource(R.drawable.button_return)
+            else
+                binding.floatingActionButtonCodi.setImageResource(R.drawable.button_fab_codi)
+        }
+
+        var isFABOpen = false
+
+        binding.floatingActionButton.setOnClickListener {
+            if (!isFABOpen) {
+                isFABOpen = true
+                binding.floatingActionButton.animate()
+                    .rotation(45f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(300)
+                    .start()
+
+                binding.floatingActionButtonAdd.visibility = View.VISIBLE
+                binding.floatingActionButtonCodi.visibility = View.VISIBLE
+            } else {
+                isFABOpen = false
+                binding.floatingActionButton.animate()
+                    .rotation(0f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(300)
+                    .start()
+
+                binding.floatingActionButtonAdd.visibility = View.INVISIBLE
+                binding.floatingActionButtonCodi.visibility = View.INVISIBLE
+            }
+        }
+
+        binding.floatingActionButtonAdd.setOnClickListener {
+            navController.navigate(R.id.action_wardrobeFragment_to_addclothesFragment)
+        }
+
+        binding.floatingActionButtonCodi.setOnClickListener {
+            viewModel.isCodiMode.value = viewModel.isCodiMode.value != true
         }
 
         viewModel.topSelectedCheckBox.observe(viewLifecycleOwner) { position ->
@@ -158,7 +214,7 @@ class SearchFragment: Fragment(){
     }
     private fun loadtagList() {
         val seasonColRef = db.collection("top")
-        seasonColRef.whereEqualTo("tag", binding.editSearch.text.toString()).get()
+        seasonColRef.whereArrayContains("hashtag", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
                     viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"top")
@@ -213,7 +269,7 @@ class SearchFragment: Fragment(){
     }
     private fun loadbottomtagList() {
         val seasonColRef = db.collection("bottom")
-        seasonColRef.whereEqualTo("tag", binding.editSearch.text.toString()).get()
+        seasonColRef.whereArrayContains("hashtag", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
                     viewModel.addWardrobeItem(Item(doc["imageRef"].toString()),"bottom")
