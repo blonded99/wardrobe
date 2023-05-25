@@ -37,9 +37,6 @@ class SearchFragment: Fragment(){
     val topColRef = db.collection("top")
     val bottomColRef = db.collection("bottom")
 
-    val text = requireArguments().getString("search")
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,16 +44,14 @@ class SearchFragment: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater,container,false)
-
-        val text = requireArguments().getString("search")
-        binding.editSearch.setText(text)
-        searchtopList()
-
-
         initView()
         return binding.root
     }
     private fun initView() {
+
+        val text = requireArguments().getString("search")
+        binding.editSearch.setText(text)
+//        searchtopList()
 
         navController = findNavController()
 

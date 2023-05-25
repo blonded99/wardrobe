@@ -85,7 +85,7 @@ class CodiSearchFragment : Fragment(){
                 }
         }
         else if(binding.editSearch.text.toString().equals("겨울")) {
-            setColRef.whereEqualTo("season", "summer").get()
+            setColRef.whereEqualTo("season", "winter").get()
                 .addOnSuccessListener {
                     for (doc in it) {
                         if (doc["userID"] == currentUID) {

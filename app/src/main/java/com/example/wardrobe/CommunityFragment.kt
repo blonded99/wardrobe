@@ -70,12 +70,12 @@ class CommunityFragment : Fragment() {
 
         loadCommunityMainList()
 
-        binding.searchProductBtn.setOnClickListener {
-            val bundle = bundleOf("searchcommunity" to binding.editSearch.text.toString())
-            navController.navigate(R.id.action_communityFragment_to_communitySearchFragment, bundle)
-//            navController.navigate(R.id.action_wardrobeFragment_to_searchFragment)
-
-        }
+//        binding.searchProductBtn.setOnClickListener {
+//            val bundle = bundleOf("searchcommunity" to binding.editSearch.text.toString())
+//            navController.navigate(R.id.action_communityFragment_to_communitySearchFragment, bundle)
+////            navController.navigate(R.id.action_wardrobeFragment_to_searchFragment)
+//
+//        }
 
         binding.radioGroup.addOnButtonCheckedListener { group, _, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener
