@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_codiFragment_to_detailCodiFragment"
             app:destination="@id/detailCodiFragment" />
+        <action
+            android:id="@+id/action_codiFragment_to_codiSearchFragment"
+            app:destination="@id/codiSearchFragment" />
     </fragment>
 
     <fragment
@@ -126,5 +129,16 @@
             app:argType="string"
             />
     </fragment>
+    <fragment
+        android:id="@+id/codiSearchFragment"
+        android:name="com.example.wardrobe.CodiSearchFragment"
+        android:label="fragment_codisearch"
+        tools:layout="@layout/fragment_codisearch">
+        <argument
+            android:name="searchcodi"
+            app:argType="string"
+            />
+    </fragment>
+
 
 </navigation>

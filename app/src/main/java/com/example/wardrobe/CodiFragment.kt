@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -24,6 +26,8 @@ import com.google.firebase.ktx.Firebase
 
 class CodiFragment : Fragment() {
     private lateinit var binding: FragmentCodiBinding
+    protected lateinit var navController: NavController
+
 
     private val viewModel by viewModels<CodiViewModel>()
 
@@ -50,6 +54,8 @@ class CodiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        navController = findNavController()
 
         val adapter_codi_all = CodiAllRecyclerViewAdapter(viewModel,context,this)
         val adapter_codi_public = CodiPublicRecyclerViewAdapter(viewModel,context,this)
@@ -86,6 +92,12 @@ class CodiFragment : Fragment() {
                 R.id.button_public_codi -> loadCodiPublicList()
                 R.id.button_private_codi -> loadCodiPrivateList()
             }
+        }
+        binding.searchProductBtn.setOnClickListener {
+            val bundle = bundleOf("searchcodi" to binding.editSearch.text.toString())
+            navController.navigate(R.id.action_codiFragment_to_codiSearchFragment, bundle)
+//            navController.navigate(R.id.action_wardrobeFragment_to_searchFragment)
+
         }
 
 
