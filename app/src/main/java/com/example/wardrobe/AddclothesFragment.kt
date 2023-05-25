@@ -2,6 +2,7 @@ package com.example.wardrobe
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -62,6 +63,7 @@ class AddclothesFragment : Fragment() {
 
     companion object{
         const val REQ_GALLERY = 1
+        const val REQUEST_CAMERA = 2
     }
 
     private var list = ArrayList<String>() // post image 넘어오는 array
@@ -82,15 +84,12 @@ class AddclothesFragment : Fragment() {
                     for (i in 0 until count) {
                         val imageUri = getRealPathFromURI(it.clipData!!.getItemAt(i).uri)
 
-                        // Do Something with uri
                         doSomething(imageUri, isTop)
 
                     }
                 } else {    // 사진 1장 선택
                     val imageUri = getRealPathFromURI(it.data!!)
 
-
-                    // Do Something with uri
                     doSomething(imageUri, isTop)
 
 
@@ -99,6 +98,18 @@ class AddclothesFragment : Fragment() {
             }
         }
     }
+
+    private val takePictureResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val photoUri = result.data?.data
+            photoUri?.let {
+                val imageUri = getRealPathFromURI(it)
+//                doSomething(imageUri, isTop)
+                Snackbar.make(binding.root,"Success ${imageUri}", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -133,13 +144,31 @@ class AddclothesFragment : Fragment() {
 
             topButton.setOnClickListener {
                 isTop = true
-                selectGallery()
+//                selectGallery()
+                AlertDialog.Builder(context)
+                    .setTitle("사진 업로드")
+                    .setPositiveButton("카메라") { _, _ ->
+                        checkCameraPermission()
+                    }
+                    .setNegativeButton("갤러리") { _, _ ->
+                        selectGallery()
+                    }
+                    .show()
                 dialog.dismiss()
             }
 
             bottomButton.setOnClickListener {
                 isTop = false
-                selectGallery()
+//                selectGallery()
+                AlertDialog.Builder(context)
+                    .setTitle("사진 업로드")
+                    .setPositiveButton("카메라") { _, _ ->
+                        checkCameraPermission()
+                    }
+                    .setNegativeButton("갤러리") { _, _ ->
+                        selectGallery()
+                    }
+                    .show()
                 dialog.dismiss()
             }
 
@@ -293,9 +322,9 @@ class AddclothesFragment : Fragment() {
 
         // 느린 서버 테스트용 timeout 재설정
         val client = OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS) // Adjust the timeout value as needed
-            .readTimeout(30, TimeUnit.SECONDS) // Adjust the timeout value as needed
-            .writeTimeout(30, TimeUnit.SECONDS) // Adjust the timeout value as needed
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
 
         val requestBody: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -343,7 +372,6 @@ class AddclothesFragment : Fragment() {
                     val path = jsonObject.optString("path", "") // storage에 들어간 사진의 path
                     Log.e("", "path= $path")
 
-                    // Process with path
                     clothesInfo.imageRef = path
                     listImageDialog(path)
 
@@ -357,8 +385,6 @@ class AddclothesFragment : Fragment() {
         } else {
             Snackbar.make(binding.root,"RESPONSE FAILED", Snackbar.LENGTH_SHORT).show()
         }
-
-//        listImageDialog()
 
 
         withContext(Dispatchers.Main) {
@@ -389,6 +415,24 @@ class AddclothesFragment : Fragment() {
                 .into(BitmapImageViewTarget(binding.ivGallery))
         }
 
+    }
+
+
+    private fun takePictureFromCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+            takePictureResultLauncher.launch(takePictureIntent)
+        }
+    }
+
+    private fun checkCameraPermission() {
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA),
+                REQUEST_CAMERA)
+        } else {
+            takePictureFromCamera()
+        }
     }
 
 
