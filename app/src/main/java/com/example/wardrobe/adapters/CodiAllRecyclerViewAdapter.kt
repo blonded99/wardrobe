@@ -68,7 +68,7 @@ class CodiAllRecyclerViewAdapter(private val viewModel: CodiViewModel, val conte
                         for(doc in it){
                             val bundle = Bundle()
                             bundle.putString("imageRef",doc["imageRef"].toString())
-                            fragment.findNavController().navigate(R.id.action_codiFragment_to_detailCodiFragment,bundle)
+                            fragment.findNavController().navigate(R.id.detailCodiFragment,bundle)
                         }
                     }
             }

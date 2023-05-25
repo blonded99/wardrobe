@@ -74,27 +74,63 @@ class CodiSearchFragment : Fragment(){
     }
 
     private fun loadseasonList() {
-        setColRef.whereEqualTo("season", binding.editSearch.text.toString()).get()
-            .addOnSuccessListener {
-                for (doc in it) {
-                    viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()),"all")
+        if (binding.editSearch.text.toString().equals("여름")) {
+            setColRef.whereEqualTo("season", "summer").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()), "all")
+                        }
+                    }
                 }
-            }
+        }
+        else if(binding.editSearch.text.toString().equals("겨울")) {
+            setColRef.whereEqualTo("season", "summer").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()), "all")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("가을")){
+            setColRef.whereEqualTo("season", "spring&fall").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()), "all")
+                        }
+                    }
+                }
+        }
+        else if(binding.editSearch.text.toString().equals("봄")){
+            setColRef.whereEqualTo("season", "spring&fall").get()
+                .addOnSuccessListener {
+                    for (doc in it) {
+                        if (doc["userID"] == currentUID) {
+                            viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()), "all")
+                        }
+                    }
+                }
+        }
     }
     private fun loadmemoList() {
         setColRef.whereEqualTo("memo", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()),"all")
-                }
+                    if (doc["userID"] == currentUID) {
+                        viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()), "all")
+                    }                }
             }
     }
     private fun loadtagList() {
         setColRef.whereArrayContains("hashtag", binding.editSearch.text.toString()).get()
             .addOnSuccessListener {
                 for (doc in it) {
-                    viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()),"all")
-                }
+                    if (doc["userID"] == currentUID) {
+                        viewModel.addCodiItem(CodiItem(doc["imageRef"].toString()), "all")
+                    }                }
             }
     }
 
