@@ -104,8 +104,8 @@ class AddclothesFragment : Fragment() {
             val photoUri = result.data?.data
             photoUri?.let {
                 val imageUri = getRealPathFromURI(it)
-//                doSomething(imageUri, isTop)
-                Snackbar.make(binding.root,"Success ${imageUri}", Snackbar.LENGTH_SHORT).show()
+                doSomething(imageUri, isTop)
+//                Snackbar.make(binding.root,"Success ${imageUri}", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
