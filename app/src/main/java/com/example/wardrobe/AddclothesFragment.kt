@@ -338,7 +338,9 @@ class AddclothesFragment : Fragment() {
             .build()
 
 //        var baseUrl = "http://10.0.2.2:5000/seg_clothes"              // 로컬 테스트용
-        var baseUrl = "http://helike.duckdns.org:5000/seg_clothes"   // 느린 서버 테스트용
+        var baseUrl = "http://13.209.183.25:5000/seg_clothes"
+//           "http://helike.duckdns.org:5000/seg_clothes"   // 느린 서버 테스트용
+
 
         if (isTop) {
             baseUrl += "?include=0"
