@@ -196,7 +196,7 @@ class SearchFragment: Fragment(){
                 }
         }
         else if(binding.editSearch.text.toString().equals("겨울")) {
-            topColRef.whereEqualTo("season", "summer").get()
+            topColRef.whereEqualTo("season", "winter").get()
                 .addOnSuccessListener {
                     for (doc in it) {
                         if (doc["userID"] == currentUID) {
@@ -333,7 +333,7 @@ class SearchFragment: Fragment(){
                 }
         }
         else if(binding.editSearch.text.toString().equals("겨울")) {
-            bottomColRef.whereEqualTo("season", "summer").get()
+            bottomColRef.whereEqualTo("season", "winter").get()
                 .addOnSuccessListener {
                     for (doc in it) {
                         if (doc["userID"] == currentUID) {
