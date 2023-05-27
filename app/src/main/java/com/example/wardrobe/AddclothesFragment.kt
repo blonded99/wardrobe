@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -43,6 +45,10 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class AddclothesFragment : Fragment() {
@@ -65,6 +71,8 @@ class AddclothesFragment : Fragment() {
         const val REQ_GALLERY = 1
         const val REQUEST_CAMERA = 2
     }
+
+    private var currentPhotoPath: String = ""
 
     private var list = ArrayList<String>() // post image 넘어오는 array
 
@@ -101,14 +109,11 @@ class AddclothesFragment : Fragment() {
 
     private val takePictureResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            val photoUri = result.data?.data
-            photoUri?.let {
-                val imageUri = getRealPathFromURI(it)
-                doSomething(imageUri, isTop)
-//                Snackbar.make(binding.root,"Success ${imageUri}", Snackbar.LENGTH_SHORT).show()
-            }
+            if (currentPhotoPath.isNotBlank())
+                doSomething(currentPhotoPath, isTop)
         }
     }
+
 
 
     override fun onCreateView(
@@ -423,7 +428,35 @@ class AddclothesFragment : Fragment() {
     private fun takePictureFromCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-            takePictureResultLauncher.launch(takePictureIntent)
+            val photoFile: File? = try {
+                createImageFile()
+            } catch (ex: IOException) {
+                // 파일 생성에서 문제 생기면
+                null
+            }
+            photoFile?.also {
+                val photoURI: Uri = FileProvider.getUriForFile(
+                    requireActivity(),
+                    "${BuildConfig.APPLICATION_ID}.provider",
+                    it
+                )
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                takePictureResultLauncher.launch(takePictureIntent)
+            }
+        }
+    }
+
+
+    private fun createImageFile(): File {
+        // 파일 이름
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentPhotoPath = absolutePath
         }
     }
 
@@ -436,7 +469,6 @@ class AddclothesFragment : Fragment() {
             takePictureFromCamera()
         }
     }
-
 
 }
 
