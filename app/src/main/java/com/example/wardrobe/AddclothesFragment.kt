@@ -4,8 +4,13 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -45,6 +50,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -72,6 +78,7 @@ class AddclothesFragment : Fragment() {
         const val REQUEST_CAMERA = 2
     }
 
+    private var isCamera : Boolean = false
     private var currentPhotoPath: String = ""
 
     private var list = ArrayList<String>() // post image 넘어오는 array
@@ -153,9 +160,11 @@ class AddclothesFragment : Fragment() {
                 AlertDialog.Builder(context)
                     .setTitle("사진 업로드")
                     .setPositiveButton("카메라") { _, _ ->
+                        isCamera = true
                         checkCameraPermission()
                     }
                     .setNegativeButton("갤러리") { _, _ ->
+                        isCamera = false
                         selectGallery()
                     }
                     .show()
@@ -168,9 +177,11 @@ class AddclothesFragment : Fragment() {
                 AlertDialog.Builder(context)
                     .setTitle("사진 업로드")
                     .setPositiveButton("카메라") { _, _ ->
+                        isCamera = true
                         checkCameraPermission()
                     }
                     .setNegativeButton("갤러리") { _, _ ->
+                        isCamera = false
                         selectGallery()
                     }
                     .show()
@@ -402,14 +413,31 @@ class AddclothesFragment : Fragment() {
     fun doSomething(imageUri: String, isTop: Boolean){
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val path = imageUri
-                removeBackground(path, isTop)
+                if(isCamera) {
+                    val originalFile = File(imageUri)
+                    val bitmap = BitmapFactory.decodeFile(originalFile.absolutePath)
+                    val rotatedBitmap =
+                        rotateImageIfRequired(requireActivity(), bitmap, Uri.fromFile(originalFile))
+
+                    val newFile = File(context?.cacheDir, originalFile.name)
+                    val out = FileOutputStream(newFile)
+                    rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                    out.flush()
+                    out.close()
+
+                    val path = newFile.absolutePath
+                    removeBackground(path, isTop)
+                }
+                else {
+                    val path = imageUri
+                    removeBackground(path, isTop)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
-
     }
+
 
 
     // path를 넘겨받고 storage에서 이미지 받아와서 imageView에 세팅
@@ -469,6 +497,40 @@ class AddclothesFragment : Fragment() {
             takePictureFromCamera()
         }
     }
+
+    fun rotateImageIfRequired(context: Context, img: Bitmap, selectedImage: Uri): Bitmap {
+        val input = context.contentResolver.openInputStream(selectedImage)
+        val ei: ExifInterface
+        ei = ExifInterface(input!!)
+        val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(img, 90f)
+
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(img, 180f)
+
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(img, 270f)
+
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> flipImage(img, horizontal = true, vertical = false)
+
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> flipImage(img, horizontal = false, vertical = true)
+
+            else -> img
+        }
+    }
+
+    private fun rotateImage(img: Bitmap, degree: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(degree)
+        return Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
+    }
+
+    private fun flipImage(img: Bitmap, horizontal: Boolean, vertical: Boolean): Bitmap {
+        val matrix = Matrix()
+        matrix.preScale((if (horizontal) -1 else 1).toFloat(), (if (vertical) -1 else 1).toFloat())
+        return Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
+    }
+
 
 }
 
