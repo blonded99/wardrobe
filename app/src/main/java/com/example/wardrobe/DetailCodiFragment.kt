@@ -1,5 +1,6 @@
 package com.example.wardrobe
 
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -56,6 +57,16 @@ class DetailCodiFragment : Fragment() {
             findNavController().navigate(R.id.action_detailCodiFragment_to_detailCodiEditFragment,bundle)
         }
 
+        binding.buttonTrash.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("삭제하시겠습니까?")
+                .setPositiveButton("예") { _, _ ->
+                    deleteClothes()
+                }
+                .setNegativeButton("아니오") { _, _ ->
+                }
+                .show()
+        }
 
     }
 
@@ -107,6 +118,18 @@ class DetailCodiFragment : Fragment() {
                     }
                 }
         }
+    }
+
+    private fun deleteClothes(){
+        setColRef.whereEqualTo("imageRef",storageImageRef).get()
+            .addOnSuccessListener {
+                for(doc in it){
+                    setColRef.document(doc.id).delete()
+                        .addOnSuccessListener {
+                            findNavController().popBackStack()
+                        }
+                }
+            }
     }
 
 
