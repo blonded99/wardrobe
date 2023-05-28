@@ -216,11 +216,10 @@
                 android:id="@+id/button_trash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:background="@drawable/icon_trash"
                 app:layout_constraintTop_toTopOf="@+id/button_edit"
                 app:layout_constraintBottom_toBottomOf="@+id/button_edit"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="@+id/editTextHashtag"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
