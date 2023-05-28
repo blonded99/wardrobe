@@ -1,5 +1,6 @@
 package com.example.wardrobe
 
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.databinding.FragmentDetailClothesBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -56,6 +58,17 @@ class DetailclothesFragment : Fragment() {
             bundle.putString("imageRef",storageImageRef)
             bundle.putBoolean("isTop",isTop)
             findNavController().navigate(R.id.action_detailClothesFragment_to_detailClothesEditFragment,bundle)
+        }
+
+        binding.buttonTrash.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("삭제하시겠습니까?")
+                .setPositiveButton("예") { _, _ ->
+                    deleteClothes()
+                }
+                .setNegativeButton("아니오") { _, _ ->
+                }
+                .show()
         }
 
 
@@ -132,6 +145,21 @@ class DetailclothesFragment : Fragment() {
                     }
                 }
         }
+    }
+
+    private fun deleteClothes(){
+        var target = "top"
+        if(!isTop)
+            target = "bottom"
+        db.collection(target).whereEqualTo("imageRef",storageImageRef).get()
+            .addOnSuccessListener {
+                for(doc in it){
+                    db.collection(target).document(doc.id).delete()
+                        .addOnSuccessListener {
+                            findNavController().popBackStack()
+                        }
+                }
+            }
     }
 
 
