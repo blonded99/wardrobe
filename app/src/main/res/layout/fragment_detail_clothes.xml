@@ -388,7 +388,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_edit_navy_large"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
