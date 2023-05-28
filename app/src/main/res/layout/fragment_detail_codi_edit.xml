@@ -163,7 +163,7 @@
             <EditText
                 android:id="@+id/editTextHashtag"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
@@ -173,10 +173,19 @@
                 android:inputType="textMultiLine"
                 android:textSize="13sp"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@+id/button_save"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line4" />
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="50dp"
+                android:background="@color/lightgray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextHashtag" />
 
             <ImageButton
                 android:id="@+id/button_save"
@@ -184,7 +193,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_save_navy_large"
                 android:layout_marginBottom="10dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/line5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
