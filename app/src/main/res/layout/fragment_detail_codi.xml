@@ -219,7 +219,7 @@
                 android:background="@drawable/icon_trash"
                 app:layout_constraintTop_toTopOf="@+id/button_edit"
                 app:layout_constraintBottom_toBottomOf="@+id/button_edit"
-                app:layout_constraintStart_toStartOf="@+id/editTextHashtag"/>
+                app:layout_constraintStart_toStartOf="@+id/radioGroup_season"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
