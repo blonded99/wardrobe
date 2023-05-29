@@ -15,7 +15,9 @@ import com.example.wardrobe.viewmodel.HomeItem
 import com.example.wardrobe.viewmodel.TempHomeItem
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
