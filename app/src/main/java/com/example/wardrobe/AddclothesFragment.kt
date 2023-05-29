@@ -240,22 +240,22 @@ class AddclothesFragment : Fragment() {
 
             if(isTop) {
                 topColRef.add(clothesInfo).addOnSuccessListener {
-                    Snackbar.make(binding.root,"FIRESTORE ADD SUCCESS", Snackbar.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
+                    Snackbar.make(binding.root,"옷 추가 성공", Snackbar.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_addclothesFragment_to_wardrobeFragment)
                 }
                     .addOnFailureListener {
-                        Snackbar.make(binding.root,"FIRESTORE ADD FAILED", Snackbar.LENGTH_SHORT).show()
-                        findNavController().popBackStack()
+                        Snackbar.make(binding.root,"옷 추가 실패", Snackbar.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_addclothesFragment_to_wardrobeFragment)
                     }
             }
             else{
                 bottomColRef.add(clothesInfo).addOnSuccessListener {
-                    Snackbar.make(binding.root,"FIRESTORE ADD SUCCESS", Snackbar.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
+                    Snackbar.make(binding.root,"옷 추가 성공", Snackbar.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_addclothesFragment_to_wardrobeFragment)
                 }
                     .addOnFailureListener {
-                        Snackbar.make(binding.root,"FIRESTORE ADD FAILED", Snackbar.LENGTH_SHORT).show()
-                        findNavController().popBackStack()
+                        Snackbar.make(binding.root,"옷 추가 실패", Snackbar.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_addclothesFragment_to_wardrobeFragment)
                     }
             }
 

@@ -55,6 +55,9 @@
         android:id="@+id/addclothesFragment"
         android:name="com.example.wardrobe.AddclothesFragment"
         tools:layout="@layout/fragment_addclothes" >
+        <action
+            android:id="@+id/action_addclothesFragment_to_wardrobeFragment"
+            app:destination="@id/wardrobeFragment" />
     </fragment>
 
     <fragment
