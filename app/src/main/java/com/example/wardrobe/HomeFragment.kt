@@ -69,6 +69,8 @@ class HomeFragment : Fragment() {
             currentAddress.text = it.location
             val unit = view.context.resources.getString(R.string.celsius)
             currentTemperature.text = "${it.temperature.toInt()} ${unit}"
+
+            loadHomeWeatherList(it.feelsLike)
         }
 
 
@@ -90,7 +92,6 @@ class HomeFragment : Fragment() {
             adapter_community.notifyDataSetChanged()
         }
 
-        loadHomeWeatherList()
         loadHomeCommunityList()
 
         //임시
@@ -108,32 +109,25 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun loadHomeWeatherList(){
+    private fun loadHomeWeatherList(feelsLike: Float) {
         viewModel.deleteHomeWeatherItem()
-        sortClothesForWeather(23) // api에서 현재 체감 온도 받아와서 전달
+        sortClothesForWeather(feelsLike) // api에서 현재 체감 온도 받아와서 전달
     }
 
-    private fun sortClothesForWeather(currentTemperature: Int){ // Int 아닐수도
-        if(currentTemperature in 17..22){
-            setColRef.whereEqualTo("userID",currentUID).get()
-                .addOnSuccessListener {
-                    for(doc in it){
-                        if(doc["season"].toString().equals("spring&fall")){
-                            viewModel.addHomeWeatherItem(HomeItem(doc["imageRef"].toString()))
-                        }
+    private fun sortClothesForWeather(feelsLike: Float) {
+        val seasonString = when {
+            feelsLike > 22f -> "summer"
+            feelsLike > 12f -> "spring&fall"
+            else -> "winter"
+        }
+        setColRef.whereEqualTo("userID", currentUID).get()
+            .addOnSuccessListener {
+                for (doc in it) {
+                    if (seasonString == doc["season"].toString()) {
+                        viewModel.addHomeWeatherItem(HomeItem(doc["imageRef"].toString()))
                     }
                 }
-        }
-        else if(currentTemperature > 22){
-            setColRef.whereEqualTo("userID",currentUID).get()
-                .addOnSuccessListener {
-                    for(doc in it){
-                        if(doc["season"].toString().equals("summer")){
-                            viewModel.addHomeWeatherItem(HomeItem(doc["imageRef"].toString()))
-                        }
-                    }
-                }
-        }
+            }
     }
 
     private fun loadHomeCommunityList() {
