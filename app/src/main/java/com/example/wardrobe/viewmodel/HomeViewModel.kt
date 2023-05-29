@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
         val isUpdateNeeded = dataStore.data.map { data ->
             val epoch = data[LAST_UPDATED] ?: 0
             val duration = now - Instant.fromEpochSeconds(epoch)
-            duration.inWholeMinutes > 60
+            duration.inWholeMinutes > 15
         }
         val cachedLatLon = dataStore.data.map { data ->
             val  lat= data[LAT_KEY]
