@@ -12,7 +12,6 @@ import com.example.wardrobe.adapters.HomeRecyclerViewAdapter2
 import com.example.wardrobe.databinding.FragmentHomeBinding
 import com.example.wardrobe.viewmodel.HomeViewModel
 import com.example.wardrobe.viewmodel.HomeItem
-import com.example.wardrobe.viewmodel.TempHomeItem
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -66,11 +65,12 @@ class HomeFragment : Fragment() {
             adapter_community.notifyDataSetChanged()
         }
 
+        loadHomeWeatherList()
         loadHomeCommunityList()
 
         //임시
-        viewModel.addHomeWeatherItem(TempHomeItem(R.drawable.test_top))
-        viewModel.addHomeWeatherItem(TempHomeItem(R.drawable.test_bottom))
+//        viewModel.addHomeWeatherItem(TempHomeItem(R.drawable.test_top))
+//        viewModel.addHomeWeatherItem(TempHomeItem(R.drawable.test_bottom))
 
     }
 
@@ -83,6 +83,33 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun loadHomeWeatherList(){
+        viewModel.deleteHomeWeatherItem()
+        sortClothesForWeather(23) // api에서 현재 체감 온도 받아와서 전달
+    }
+
+    private fun sortClothesForWeather(currentTemperature: Int){ // Int 아닐수도
+        if(currentTemperature in 17..22){
+            setColRef.whereEqualTo("userID",currentUID).get()
+                .addOnSuccessListener {
+                    for(doc in it){
+                        if(doc["season"].toString().equals("spring&fall")){
+                            viewModel.addHomeWeatherItem(HomeItem(doc["imageRef"].toString()))
+                        }
+                    }
+                }
+        }
+        else if(currentTemperature > 22){
+            setColRef.whereEqualTo("userID",currentUID).get()
+                .addOnSuccessListener {
+                    for(doc in it){
+                        if(doc["season"].toString().equals("summer")){
+                            viewModel.addHomeWeatherItem(HomeItem(doc["imageRef"].toString()))
+                        }
+                    }
+                }
+        }
+    }
 
     private fun loadHomeCommunityList() {
         viewModel.deleteHomeCommunityItem()
