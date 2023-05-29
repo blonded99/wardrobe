@@ -97,7 +97,7 @@ class HomeViewModel @Inject constructor(
 
     fun deleteHomeWeatherItem(){
         HomeweatherItems.clear()
-        HomecommunityItemsListData.value?.clear()
+        HomeweatherItemsListData.value?.clear()
     }
 
     fun deleteHomeCommunityItem(){
