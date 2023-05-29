@@ -23,7 +23,6 @@ import kotlinx.datetime.Instant
 import javax.inject.Inject
 
 data class HomeItem(val clothesImageUrl: String)
-data class TempHomeItem(val clothesImageUrl: Int)
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -31,8 +30,8 @@ class HomeViewModel @Inject constructor(
     val weatherApi: WeatherApi,
     val dataStore: DataStore<Preferences>,
 ) : ViewModel() {
-    val HomeweatherItems = ArrayList<TempHomeItem>()
-    val HomeweatherItemsListData = MutableLiveData<ArrayList<TempHomeItem>>()
+    val HomeweatherItems = ArrayList<HomeItem>()
+    val HomeweatherItemsListData = MutableLiveData<ArrayList<HomeItem>>()
 
     val HomecommunityItems = ArrayList<HomeItem>()
     val HomecommunityItemsListData = MutableLiveData<ArrayList<HomeItem>>()
@@ -85,7 +84,7 @@ class HomeViewModel @Inject constructor(
 
     /* 옷장 이미지 */
 
-    fun addHomeWeatherItem(item: TempHomeItem){
+    fun addHomeWeatherItem(item: HomeItem){
         HomeweatherItems.add(item)
         HomeweatherItemsListData.value = HomeweatherItems
     }
@@ -96,6 +95,10 @@ class HomeViewModel @Inject constructor(
         HomecommunityItemsListData.value = HomecommunityItems
     }
 
+    fun deleteHomeWeatherItem(){
+        HomeweatherItems.clear()
+        HomecommunityItemsListData.value?.clear()
+    }
 
     fun deleteHomeCommunityItem(){
         HomecommunityItems.clear()

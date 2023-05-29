@@ -47,6 +47,9 @@
         android:name="com.example.wardrobe.HomeFragment"
         tools:layout="@layout/fragment_home" >
         <action
+            android:id="@+id/action_homeFragment_to_detailCodiFragment"
+            app:destination="@id/detailCodiFragment" />
+        <action
             android:id="@+id/action_homeFragment_to_detailCommunityFragment"
             app:destination="@id/detailCommunityFragment" />
     </fragment>
@@ -55,6 +58,9 @@
         android:id="@+id/addclothesFragment"
         android:name="com.example.wardrobe.AddclothesFragment"
         tools:layout="@layout/fragment_addclothes" >
+        <action
+            android:id="@+id/action_addclothesFragment_to_wardrobeFragment"
+            app:destination="@id/wardrobeFragment" />
     </fragment>
 
     <fragment
