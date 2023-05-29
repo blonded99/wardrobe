@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">wardrobe</string>
+    <string name="celsius">℃</string>
+    <string name="fahrenheit">℉</string>
 </resources>
