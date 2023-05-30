@@ -14,6 +14,7 @@ import com.example.wardrobe.network.WeatherApi
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -42,27 +43,32 @@ class HomeViewModel @Inject constructor(
     private val LON_KEY = doublePreferencesKey("lon_key")
     private val LAST_UPDATED = longPreferencesKey("last_updated")
 
-    fun fetchWeatherForecast() {
+    private fun isUpdateNeeded(): Flow<Boolean> = dataStore.data.map { data ->
         val now = Clock.System.now()
-        val isUpdateNeeded = dataStore.data.map { data ->
-            val epoch = data[LAST_UPDATED] ?: 0
-            val duration = now - Instant.fromEpochSeconds(epoch)
-            duration.inWholeMinutes > 15
+        val epoch = data[LAST_UPDATED] ?: 0
+        val duration = now - Instant.fromEpochSeconds(epoch)
+        duration.inWholeMinutes > 15
+    }
+
+    private fun cachedLatLon() = dataStore.data.map { data ->
+        val lat = data[LAT_KEY]
+        val lon = data[LON_KEY]
+        if (lat == null || lon == null) {
+            null
+        } else {
+            lat to lon
         }
-        val cachedLatLon = dataStore.data.map { data ->
-            val  lat= data[LAT_KEY]
-            val lon = data[LON_KEY]
-            if (lat == null || lon==null) {
-                null
-            } else {
-                lat to lon
-            }
-        }
+    }
+
+    fun fetchWeatherForecast() {
         viewModelScope.launch {
-            val cache = cachedLatLon.first()
-            val latLon = if ( cache == null || isUpdateNeeded.first()) {
+            val cache = cachedLatLon().first()
+            val latLon = if (cache == null || isUpdateNeeded().first()) {
                 @SuppressLint("MissingPermission")
-                val freshLocation  = fusedLocationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null).await()
+                val freshLocation = fusedLocationClient.getCurrentLocation(
+                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                    null
+                ).await()
 
                 dataStore.edit { data ->
                     data[LAT_KEY] = freshLocation.latitude
@@ -84,23 +90,23 @@ class HomeViewModel @Inject constructor(
 
     /* 옷장 이미지 */
 
-    fun addHomeWeatherItem(item: HomeItem){
+    fun addHomeWeatherItem(item: HomeItem) {
         HomeweatherItems.add(item)
         HomeweatherItemsListData.value = HomeweatherItems
     }
     /* 커뮤니티 이미지 */
 
-    fun addHomeCommunityItem(item: HomeItem){
+    fun addHomeCommunityItem(item: HomeItem) {
         HomecommunityItems.add(item)
         HomecommunityItemsListData.value = HomecommunityItems
     }
 
-    fun deleteHomeWeatherItem(){
+    fun deleteHomeWeatherItem() {
         HomeweatherItems.clear()
         HomeweatherItemsListData.value?.clear()
     }
 
-    fun deleteHomeCommunityItem(){
+    fun deleteHomeCommunityItem() {
         HomecommunityItems.clear()
         HomecommunityItemsListData.value?.clear()
 

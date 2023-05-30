@@ -57,7 +57,6 @@ class HomeFragment : Fragment() {
         }
         locationPermissionRequest.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-        val weatherWidget = binding.widgetWeatherNow
         val weatherIcon = binding.weatherIcon
         val currentAddress = binding.currentLocation
         val currentTemperature = binding.currentTemperature
