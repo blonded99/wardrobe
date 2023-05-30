@@ -1,113 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/search_area"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/editSearch"
+        <LinearLayout
+            android:id="@+id/search_area"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:hint=" 검색어 입력"
-            android:inputType="text" />
-
-        <Button
-            android:id="@+id/searchProductBtn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/editSearch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:hint=" 검색어 입력"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/searchProductBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:text="검색" />
+
+        </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:layout_marginHorizontal="14dp"
+            app:selectionRequired="true"
+            app:singleSelection="true"
+            app:checkedButton="@id/button_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_area">
+
+            <Button
+                style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
+                android:id="@+id/button_top"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="상의"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:textAlignment="center"
+                android:backgroundTint="@color/button_toggle_group_background_tint"
+                android:textColor="@drawable/selector_community_button_text" />
+
+            <Button
+                style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
+                android:id="@+id/button_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="하의"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:textAlignment="center"
+                android:backgroundTint="@color/button_toggle_group_background_tint"
+                android:textColor="@drawable/selector_community_button_text" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_marginTop="10dp"
-            android:text="검색" />
+            android:background="@color/lightgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_top"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line1" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/recyclerView_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line1" />
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="8dp"
-        android:layout_marginHorizontal="14dp"
-        app:selectionRequired="true"
-        app:singleSelection="true"
-        app:checkedButton="@id/button_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_area">
-
-        <Button
-            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
-            android:id="@+id/button_top"
-            android:layout_width="wrap_content"
+        <View
+            android:id="@+id/backgroundOverlay"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="상의"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textAlignment="center"
-            android:backgroundTint="@color/button_toggle_group_background_tint"
-            android:textColor="@drawable/selector_community_button_text" />
+            android:background="@color/backgroundOverlayColor"
+            android:visibility="gone" />
 
-        <Button
-            style="@style/Widget.Wardrobe.Button.ButtonGroupItem"
-            android:id="@+id/button_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="하의"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textAlignment="center"
-            android:backgroundTint="@color/button_toggle_group_background_tint"
-            android:textColor="@drawable/selector_community_button_text" />
-
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <View
-        android:id="@+id/line1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/lightgray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_top"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line1" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/recyclerView_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line1" />
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -147,5 +159,32 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/floatingActionButton" />
 
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_codi_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="코디 조합하기"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton_Codi"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton_Codi"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton_Codi" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_addclothes_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="옷 추가하기"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton_Add"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton_Add"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton_Add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
