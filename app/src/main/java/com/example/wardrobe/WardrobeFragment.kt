@@ -80,8 +80,12 @@ class WardrobeFragment : Fragment() {
                 R.id.button_top -> adapter_top.notifyDataSetChanged()
                 R.id.button_bottom -> adapter_bottom.notifyDataSetChanged()
             }
-            if(it==true)
+            if(it==true) {
                 binding.floatingActionButtonCodi.setImageResource(R.drawable.button_return)
+                binding.backgroundOverlay.visibility = View.INVISIBLE
+                binding.tvCodiGuide.visibility = View.INVISIBLE
+                binding.tvAddclothesGuide.visibility = View.INVISIBLE
+            }
             else
                 binding.floatingActionButtonCodi.setImageResource(R.drawable.button_fab_codi)
         }
@@ -100,6 +104,9 @@ class WardrobeFragment : Fragment() {
 
                 binding.floatingActionButtonAdd.visibility = View.VISIBLE
                 binding.floatingActionButtonCodi.visibility = View.VISIBLE
+                binding.tvCodiGuide.visibility = View.VISIBLE
+                binding.tvAddclothesGuide.visibility = View.VISIBLE
+                binding.backgroundOverlay.visibility = View.VISIBLE
             } else {
                 isFABOpen = false
                 binding.floatingActionButton.animate()
@@ -111,6 +118,9 @@ class WardrobeFragment : Fragment() {
 
                 binding.floatingActionButtonAdd.visibility = View.INVISIBLE
                 binding.floatingActionButtonCodi.visibility = View.INVISIBLE
+                binding.tvCodiGuide.visibility = View.INVISIBLE
+                binding.tvAddclothesGuide.visibility = View.INVISIBLE
+                binding.backgroundOverlay.visibility = View.INVISIBLE
             }
         }
 
@@ -128,6 +138,7 @@ class WardrobeFragment : Fragment() {
         binding.floatingActionButtonCodi.setOnClickListener {
             viewModel.isCodiMode.value = viewModel.isCodiMode.value != true
         }
+
         loadTopList()
 
         binding.radioGroup.addOnButtonCheckedListener { group, _, isChecked ->
