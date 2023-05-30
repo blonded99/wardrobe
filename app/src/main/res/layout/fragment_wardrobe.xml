@@ -147,5 +147,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/floatingActionButton" />
 
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_codi_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="코디 조합하기"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton_Codi"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton_Codi"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton_Codi" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_addclothes_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="옷 추가하기"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton_Add"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton_Add"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton_Add" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
