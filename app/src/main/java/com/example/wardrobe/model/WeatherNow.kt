@@ -1,11 +1,14 @@
 package com.example.wardrobe.model
 
+import kotlinx.datetime.Instant
+
 data class WeatherNow(
     val type: Weather,
     val description: String,
     val location: String,
     val temperature: Float,
     val feelsLike: Float,
+    val timeUTC: Instant,
 )
 
 enum class Weather(val icon: DrawableIcon) {
