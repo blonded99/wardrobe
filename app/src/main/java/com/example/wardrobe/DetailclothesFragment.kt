@@ -14,6 +14,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class DetailclothesFragment : Fragment() {
     private lateinit var binding: FragmentDetailClothesBinding
@@ -64,7 +68,12 @@ class DetailclothesFragment : Fragment() {
             AlertDialog.Builder(context)
                 .setTitle("삭제하시겠습니까?")
                 .setPositiveButton("예") { _, _ ->
-                    deleteClothes()
+                    GlobalScope.launch(Dispatchers.Main){
+                        if(checkReferenceInCodi())
+                            Snackbar.make(binding.root,"해당 옷이 등록된 코디를 먼저 삭제해주세요.", Snackbar.LENGTH_SHORT).show()
+                        else
+                            deleteClothes()
+                    }
                 }
                 .setNegativeButton("아니오") { _, _ ->
                 }
@@ -151,6 +160,7 @@ class DetailclothesFragment : Fragment() {
         var target = "top"
         if(!isTop)
             target = "bottom"
+
         db.collection(target).whereEqualTo("imageRef",storageImageRef).get()
             .addOnSuccessListener {
                 for(doc in it){
@@ -160,7 +170,25 @@ class DetailclothesFragment : Fragment() {
                         }
                 }
             }
+
     }
+
+    private suspend fun checkReferenceInCodi(): Boolean { // true = 코디에서 사용중
+        var target = "topRef"
+        if(!isTop)
+            target = "bottomRef"
+
+        var isReferred = false
+        val result = db.collection("set").whereEqualTo(target,storageImageRef).get().await()
+
+        for(doc in result){
+            isReferred = true
+            break
+        }
+
+        return isReferred
+    }
+
 
 
 
