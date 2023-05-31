@@ -15,12 +15,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.CodiAllRecyclerViewAdapter
 import com.example.wardrobe.adapters.CodiPrivateRecyclerViewAdapter
 import com.example.wardrobe.adapters.CodiPublicRecyclerViewAdapter
-import com.example.wardrobe.adapters.WardrobeBottomRecyclerViewAdapter
-import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentCodiBinding
 import com.example.wardrobe.viewmodel.CodiItem
 import com.example.wardrobe.viewmodel.CodiViewModel
-import com.example.wardrobe.viewmodel.Item
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

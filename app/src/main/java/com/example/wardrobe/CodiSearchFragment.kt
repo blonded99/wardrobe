@@ -12,13 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.CodiAllRecyclerViewAdapter
-import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentCodisearchBinding
-import com.example.wardrobe.databinding.FragmentSearchBinding
 import com.example.wardrobe.viewmodel.CodiItem
 import com.example.wardrobe.viewmodel.CodiViewModel
-import com.example.wardrobe.viewmodel.Item
-import com.example.wardrobe.viewmodel.WardrobeViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

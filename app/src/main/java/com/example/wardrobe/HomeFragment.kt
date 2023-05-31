@@ -93,10 +93,6 @@ class HomeFragment : Fragment() {
 
         loadHomeCommunityList()
 
-        //임시
-//        viewModel.addHomeWeatherItem(TempHomeItem(R.drawable.test_top))
-//        viewModel.addHomeWeatherItem(TempHomeItem(R.drawable.test_bottom))
-
     }
 
     override fun onResume() {

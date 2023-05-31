@@ -1,23 +1,19 @@
 package com.example.wardrobe
 
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.WardrobeBottomRecyclerViewAdapter
 import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentSearchBinding
-import com.example.wardrobe.viewmodel.CommunityItem
 import com.example.wardrobe.viewmodel.Item
 import com.example.wardrobe.viewmodel.WardrobeViewModel
 import com.google.firebase.firestore.ktx.firestore
