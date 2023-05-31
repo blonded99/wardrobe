@@ -360,10 +360,7 @@ class AddclothesFragment : Fragment() {
             .addFormDataPart("smooth_edges", "true")
             .build()
 
-//        var baseUrl = "http://10.0.2.2:5000/seg_clothes"              // 로컬 테스트용
-        var baseUrl = "http://13.209.183.25:5000/seg_clothes"
-//           "http://helike.duckdns.org:5000/seg_clothes"   // 느린 서버 테스트용
-
+        var baseUrl = BuildConfig.BASE_URL
 
         if (isTop) {
             baseUrl += "?include=0"

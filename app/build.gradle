@@ -9,6 +9,14 @@ plugins {
     id 'org.jetbrains.kotlin.kapt'
 }
 
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
+// Access the base URL
+String baseUrl = properties.getProperty('baseUrl', '"https://default.url/"')
+
 android {
     namespace 'com.example.wardrobe'
     compileSdk 33
@@ -23,6 +31,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField 'String', 'BASE_URL', baseUrl
     }
 
     buildTypes {
