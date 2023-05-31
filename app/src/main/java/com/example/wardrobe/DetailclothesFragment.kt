@@ -132,9 +132,11 @@ class DetailclothesFragment : Fragment() {
                         "xl" -> binding.buttonSizeXl.isChecked = true
                     }
 
+                    binding.editTextBrandName.text.clear()
                     if(doc["brand"].toString().isNotBlank())
                         binding.editTextBrandName.setText(doc["brand"].toString())
 
+                    binding.editTextMemo.text.clear()
                     if(doc["memo"].toString().isNotBlank())
                         binding.editTextMemo.setText(doc["memo"].toString())
 

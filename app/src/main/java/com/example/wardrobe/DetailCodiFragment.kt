@@ -101,15 +101,18 @@ class DetailCodiFragment : Fragment() {
                         true -> binding.buttonPublic.isChecked = true
                         false -> binding.buttonPrivate.isChecked = true
                     }
+                    binding.editTextMemo.text.clear()
                     if(doc["memo"].toString().isNotBlank())
                         binding.editTextMemo.setText(doc["memo"].toString())
 
                     binding.editTextHashtag.text.clear()
-                    val tempList = doc["hashtag"] as List<String>
-                    if(tempList.isNotEmpty()) {
-                        tempList.forEach {
-                            binding.editTextHashtag.text.append("#")
-                            binding.editTextHashtag.text.append(it)
+                    val tempList = doc["hashtag"] as List<String>?
+                    if (tempList != null) {
+                        if(tempList.isNotEmpty()) {
+                            tempList.forEach {
+                                binding.editTextHashtag.text.append("#")
+                                binding.editTextHashtag.text.append(it)
+                            }
                         }
                     }
 

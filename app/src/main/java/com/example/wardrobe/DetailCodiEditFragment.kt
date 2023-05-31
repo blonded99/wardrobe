@@ -134,7 +134,6 @@ class DetailCodiEditFragment : Fragment() {
                     if(doc["memo"].toString().isNotBlank())
                         binding.editTextMemo.setText(doc["memo"].toString())
 
-                    binding.editTextHashtag.text.clear()
                     val tempList = doc["hashtag"] as List<String>?
                     if (tempList != null) {
                         if(tempList.isNotEmpty()) {
