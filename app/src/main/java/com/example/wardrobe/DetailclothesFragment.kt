@@ -132,24 +132,22 @@ class DetailclothesFragment : Fragment() {
                         "xl" -> binding.buttonSizeXl.isChecked = true
                     }
 
-                    if(doc["brand"].toString().isNullOrBlank())
-                        binding.editTextBrandName.setHint("브랜드를 입력해주세요.")
-                    else
+                    binding.editTextBrandName.text.clear()
+                    if(doc["brand"].toString().isNotBlank())
                         binding.editTextBrandName.setText(doc["brand"].toString())
 
-                    if(doc["memo"].toString().isNullOrBlank())
-                        binding.editTextMemo.setHint("메모를 입력해주세요.")
-                    else
+                    binding.editTextMemo.text.clear()
+                    if(doc["memo"].toString().isNotBlank())
                         binding.editTextMemo.setText(doc["memo"].toString())
 
                     binding.editTextHashtag.text.clear()
                     val tempList = doc["hashtag"] as List<String>?
-                    if(tempList.isNullOrEmpty())
-                        binding.editTextHashtag.setHint("해시태그를 #로 구분하여 입력해주세요.")
-                    else{
-                        tempList.forEach {
-                            binding.editTextHashtag.text.append("#")
-                            binding.editTextHashtag.text.append(it)
+                    if (tempList != null) {
+                        if(tempList.isNotEmpty()) {
+                            tempList.forEach {
+                                binding.editTextHashtag.text.append("#")
+                                binding.editTextHashtag.text.append(it)
+                            }
                         }
                     }
                 }
