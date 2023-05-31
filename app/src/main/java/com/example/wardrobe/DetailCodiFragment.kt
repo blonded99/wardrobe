@@ -101,21 +101,18 @@ class DetailCodiFragment : Fragment() {
                         true -> binding.buttonPublic.isChecked = true
                         false -> binding.buttonPrivate.isChecked = true
                     }
-                    if(doc["memo"].toString().isNullOrBlank())
-                        binding.editTextMemo.setHint("메모를 입력해주세요.")
-                    else
+                    if(doc["memo"].toString().isNotBlank())
                         binding.editTextMemo.setText(doc["memo"].toString())
 
                     binding.editTextHashtag.text.clear()
                     val tempList = doc["hashtag"] as List<String>
-                    if(tempList.isEmpty())
-                        binding.editTextHashtag.setHint("해시태그를 #로 구분하여 입력해주세요.")
-                    else{
+                    if(tempList.isNotEmpty()) {
                         tempList.forEach {
                             binding.editTextHashtag.text.append("#")
                             binding.editTextHashtag.text.append(it)
                         }
                     }
+
                 }
         }
     }
