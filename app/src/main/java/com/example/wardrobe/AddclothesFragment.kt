@@ -66,6 +66,7 @@ class AddclothesFragment : Fragment() {
 
     var clothesInfo = TopBottomDTO()
     var isTop : Boolean = true
+    var isClothesEntered : Boolean = false
 
     val db = Firebase.firestore
     // Top(상의) Collection Ref
@@ -228,6 +229,12 @@ class AddclothesFragment : Fragment() {
 
 
         binding.buttonSave.setOnClickListener {
+            if(binding.radioGroupThickness.checkedRadioButtonId == -1 || binding.radioGroupSeason.checkedRadioButtonId == -1
+                || binding.radioGroupLength.checkedRadioButtonId == -1 || binding.radioGroupSize.checkedRadioButtonId == -1
+                || !isClothesEntered){
+                Snackbar.make(binding.root,"사진을 추가하고 모든 버튼을 클릭해주세요.", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             clothesInfo.userID = currentUID
             clothesInfo.brand = binding.editTextBrandName.text.toString()
             clothesInfo.memo = binding.editTextMemo.text.toString()
@@ -448,6 +455,7 @@ class AddclothesFragment : Fragment() {
                 .asBitmap()
                 .load(imageRef)
                 .into(BitmapImageViewTarget(binding.ivGallery))
+            isClothesEntered = true
         }
 
     }
