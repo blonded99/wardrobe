@@ -155,8 +155,6 @@ class WardrobeFragment : Fragment() {
             if(viewModel.topSelectedCheckBox.value != null) {
                 if (viewModel.bottomSelectedCheckBox.value != null) {
                     val bundle = Bundle()
-//                    bundle.putInt("topIndex", viewModel.topSelectedCheckBox.value!!)
-//                    bundle.putInt("bottomIndex", viewModel.bottomSelectedCheckBox.value!!)
                     bundle.putString("topRef",viewModel.topItems[viewModel.topSelectedCheckBox.value!!].clothesImageUrl)
                     bundle.putString("bottomRef",viewModel.bottomItems[viewModel.bottomSelectedCheckBox.value!!].clothesImageUrl)
                     findNavController().navigate(R.id.action_wardrobeFragment_to_doCodiFragment,bundle)
@@ -170,8 +168,6 @@ class WardrobeFragment : Fragment() {
             if(viewModel.bottomSelectedCheckBox.value != null) {
                 if (viewModel.topSelectedCheckBox.value != null) {
                     val bundle = Bundle()
-//                    bundle.putInt("topIndex", viewModel.topSelectedCheckBox.value!!)
-//                    bundle.putInt("bottomIndex", viewModel.bottomSelectedCheckBox.value!!)
                     bundle.putString("topRef",viewModel.topItems[viewModel.topSelectedCheckBox.value!!].clothesImageUrl)
                     bundle.putString("bottomRef",viewModel.bottomItems[viewModel.bottomSelectedCheckBox.value!!].clothesImageUrl)
                     findNavController().navigate(R.id.action_wardrobeFragment_to_doCodiFragment,bundle)

@@ -10,12 +10,9 @@ import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wardrobe.databinding.FragmentDoCodiBinding
-import com.example.wardrobe.viewmodel.WardrobeViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -29,7 +26,6 @@ class DoCodiFragment : Fragment() {
     private lateinit var binding: FragmentDoCodiBinding
     private lateinit var storage: FirebaseStorage
 
-//    private val viewModel by viewModels<WardrobeViewModel>()
 
     private lateinit var scaleGestureDetector: ScaleGestureDetector
     private lateinit var scaleGestureDetector2: ScaleGestureDetector
@@ -200,7 +196,7 @@ class DoCodiFragment : Fragment() {
 
             imageRef.putBytes(data).addOnCompleteListener{
                 if(it.isSuccessful) {
-                    Snackbar.make(binding.root, "Storage upload completed", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, "Completed", Snackbar.LENGTH_SHORT)
                         .show()
 
                     val bundle = Bundle()
@@ -234,7 +230,7 @@ class DoCodiFragment : Fragment() {
 
         if(path != ""){ // path is always not null
             val imageRef = storage.reference.child(path)
-            imageRef.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+            imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
                 val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
                 topBitmap = bmp
                 binding.ivTop.setImageBitmap(bmp)
@@ -248,7 +244,7 @@ class DoCodiFragment : Fragment() {
 
         if(path != ""){ // path is always not null
             val imageRef = storage.reference.child(path)
-            imageRef.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+            imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
                 val bmp = BitmapFactory.decodeByteArray(it,0,it.size)
                 bottomBitmap = bmp
                 binding.ivBottom.setImageBitmap(bmp)

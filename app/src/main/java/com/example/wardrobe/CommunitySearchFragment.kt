@@ -13,12 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.wardrobe.adapters.CommunityLikedRecyclerViewAdapter
 import com.example.wardrobe.adapters.CommunityMainRecyclerViewAdapter
-import com.example.wardrobe.adapters.WardrobeRecyclerViewAdapter
 import com.example.wardrobe.databinding.FragmentCommunitysearchBinding
-import com.example.wardrobe.databinding.FragmentSearchBinding
-import com.example.wardrobe.viewmodel.CodiItem
 import com.example.wardrobe.viewmodel.CommunityViewModel
-import com.example.wardrobe.viewmodel.WardrobeViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

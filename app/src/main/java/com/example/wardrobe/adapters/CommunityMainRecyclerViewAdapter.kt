@@ -13,9 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wardrobe.R
-import com.example.wardrobe.viewmodel.CommunityItem
 import com.example.wardrobe.viewmodel.CommunityViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
