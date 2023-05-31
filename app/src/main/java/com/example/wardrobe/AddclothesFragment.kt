@@ -228,6 +228,11 @@ class AddclothesFragment : Fragment() {
 
 
         binding.buttonSave.setOnClickListener {
+            if(binding.radioGroupThickness.checkedRadioButtonId == -1 || binding.radioGroupSeason.checkedRadioButtonId == -1
+                || binding.radioGroupLength.checkedRadioButtonId == -1 || binding.radioGroupSize.checkedRadioButtonId == -1){
+                Snackbar.make(binding.root,"모든 버튼을 클릭해주세요.", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             clothesInfo.userID = currentUID
             clothesInfo.brand = binding.editTextBrandName.text.toString()
             clothesInfo.memo = binding.editTextMemo.text.toString()
