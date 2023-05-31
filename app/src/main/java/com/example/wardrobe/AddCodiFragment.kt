@@ -78,6 +78,10 @@ class AddCodiFragment : Fragment() {
         }
 
         binding.buttonSave.setOnClickListener {
+            if(binding.radioGroupSeason.checkedRadioButtonId == -1 || binding.radioGroupIsPublic.checkedRadioButtonId == -1){
+                Snackbar.make(binding.root,"모든 버튼을 클릭해주세요.", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             clothesInfo.userID = currentUID
             clothesInfo.memo = binding.editTextMemo.text.toString()
             clothesInfo.topRef = topRef
