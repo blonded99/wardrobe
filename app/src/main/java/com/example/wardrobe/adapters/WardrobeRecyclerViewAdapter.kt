@@ -31,8 +31,6 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val 
             R.layout.itemview_wardrobe,
             parent, false)
         storage = Firebase.storage
-//        val inflater = LayoutInflater.from(parent.context)
-//        val binding = ItemViewBinding.inflate(inflater,parent,false)
         return RecyclerViewViewHolder(itemView)
     }
 
@@ -93,11 +91,10 @@ class WardrobeRecyclerViewAdapter(private val viewModel: WardrobeViewModel, val 
                 if(isChecked) {
                     checkedPosition = pos
                     viewModel.topSelectedCheckBox.value = pos
-//                    notifyDataSetChanged()
                 } else {
                     if (pos == checkedPosition) {
                         viewModel.topSelectedCheckBox.value = null
-                        checkedPosition = -1 // if the currently checked checkbox is unchecked manually
+                        checkedPosition = -1
                     }
                 }
             }

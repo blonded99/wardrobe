@@ -31,8 +31,6 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
             R.layout.itemview_wardrobe,
             parent, false)
         storage = Firebase.storage
-//        val inflater = LayoutInflater.from(parent.context)
-//        val binding = ItemViewBinding.inflate(inflater,parent,false)
         return RecyclerViewViewHolder(itemView)
     }
 
@@ -76,7 +74,6 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
                             val bundle = Bundle()
                             bundle.putString("imageRef",doc["imageRef"].toString())
                             bundle.putBoolean("isTop",false)
-//                            fragment.findNavController().navigate(R.id.action_wardrobeFragment_to_detailClothesFragment,bundle)
                             fragment.findNavController().navigate(R.id.detailClothesFragment, bundle)
 
                         }
@@ -97,11 +94,10 @@ class WardrobeBottomRecyclerViewAdapter(private val viewModel: WardrobeViewModel
                 if(isChecked) {
                     checkedPosition = pos
                     viewModel.bottomSelectedCheckBox.value = pos
-//                    notifyDataSetChanged()
                 } else {
                     if (pos == checkedPosition) {
                         viewModel.bottomSelectedCheckBox.value = null
-                        checkedPosition = -1 // if the currently checked checkbox is unchecked manually
+                        checkedPosition = -1
                     }
                 }
             }
