@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class DetailclothesFragment : Fragment() {
     private lateinit var binding: FragmentDetailClothesBinding
@@ -68,11 +69,15 @@ class DetailclothesFragment : Fragment() {
             AlertDialog.Builder(context)
                 .setTitle("삭제하시겠습니까?")
                 .setPositiveButton("예") { _, _ ->
-                    GlobalScope.launch(Dispatchers.Main){
-                        if(checkReferenceInCodi())
-                            Snackbar.make(binding.root,"해당 옷이 등록된 코디를 먼저 삭제해주세요.", Snackbar.LENGTH_SHORT).show()
-                        else
-                            deleteClothes()
+                    GlobalScope.launch(Dispatchers.IO){
+                        val isDenied = checkReferenceInCodi()
+
+                        withContext(Dispatchers.Main) {
+                            if(isDenied)
+                                Snackbar.make(binding.root,"해당 옷이 등록된 코디를 먼저 삭제해주세요.", Snackbar.LENGTH_SHORT).show()
+                            else
+                                deleteClothes()
+                        }
                     }
                 }
                 .setNegativeButton("아니오") { _, _ ->
