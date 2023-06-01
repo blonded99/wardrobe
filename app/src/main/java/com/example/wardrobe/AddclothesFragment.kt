@@ -280,7 +280,7 @@ class AddclothesFragment : Fragment() {
 
 
 
-    fun getRealPathFromURI(uri: Uri): String{
+    private fun getRealPathFromURI(uri: Uri): String{
 
         val buildName = Build.MANUFACTURER
         var columnIndex = 0
@@ -295,7 +295,7 @@ class AddclothesFragment : Fragment() {
     }
 
 
-    fun selectGallery(){
+    private fun selectGallery(){
         list.clear()
 
         var readPermission = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_MEDIA_IMAGES)
@@ -319,11 +319,8 @@ class AddclothesFragment : Fragment() {
 
 
     // 일단 여기서 세팅까지 한번에
-    suspend fun removeBackground(path: String, isTop: Boolean){ // isTop == true -> 상의
+    private suspend fun removeBackground(path: String, isTop: Boolean){ // isTop == true -> 상의
         storage = Firebase.storage
-        val storageRef = storage.reference
-        var imageRef: StorageReference
-        val itemsString = mutableListOf<String>()
 
         if (context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
@@ -341,13 +338,10 @@ class AddclothesFragment : Fragment() {
 //        val tempPath = "/data/data/com.example.wardrobe/test_image9.jpg"
         val file = File(path)
 
-//        val client = OkHttpClient().newBuilder().build()
-
-        // 느린 서버 테스트용 timeout 재설정
         val client = OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
             .build()
 
         val requestBody: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -414,7 +408,7 @@ class AddclothesFragment : Fragment() {
         }
     }
 
-    fun doSomething(imageUri: String, isTop: Boolean){
+    private fun doSomething(imageUri: String, isTop: Boolean){
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 if(isCamera) {
@@ -503,10 +497,9 @@ class AddclothesFragment : Fragment() {
         }
     }
 
-    fun rotateImageIfRequired(context: Context, img: Bitmap, selectedImage: Uri): Bitmap {
+    private fun rotateImageIfRequired(context: Context, img: Bitmap, selectedImage: Uri): Bitmap {
         val input = context.contentResolver.openInputStream(selectedImage)
-        val ei: ExifInterface
-        ei = ExifInterface(input!!)
+        val ei: ExifInterface = ExifInterface(input!!)
         val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
         input.close()
