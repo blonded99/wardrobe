@@ -37,7 +37,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -318,8 +317,7 @@ class AddclothesFragment : Fragment() {
     }
 
 
-    // 일단 여기서 세팅까지 한번에
-    private suspend fun removeBackground(path: String, isTop: Boolean){ // isTop == true -> 상의
+    private fun removeBackground(path: String, isTop: Boolean): String?{ // isTop == true -> 상의
         storage = Firebase.storage
 
         if (context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED) {
@@ -335,7 +333,7 @@ class AddclothesFragment : Fragment() {
         }
 
         // 갤러리 열 때 권한요청이 뜨지 않는 오류가 있어서 일단 임시로 파일 path를 다른 곳으로 지정
-//        val tempPath = "/data/data/com.example.wardrobe/test_image9.jpg"
+//        val tempPath = "/data/data/com.example.wardrobe/test23052903.jpg"
         val file = File(path)
 
         val client = OkHttpClient.Builder()
@@ -372,7 +370,8 @@ class AddclothesFragment : Fragment() {
         val responseBody = response.body?.string() ?: ""
         Log.e("","response= ${responseBody}")
 //        response.close()
-        Snackbar.make(binding.root,"Completed", Snackbar.LENGTH_SHORT).show()
+//        Snackbar.make(binding.root,"Completed", Snackbar.LENGTH_SHORT).show()
+        Log.e("","Storage Upload Completed")
 
 
         // RESPONSE 성공시
@@ -380,36 +379,38 @@ class AddclothesFragment : Fragment() {
             try {
                 val jsonArray = JSONArray(responseBody)
                 if (jsonArray.length() > 0) {
-                    var jsonObject: Any
-                    if(isTop)
-                        jsonObject = jsonArray.getJSONObject(0)
+                    val jsonObject: Any
+                    jsonObject = if(isTop)
+                        jsonArray.getJSONObject(0)
                     else
-                        jsonObject = jsonArray.getJSONObject(1)
+                        jsonArray.getJSONObject(1)
                     val path = jsonObject.optString("path", "") // storage에 들어간 사진의 path
                     Log.e("", "path= $path")
 
                     clothesInfo.imageRef = path
-                    listImageDialog(path)
+//                    listImageDialog(path)
+                    return path
 
                 } else {
-                    Snackbar.make(binding.root,"ARRAY IS EMPTY", Snackbar.LENGTH_SHORT).show()
+//                    Snackbar.make(binding.root,"ARRAY IS EMPTY", Snackbar.LENGTH_SHORT).show()
+                    Log.e("","ARRAY IS EMPTY")
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
-                Snackbar.make(binding.root,"JSON PARSING ERROR", Snackbar.LENGTH_SHORT).show()
+//                Snackbar.make(binding.root,"JSON PARSING ERROR", Snackbar.LENGTH_SHORT).show()
+                Log.e("","JSON PARSING ERROR")
             }
         } else {
-            Snackbar.make(binding.root,"RESPONSE FAILED", Snackbar.LENGTH_SHORT).show()
+//            Snackbar.make(binding.root,"RESPONSE FAILED", Snackbar.LENGTH_SHORT).show()
+            Log.e("","RESPONSE FAILED")
         }
 
-
-        withContext(Dispatchers.Main) {
-            // handle the response on the main thread
-        }
+        return null
     }
 
     private fun doSomething(imageUri: String, isTop: Boolean){
         GlobalScope.launch(Dispatchers.IO) {
+            var storageImageRef: String? = ""
             try {
                 if(isCamera) {
                     val originalFile = File(imageUri)
@@ -424,14 +425,20 @@ class AddclothesFragment : Fragment() {
                     out.close()
 
                     val path = newFile.absolutePath
-                    removeBackground(path, isTop)
+                    storageImageRef = removeBackground(path, isTop)
                 }
                 else {
-                    val path = imageUri
-                    removeBackground(path, isTop)
+                    storageImageRef = removeBackground(imageUri, isTop)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+            withContext(Dispatchers.Main) {
+                if(!storageImageRef.isNullOrBlank())
+                    listItemDialog(storageImageRef)
+                else{
+                    Snackbar.make(binding.root, "사진을 다시 등록해주세요", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -439,16 +446,13 @@ class AddclothesFragment : Fragment() {
 
 
     // path를 넘겨받고 storage에서 이미지 받아와서 imageView에 세팅
-    private fun listImageDialog(path: String){
-        if(path != ""){ // path is always not null
-            val imageRef = Firebase.storage.reference.child(path)
-            Glide.with(binding.root.context)
-                .asBitmap()
-                .load(imageRef)
-                .into(BitmapImageViewTarget(binding.ivGallery))
-            isClothesEntered = true
-        }
-
+    private fun listItemDialog(path: String?){
+        val imageRef = path?.let { Firebase.storage.reference.child(it) }
+        Glide.with(binding.root.context)
+            .asBitmap()
+            .load(imageRef)
+            .into(BitmapImageViewTarget(binding.ivGallery))
+        isClothesEntered = true
     }
 
 
